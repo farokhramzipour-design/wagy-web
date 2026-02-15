@@ -1,11 +1,11 @@
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { routeDebug } from "@/lib/route-debug";
 
 export const dynamic = "force-dynamic";
 
-const LandingPageSections = dynamic(
+const LandingPageSections = dynamicImport(
   () => import("@/components/sections/landing-page").then((mod) => mod.LandingPageSections),
   {
     ssr: false,
