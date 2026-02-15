@@ -10,6 +10,8 @@ services:
       NODE_ENV: production
       HOSTNAME: 0.0.0.0
       PORT: 3000
+      DEBUG_ROUTING: ${DEBUG_ROUTING:-0}
+      NEXT_PUBLIC_DEBUG_ROUTING: ${NEXT_PUBLIC_DEBUG_ROUTING:-0}
     ports:
       - "3000:3000"
     healthcheck:

@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { authService, otpSchema, phoneSchema } from "@/services/auth-service";
 import { useAppStore } from "@/stores/app-store";
+import { routeDebug } from "@/lib/route-debug";
 
 type PhoneValues = z.infer<typeof phoneSchema>;
 type OtpValues = z.infer<typeof otpSchema>;
@@ -44,22 +45,29 @@ export function AuthView() {
   const canResend = useMemo(() => timer <= 0, [timer]);
 
   const handlePhone = phoneForm.handleSubmit(async (values) => {
+    routeDebug("auth-view", "request-otp:start", { phone: values.phone });
     await authService.requestOtp(values.phone);
     setTimer(45);
     setStep("otp");
+    routeDebug("auth-view", "request-otp:success", { nextStep: "otp" });
   });
 
   const handleOtp = otpForm.handleSubmit(async (values) => {
+    routeDebug("auth-view", "verify-otp:start", { otpLength: values.otp.length });
     const result = await authService.verifyOtp(values.otp);
+    routeDebug("auth-view", "verify-otp:result", { ok: result.ok });
     if (result.ok) {
       loginAsUser();
+      routeDebug("auth-view", "router.push:/app/dashboard", { source: "otp" });
       router.push("/app/dashboard");
     }
   });
 
   const handleGoogle = async () => {
+    routeDebug("auth-view", "google-login:start");
     await authService.loginWithGoogle();
     loginAsUser();
+    routeDebug("auth-view", "router.push:/app/dashboard", { source: "google" });
     router.push("/app/dashboard");
   };
 
@@ -112,6 +120,7 @@ export function AuthView() {
               variant="outline"
               onClick={() => {
                 loginAsUser();
+                routeDebug("auth-view", "router.push:/app/dashboard", { source: "demo-user" });
                 router.push("/app/dashboard");
               }}
             >
@@ -121,6 +130,7 @@ export function AuthView() {
               variant="outline"
               onClick={() => {
                 loginAsAdmin();
+                routeDebug("auth-view", "router.push:/admin/overview", { source: "demo-admin" });
                 router.push("/admin/overview");
               }}
             >

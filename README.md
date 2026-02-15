@@ -33,6 +33,19 @@ Production-grade starter scaffold for a Rover-like pet services marketplace with
 
 App is served on `http://localhost:3000`.
 
+## Route Debugging (Redirect Tracing)
+If you need to trace unexpected redirects (`/` -> `/app/dashboard`, `/app/*` -> `/auth`, etc.), enable route debugging:
+
+1. Start with debug env flags:
+   - `DEBUG_ROUTING=1 NEXT_PUBLIC_DEBUG_ROUTING=1 docker compose up -d --build`
+2. Watch server logs:
+   - `docker compose logs -f waggy-web | grep route-debug`
+3. Inspect debug response header:
+   - `curl -I http://127.0.0.1:3000/ | grep -i x-waggy-route-debug`
+4. Check browser console for client-side guard/auth logs (`[route-debug][protected-route]`, `[route-debug][auth-view]`, `[route-debug][app-store]`).
+
+Disable by setting both flags to `0`.
+
 ## Project Structure
 ```text
 app/

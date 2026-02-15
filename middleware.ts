@@ -1,0 +1,29 @@
+import { NextRequest, NextResponse } from "next/server";
+import { isRouteDebugEnabled, routeDebug } from "./lib/route-debug";
+
+export function middleware(request: NextRequest) {
+  const debugEnabled = isRouteDebugEnabled();
+
+  if (debugEnabled) {
+    routeDebug("middleware", "request", {
+      method: request.method,
+      pathname: request.nextUrl.pathname,
+      search: request.nextUrl.search,
+      host: request.headers.get("host"),
+      forwardedHost: request.headers.get("x-forwarded-host"),
+      forwardedProto: request.headers.get("x-forwarded-proto"),
+      referer: request.headers.get("referer")
+    });
+  }
+
+  const response = NextResponse.next();
+  if (debugEnabled) {
+    response.headers.set("x-waggy-route-debug", `${request.method} ${request.nextUrl.pathname}`);
+  }
+  return response;
+}
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"]
+};
+
