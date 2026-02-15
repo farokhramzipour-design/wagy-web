@@ -3,6 +3,7 @@ import { isRouteDebugEnabled, routeDebug } from "./lib/route-debug";
 
 export function middleware(request: NextRequest) {
   const debugEnabled = isRouteDebugEnabled();
+  const isRoot = request.nextUrl.pathname === "/";
 
   if (debugEnabled) {
     routeDebug("middleware", "request", {
@@ -17,6 +18,13 @@ export function middleware(request: NextRequest) {
       rewriteUrl: request.headers.get("x-rewrite-url"),
       referer: request.headers.get("referer")
     });
+  }
+
+  if (isRoot) {
+    if (debugEnabled) {
+      routeDebug("middleware", "rewrite:/ -> /__landing");
+    }
+    return NextResponse.rewrite(new URL("/__landing", request.url));
   }
 
   const response = NextResponse.next();
