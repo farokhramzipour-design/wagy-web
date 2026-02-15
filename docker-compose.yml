@@ -1,0 +1,20 @@
+services:
+  waggy-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: waggy-web:prod
+    container_name: waggy-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/ >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
