@@ -1,5 +1,13 @@
-import { AuthView } from "@/features/auth/components/auth-view";
+import Link from 'next/link';
 
 export default function AuthPage() {
-  return <AuthView />;
+  return (
+    <main className="wrap">
+      <h1>Auth</h1>
+      <p>Auth placeholder page.</p>
+      <div className="links">
+        <Link href="/">Back to Home</Link>
+      </div>
+    </main>
+  );
 }

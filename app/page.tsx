@@ -1,16 +1,13 @@
-import { LandingPageSections } from "@/components/sections/landing-page";
-import { headers } from "next/headers";
-import { routeDebug } from "@/lib/route-debug";
-
-export const dynamic = "force-dynamic";
+import Link from 'next/link';
 
 export default function HomePage() {
-  const requestHeaders = headers();
-  routeDebug("app/page", "render", {
-    host: requestHeaders.get("host"),
-    forwardedHost: requestHeaders.get("x-forwarded-host"),
-    forwardedProto: requestHeaders.get("x-forwarded-proto")
-  });
-
-  return <LandingPageSections />;
+  return (
+    <main className="wrap">
+      <h1>Waggy</h1>
+      <p>Clean restart is running.</p>
+      <div className="links">
+        <Link href="/auth">Go to Auth</Link>
+      </div>
+    </main>
+  );
 }
