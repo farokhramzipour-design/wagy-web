@@ -15,22 +15,28 @@ export function ProtectedRoute({ children, requireAuth = false, requireRole }: P
   const router = useRouter();
   const pathname = usePathname();
   const role = useAppStore((state) => state.role);
+  const inUserApp = pathname?.startsWith("/app");
+  const inAdminApp = pathname?.startsWith("/admin");
+  const shouldEnforceAuth = Boolean(requireAuth && (inUserApp || inAdminApp));
+  const shouldEnforceRole = Boolean(requireRole && inAdminApp);
 
   useEffect(() => {
     routeDebug("protected-route", "evaluate", {
       pathname,
       requireAuth,
       requireRole,
-      role
+      role,
+      shouldEnforceAuth,
+      shouldEnforceRole
     });
 
-    if (requireAuth && role === "guest") {
+    if (shouldEnforceAuth && role === "guest") {
       routeDebug("protected-route", "redirect:/auth", { pathname, role });
       router.replace("/auth");
       return;
     }
 
-    if (requireRole && role !== requireRole) {
+    if (shouldEnforceRole && role !== requireRole) {
       routeDebug("protected-route", "redirect:/access-denied", {
         pathname,
         role,
@@ -38,13 +44,13 @@ export function ProtectedRoute({ children, requireAuth = false, requireRole }: P
       });
       router.replace("/access-denied");
     }
-  }, [pathname, requireAuth, requireRole, role, router]);
+  }, [pathname, requireAuth, requireRole, role, router, shouldEnforceAuth, shouldEnforceRole]);
 
-  if (requireAuth && role === "guest") {
+  if (shouldEnforceAuth && role === "guest") {
     routeDebug("protected-route", "block-render:guest", { pathname });
     return null;
   }
-  if (requireRole && role !== requireRole) {
+  if (shouldEnforceRole && role !== requireRole) {
     routeDebug("protected-route", "block-render:role-mismatch", {
       pathname,
       role,
