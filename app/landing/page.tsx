@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default function LandingInternalPage() {
   const requestHeaders = headers();
-  routeDebug("__landing/page", "render", {
+  routeDebug("landing/page", "render", {
     host: requestHeaders.get("host"),
     forwardedHost: requestHeaders.get("x-forwarded-host"),
     forwardedProto: requestHeaders.get("x-forwarded-proto")

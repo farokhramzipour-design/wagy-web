@@ -22,9 +22,9 @@ export function middleware(request: NextRequest) {
 
   if (isRoot) {
     if (debugEnabled) {
-      routeDebug("middleware", "rewrite:/ -> /__landing");
+      routeDebug("middleware", "rewrite:/ -> /landing");
     }
-    return NextResponse.rewrite(new URL("/__landing", request.url));
+    return NextResponse.rewrite(new URL("/landing", request.url));
   }
 
   const response = NextResponse.next();
