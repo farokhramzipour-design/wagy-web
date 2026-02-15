@@ -9,11 +9,6 @@ export function isRouteDebugEnabled() {
 
 export function routeDebug(scope: string, message: string, meta?: DebugMeta) {
   if (!DEBUG_ROUTE) return;
-  const line = `[route-debug][${scope}] ${message}`;
-  if (meta) {
-    console.info(line, meta);
-    return;
-  }
-  console.info(line);
+  const payload = meta ? ` ${JSON.stringify(meta)}` : "";
+  console.info(`[route-debug][${scope}] ${message}${payload}`);
 }
-
