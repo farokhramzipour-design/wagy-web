@@ -1,11 +1,18 @@
 # Waggy Web (Clean Restart)
 
-Minimal clean Next.js 14 app.
+Stable clean Next.js 14 baseline with:
+- Public home (`/`)
+- Auth placeholder (`/auth`)
+- App area (`/app`)
+- Dashboard placeholder (`/app/dashboard`)
 
 ## Run locally
+```bash
 npm install
 npm run dev
+```
 
 ## Docker
-
-docker compose up -d --build
+```bash
+docker compose up -d --build --force-recreate
+```
