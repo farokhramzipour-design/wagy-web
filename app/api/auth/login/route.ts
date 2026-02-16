@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { normalizeName, normalizeRole, serializeSession } from "@/lib/session";
+import { normalizeName, normalizeRole, serializeSession } from "../../../../lib/session";
 
 const SESSION_COOKIE = "waggy_session";
 
@@ -7,8 +7,8 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const role = normalizeRole(formData.get("role"));
   const name = normalizeName(formData.get("name"));
-  const next = typeof formData.get("next") === "string" ? String(formData.get("next")) : "/app/dashboard";
-  const safeNext = next.startsWith("/") ? next : "/app/dashboard";
+  const nextPath = typeof formData.get("next") === "string" ? String(formData.get("next")) : "";
+  const safeNext = nextPath.startsWith("/app") ? nextPath : "/app/dashboard";
 
   const response = NextResponse.redirect(new URL(safeNext, request.url));
   response.cookies.set(SESSION_COOKIE, serializeSession({ role, name }), {

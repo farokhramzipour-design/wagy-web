@@ -1,17 +1,26 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { AppProviders } from "@/components/providers/app-providers";
+import './globals.css';
+import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: "Waggy",
-  description: "Loving care for your best friend"
+export const metadata = {
+  title: 'Waggy',
+  description: 'Waggy clean restart'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <AppProviders>{children}</AppProviders>
+        <header className="topbar">
+          <div className="container">
+            <Link href="/" className="brand">Waggy</Link>
+            <nav className="nav">
+              <Link href="/">Home</Link>
+              <Link href="/auth">Auth</Link>
+              <Link href="/app/dashboard">Dashboard</Link>
+            </nav>
+          </div>
+        </header>
+        {children}
       </body>
     </html>
   );
