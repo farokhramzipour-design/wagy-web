@@ -3,7 +3,7 @@
 ## Overview
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
-- **Styling**: Global CSS with CSS Variables (No Tailwind)
+- **Styling**: Tailwind CSS with Shadcn UI
 - **Authentication**: Custom Cookie-based Auth (JWT)
 
 ## Directory Structure
@@ -12,10 +12,12 @@
   - `app/app/`: Protected application routes (dashboard, etc.).
   - `app/auth/`: Public authentication pages.
 - `components/`: UI components, grouped by feature (e.g., `auth`, `landing`).
+  - `components/ui/`: Base Shadcn UI components (Button, Input, etc.).
 - `lib/`: Core utilities and helpers.
   - `api-client.ts`: API client wrapper for fetching data.
   - `session.ts`: Session management logic.
   - `token.ts`: JWT token utilities.
+  - `utils.ts`: Tailwind utility helper (cn).
 - `services/`: API service definitions (e.g., `auth-api.ts`).
 - `locales/`: Internationalization JSON files (`en.json`, `fa.json`).
 - `public/`: Static assets (fonts, images).
@@ -33,10 +35,10 @@
 - **Authentication**: Managed via `waggy_session`, `waggy_access_token`, and `waggy_refresh_token` cookies.
 
 ### 3. Styling
-- **Methodology**: Pure CSS with CSS Variables.
-- **Global Styles**: Defined in `app/globals.css`.
-- **Theming**: Use CSS variables (e.g., `--primary`, `--neutral-900`) defined in `:root`.
-- **Conventions**: BEM-like naming for classes (e.g., `.btn-primary`, `.card`).
+- **Methodology**: Tailwind CSS with Shadcn UI components.
+- **Global Styles**: Defined in `app/globals.css` (Tailwind base + theme variables).
+- **Theming**: Use CSS variables mapped to Tailwind colors (e.g., `--primary`, `--foreground`).
+- **Components**: Use Shadcn components from `components/ui/` and customize via `className` or variants.
 
 ### 4. Internationalization (i18n)
 - **Current Strategy**: Client-side translation for the landing page.
