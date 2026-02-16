@@ -1,43 +1,56 @@
-import Link from 'next/link';
-import { cookies } from 'next/headers';
-import { parseSession } from '../../../lib/session';
+"use client";
+
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { useAppTranslation } from "@/lib/use-app-translation";
+import { queryKeys } from "@/lib/queries";
+import { fetchBookings } from "@/services/query-service";
+import { useAppStore } from "@/stores/app-store";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/layout/page-hero";
 
 export default function DashboardPage() {
-  const session = parseSession(cookies().get('waggy_session')?.value);
-  const role = session?.role ?? 'user';
-  const name = session?.name ?? 'User';
-  const cards = role === "admin"
-    ? [
-        "Pending approvals: 0",
-        "Open disputes: 0",
-        "Platform revenue today: $0"
-      ]
-    : [
-        "Upcoming bookings: 0",
-        "Unread messages: 0",
-        "Saved sitters: 0"
-      ];
+  const { t } = useAppTranslation();
+  const sitterStatus = useAppStore((s) => s.sitterStatus);
+  const { data } = useQuery({ queryKey: queryKeys.bookings, queryFn: fetchBookings });
 
   return (
-    <main className="container">
-      <section className="panel">
-        <h1>Dashboard</h1>
-        <p>
-          Welcome, <strong>{name}</strong>. Active role: <strong>{role}</strong>.
-        </p>
-        <ul className="list">
-          {cards.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-        <div className="actions">
-          <Link href="/app" className="btn btn-secondary">App Home</Link>
-          <Link href="/" className="btn btn-secondary">Public Home</Link>
-          <form action="/api/auth/logout" method="post" className="inline-form">
-            <button type="submit" className="btn btn-secondary">Logout</button>
-          </form>
-        </div>
-      </section>
-    </main>
+    <>
+      <PageHero title={t("app.dashboard.title")} subtitle={t("app.pages.bookingsSubtitle")} />
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("app.dashboard.summary1")}</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-semibold">{data?.filter((item) => item.status === "upcoming").length ?? 0}</CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("app.dashboard.summary2")}</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-semibold">3</CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("app.dashboard.summary3")}</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-semibold">5</CardContent>
+        </Card>
+      </div>
+
+      {sitterStatus !== "approved" ? (
+        <Card className="border-primary/30 bg-secondary">
+          <CardHeader>
+            <CardTitle>{t("app.ownerCta")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button asChild>
+              <Link href="/app/become-sitter">{t("app.ownerCtaButton")}</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
+    </>
   );
 }

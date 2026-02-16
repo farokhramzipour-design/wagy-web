@@ -1,0 +1,236 @@
+{
+  "common": {
+    "brand": "Waggy",
+    "language": "Language",
+    "english": "EN",
+    "persian": "FA",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "viewAll": "View all",
+    "status": "Status",
+    "search": "Search",
+    "book": "Book",
+    "relax": "Relax"
+  },
+  "nav": {
+    "services": "Services",
+    "becomeSitter": "Become a Sitter",
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "findSitter": "Find a Sitter"
+  },
+  "landing": {
+    "hero": {
+      "headline": "Find loving care for your best friend 🐾",
+      "subheadline": "Trusted sitters, secure bookings, and peace of mind whenever you are away.",
+      "location": "Location",
+      "dates": "Dates",
+      "petType": "Pet Type",
+      "serviceType": "Service Type",
+      "primaryCta": "Find a Sitter",
+      "secondaryCta": "Become a Sitter",
+      "trustLine": "Verified sitters • Secure payments • 24/7 support"
+    },
+    "trust": {
+      "title": "Care you can trust",
+      "items": {
+        "verified": {
+          "title": "Verified sitters",
+          "description": "Every sitter is carefully reviewed before joining."
+        },
+        "insurance": {
+          "title": "Insurance included",
+          "description": "Eligible bookings include extra protection for peace of mind."
+        },
+        "payments": {
+          "title": "Secure payments",
+          "description": "Your payment stays safe and protected on-platform."
+        },
+        "support": {
+          "title": "24/7 support",
+          "description": "A caring support team is always ready to help."
+        }
+      }
+    },
+    "services": {
+      "title": "Pet care made simple",
+      "boarding": "Dog Boarding",
+      "boardingDesc": "A loving home while you are away.",
+      "house": "House Sitting",
+      "houseDesc": "Comfort and routine in your pet's own home.",
+      "walking": "Dog Walking",
+      "walkingDesc": "Reliable walks to keep tails wagging.",
+      "daycare": "Day Care",
+      "daycareDesc": "Safe daytime care with play and cuddles.",
+      "dropin": "Drop-In Visits",
+      "dropinDesc": "Quick check-ins, feeding, and happy updates."
+    },
+    "how": {
+      "title": "How it works",
+      "step1Title": "Search",
+      "step1Desc": "Explore nearby sitters and read honest reviews.",
+      "step2Title": "Book",
+      "step2Desc": "Message, confirm details, and pay securely.",
+      "step3Title": "Relax",
+      "step3Desc": "Receive updates while your pet enjoys loving care."
+    },
+    "testimonials": {
+      "title": "Pet parents love Waggy",
+      "one": "Milo came home calm and happy. I finally travel without stress.",
+      "two": "The sitter treated Luna like family and sent updates every day.",
+      "three": "The booking flow was effortless, and support was incredibly kind."
+    },
+    "safety": {
+      "title": "Your pet's safety is our promise",
+      "v1": "Identity and profile checks for every sitter",
+      "v2": "Protected and encrypted payments",
+      "v3": "Friendly support whenever you need help",
+      "v4": "Emergency support if something unexpected happens"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "How are sitters verified?",
+      "a1": "We verify identity, profile details, and performance signals before sitters accept bookings.",
+      "q2": "What if something goes wrong?",
+      "a2": "Our support team responds quickly and guides you through every step.",
+      "q3": "How do payments work?",
+      "a3": "Payments are handled securely on platform, with clear booking protection.",
+      "q4": "Can I meet the sitter first?",
+      "a4": "Yes, you can chat and set up a meet-and-greet before confirming.",
+      "q5": "Is my pet insured?",
+      "a5": "Eligible bookings include protection coverage for extra confidence."
+    },
+    "final": {
+      "headline": "Because they are not just pets. They are family.",
+      "cta": "Find a Loving Sitter Today"
+    }
+  },
+  "auth": {
+    "title": "Welcome back",
+    "subtitle": "Sign in quickly and get trusted care in minutes.",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "+98 912 123 4567",
+    "requestOtp": "Send code",
+    "otpLabel": "Verification code",
+    "otpPlaceholder": "6-digit code",
+    "verifyOtp": "Verify and continue",
+    "resendIn": "Resend in {{seconds}}s",
+    "resend": "Resend code",
+    "google": "Continue with Google",
+    "switchUser": "Use admin demo user",
+    "switchOwner": "Use owner demo user"
+  },
+  "app": {
+    "greeting": "Welcome back, {{name}} 👋",
+    "ownerCta": "Turn your love for pets into income",
+    "ownerCtaButton": "Start sitter onboarding",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "searchSitters": "Search Sitters",
+      "bookings": "Bookings",
+      "messages": "Messages",
+      "pets": "Pets",
+      "payments": "Payments",
+      "profile": "Profile",
+      "becomeSitter": "Become a Sitter",
+      "sitterDashboard": "Sitter Dashboard",
+      "availability": "Availability",
+      "servicesPricing": "Services & Pricing",
+      "requests": "Requests",
+      "earnings": "Earnings",
+      "reviews": "Reviews",
+      "logout": "Logout"
+    },
+    "dashboard": {
+      "title": "Your dashboard",
+      "summary1": "Upcoming bookings",
+      "summary2": "Unread messages",
+      "summary3": "Saved sitters"
+    },
+    "pages": {
+      "searchSubtitle": "Discover nearby trusted sitters with friendly filters.",
+      "bookingsSubtitle": "Track upcoming, past, and requested stays in one place.",
+      "messagesSubtitle": "Stay close to your sitter with warm, real-time updates.",
+      "petsSubtitle": "Manage each pet profile, routine, and care notes.",
+      "paymentsSubtitle": "Review secure payments and booking receipts.",
+      "profileSubtitle": "Keep your profile up to date and trusted.",
+      "sitterDashboardSubtitle": "View requests, performance, and service health.",
+      "availabilitySubtitle": "Control your calendar and available time slots.",
+      "servicesPricingSubtitle": "Set your service options and clear pricing.",
+      "requestsSubtitle": "Review incoming booking requests with confidence.",
+      "earningsSubtitle": "Track your payout trends and monthly growth.",
+      "reviewsSubtitle": "Read feedback and keep improving your sitter profile."
+    },
+    "bookingsStatus": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "request": "Requests"
+    },
+    "sitter": {
+      "title": "Become a sitter",
+      "subtitle": "Build trust, share your care, and earn on your own schedule.",
+      "step1": "Profile details",
+      "step2": "Services & pricing",
+      "step3": "Verification",
+      "submit": "Submit for review",
+      "draft": "Draft",
+      "pending": "Pending review",
+      "approved": "Approved"
+    }
+  },
+  "admin": {
+    "title": "Admin Control Center",
+    "sidebar": {
+      "overview": "Overview",
+      "users": "Users",
+      "sitters": "Sitters",
+      "bookings": "Bookings",
+      "payments": "Payments",
+      "disputes": "Disputes",
+      "content": "Content",
+      "settings": "Settings"
+    },
+    "kpi": {
+      "revenue": "Revenue",
+      "activeUsers": "Active users",
+      "pendingReviews": "Pending reviews",
+      "openDisputes": "Open disputes"
+    },
+    "pages": {
+      "overviewSubtitle": "A live pulse of marketplace health and growth.",
+      "usersSubtitle": "Monitor account health, status, and support actions.",
+      "sittersSubtitle": "Review and approve sitter onboarding requests.",
+      "bookingsSubtitle": "Track booking quality and fulfillment status.",
+      "paymentsSubtitle": "Review payment flow and payout activity.",
+      "disputesSubtitle": "Resolve active customer and sitter disputes quickly.",
+      "contentSubtitle": "Manage marketplace copy, trust badges, and FAQs.",
+      "settingsSubtitle": "Configure business rules and platform controls."
+    },
+    "table": {
+      "name": "Name",
+      "role": "Role",
+      "city": "City",
+      "status": "Status",
+      "actions": "Actions",
+      "approve": "Approve",
+      "reject": "Reject",
+      "page": "Page"
+    }
+  },
+  "accessDenied": {
+    "title": "This page is not available for your account",
+    "description": "You can still explore the rest of Waggy from your dashboard.",
+    "cta": "Go to dashboard"
+  },
+  "footer": {
+    "tagline": "Loving care for every paw.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "support": "Support"
+  }
+}

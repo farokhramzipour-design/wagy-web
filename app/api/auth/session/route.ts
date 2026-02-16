@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { normalizeName, normalizeRole, serializeSession } from "../../../../lib/session";
+import { normalizeName, normalizeRole, serializeSession } from "@/lib/session";
 
 const SESSION_COOKIE = "waggy_session";
 const ACCESS_COOKIE = "waggy_access_token";
@@ -17,12 +17,6 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as SessionPayload;
   const role = normalizeRole(body.role);
   const name = normalizeName(body.name);
-  const accessToken = typeof body.access_token === "string" ? body.access_token : "";
-  const refreshToken = typeof body.refresh_token === "string" ? body.refresh_token : "";
-  const accessExpiresIn =
-    typeof body.access_expires_in === "number" && body.access_expires_in > 0
-      ? body.access_expires_in
-      : 60 * 60;
 
   const response = NextResponse.json({ ok: true });
   response.cookies.set(SESSION_COOKIE, serializeSession({ role, name }), {
@@ -32,17 +26,17 @@ export async function POST(request: Request) {
     maxAge: 60 * 60 * 24 * 7
   });
 
-  if (accessToken) {
-    response.cookies.set(ACCESS_COOKIE, accessToken, {
+  if (body.access_token) {
+    response.cookies.set(ACCESS_COOKIE, body.access_token, {
       httpOnly: true,
       sameSite: "lax",
       path: "/",
-      maxAge: accessExpiresIn
+      maxAge: body.access_expires_in ?? 3600
     });
   }
 
-  if (refreshToken) {
-    response.cookies.set(REFRESH_COOKIE, refreshToken, {
+  if (body.refresh_token) {
+    response.cookies.set(REFRESH_COOKIE, body.refresh_token, {
       httpOnly: true,
       sameSite: "lax",
       path: "/",
