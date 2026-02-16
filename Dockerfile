@@ -16,7 +16,11 @@ RUN rm -rf .next \
  && sed -n '1,80p' app/page.tsx \
  && grep -q "landing-shell" app/page.tsx \
  && ! grep -q "Welcome back, Friend" app/page.tsx \
- && npm run build
+ && npm run build \
+ && echo "=== BUILD OUTPUT: .next/server/app/page.js ===" \
+ && grep -n "landing-shell\\|app-shell\\|Welcome back, Friend" .next/server/app/page.js \
+ && grep -q "landing-shell" .next/server/app/page.js \
+ && ! grep -q "Welcome back, Friend" .next/server/app/page.js
 
 FROM node:20-alpine AS runner
 WORKDIR /app
