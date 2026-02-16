@@ -71,6 +71,16 @@ export function LandingPage() {
 
   const t = useMemo(() => content[lang], [lang]);
   const trustBadges = t.hero.trust.split(" • ");
+  const serviceImages = [
+    "https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+  ];
+  const heroImage = "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=80";
+  const safetyImage = "https://images.unsplash.com/photo-1548681528-6a5c45b66b42?auto=format&fit=crop&w=1200&q=80";
+  const sitterImage = "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=80";
 
   return (
     <div className="landing-shell">
@@ -103,42 +113,32 @@ export function LandingPage() {
       </header>
 
       <main className="container">
-        <section className="hero landing-section">
+        <section className="hero landing-hero-card">
           <div className="hero-layout">
             <div className="hero-copy">
               <h1>{t.hero.title}</h1>
               <p>{t.hero.subtitle}</p>
-              <div className="hero-badges">
-                {trustBadges.map((badge) => (
-                  <span className="trust-badge" key={badge}>
-                    {badge}
-                  </span>
-                ))}
-              </div>
-              <div className="actions">
-                <Link href="/auth" className="btn btn-primary">{t.hero.primary}</Link>
-                <Link href="/auth" className="btn btn-accent">{t.hero.secondary}</Link>
-              </div>
-              <form className="search-card hero-search" onSubmit={(e) => e.preventDefault()}>
+              <form className="search-card hero-search-inline" onSubmit={(e) => e.preventDefault()}>
                 <input className="text-input" placeholder={t.hero.fields[0]} />
                 <input className="text-input" placeholder={t.hero.fields[1]} />
-                <input className="text-input" placeholder={t.hero.fields[2]} />
                 <input className="text-input" placeholder={t.hero.fields[3]} />
                 <button className="btn btn-primary" type="submit">{t.nav.cta}</button>
               </form>
+              <div className="hero-badges">
+                {trustBadges.map((badge) => (
+                  <span className="trust-badge" key={badge}>{badge}</span>
+                ))}
+              </div>
             </div>
             <div className="hero-side">
               <article className="hero-photo card">
-                <div className="photo-placeholder">{t.hero.photoLabel}</div>
+                <img src={heroImage} alt={t.hero.photoLabel} className="hero-photo-image" loading="lazy" />
                 <div className="floating-card rating-card">
                   <strong>4.9</strong>
-                  <span>{t.hero.ratingLabel}</span>
                 </div>
                 <div className="floating-card verified-card">
                   <strong>{t.hero.verifiedLabel}</strong>
                 </div>
-                <h3>{t.hero.illustrationTitle}</h3>
-                <p>{t.hero.illustrationBody}</p>
               </article>
             </div>
           </div>
@@ -155,48 +155,25 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="panel landing-section story-block">
-          <div className="story-layout">
-            <div>
-              <h2 className="section-title">{t.story.title}</h2>
-              <p className="story-copy">{t.story.body}</p>
-            </div>
-            <article className="story-image card">
-              <div className="photo-placeholder">{t.story.imageTitle}</div>
-            </article>
-          </div>
-        </section>
-
-        <section className="panel landing-section">
-          <h2 className="section-title">{t.trust.title}</h2>
-          <div className="grid trust-grid">
-            {t.trust.items.map(([title, desc]) => (
-              <article className="card trust-card" key={title}>
-                <span className="trust-chip">{title}</span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="services" className="panel landing-section">
+        <section id="services" className="panel landing-section services-panel">
           <h2 className="section-title">{t.services.title}</h2>
           <div className="grid services-grid">
-            {t.services.items.map(([title, desc, photo]) => (
-              <article className="card" key={title}>
-                <div className="service-photo">{photo}</div>
+            {t.services.items.slice(0, 3).map(([title, desc], index) => (
+              <article className="card service-card" key={title}>
+                <img
+                  src={serviceImages[index]}
+                  alt={title}
+                  className="service-photo-image"
+                  loading="lazy"
+                />
                 <h3>{title}</h3>
                 <p>{desc}</p>
-                <Link href="/auth" className="service-link">
-                  {t.nav.cta}
-                </Link>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="how" className="panel landing-section">
+        <section id="how" className="panel landing-section how-compact-panel">
           <h2 className="section-title">{t.how.title}</h2>
           <div className="flow-grid">
             {t.how.items.map(([title, desc], index) => (
@@ -209,77 +186,29 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="panel landing-section testimonials-panel">
-          <h2 className="section-title">{t.testimonials.title}</h2>
-          <div className="testimonials-grid">
-            {t.testimonials.items.map(([name, city, quote]) => (
-              <article className="card" key={name + city}>
-                <p className="stars" aria-label="5 stars">{stars(5)}</p>
-                <div className="avatar-badge">{name.slice(0, 1)}</div>
-                <h3>{name} — {city}</h3>
-                <p>"{quote}"</p>
-              </article>
-            ))}
+        <section id="safety" className="panel landing-section safety-panel compact-banner">
+          <div className="banner-copy">
+            <h2 className="section-title">{t.safety.title}</h2>
+            <ul className="list">
+              {t.safety.points.slice(0, 3).map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
           </div>
+          <img src={safetyImage} alt={t.safety.photoLabel} className="banner-image" loading="lazy" />
         </section>
 
-        <section id="safety" className="panel landing-section safety-panel">
-          <div className="safety-layout">
-            <article className="card safety-photo-card">
-              <div className="photo-placeholder">{t.safety.photoLabel}</div>
-            </article>
-            <div>
-              <h2 className="section-title">{t.safety.title}</h2>
-              <ul className="list">
-                {t.safety.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-              <p className="note">{t.safety.end}</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="become" className="panel landing-section sitter-panel">
-          <div className="sitter-layout">
-            <div>
-              <h2 className="section-title">{t.sitter.title}</h2>
-              <p>{t.sitter.subtitle}</p>
-              <ul className="list">
-                {t.sitter.points.map((point) => (
-                  <li key={point}>{point}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="sitter-cta-box">
+        <section id="become" className="panel landing-section sitter-panel compact-banner">
+          <div className="banner-copy">
+            <h2 className="section-title">{t.sitter.title}</h2>
+            <p>{t.sitter.subtitle}</p>
+            <div className="actions">
               <Link href="/auth" className="btn btn-accent">{t.sitter.cta}</Link>
             </div>
           </div>
-        </section>
-
-        <section className="panel landing-section">
-          <h2 className="section-title">{t.faq.title}</h2>
-          <div className="faq-list">
-            {t.faq.items.map(([q, a]) => (
-              <details className="faq-item" key={q}>
-                <summary>{q}</summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel landing-section final-cta">
-          <h2 className="section-title">{t.final.title}</h2>
-          <div className="actions">
-            <Link href="/auth" className="btn btn-primary">{t.final.cta}</Link>
-          </div>
+          <img src={sitterImage} alt={t.sitter.title} className="banner-image" loading="lazy" />
         </section>
       </main>
     </div>
   );
-}
-
-function stars(count = 5) {
-  return "★".repeat(count);
 }
