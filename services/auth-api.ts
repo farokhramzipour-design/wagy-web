@@ -1,5 +1,6 @@
-import { apiFetch, API_BASE_URL } from "../lib/api-client";
+import { ApiError, apiFetch, API_BASE_URL } from "../lib/api-client";
 import { API_ENDPOINTS } from "../lib/api-endpoints";
+export { ApiError };
 
 export interface OtpRequestPayload {
   phone: string;
