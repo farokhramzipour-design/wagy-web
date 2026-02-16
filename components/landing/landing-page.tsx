@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { TokenLoginBootstrap } from "../auth/token-login-bootstrap";
 import en from "../../locales/en.json";
 import fa from "../../locales/fa.json";
@@ -34,7 +34,9 @@ export function LandingPage() {
 
   return (
     <div className="landing-shell">
-      <TokenLoginBootstrap />
+      <Suspense fallback={null}>
+        <TokenLoginBootstrap />
+      </Suspense>
 
       <header className="topbar">
         <div className="container landing-header-row">
