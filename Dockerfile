@@ -6,7 +6,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
 COPY package.json ./
-RUN npm install
+RUN npm install --no-audit --no-fund && npm cache clean --force
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
