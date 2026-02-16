@@ -43,6 +43,7 @@
   },
   "services": {
     "title": "Services built around comfort and trust",
+    "seeAll": "See all services",
     "items": [
       ["Dog Boarding", "A warm and safe home while you're traveling.", "Home-style care photo"],
       ["House Sitting", "Your pet stays calm in their familiar home.", "In-home sitter photo"],
@@ -50,6 +51,14 @@
       ["Day Care", "Reliable daytime care for busy schedules.", "Daycare play photo"],
       ["Drop-In Visits", "Feeding, cleaning, and gentle companionship.", "Drop-in visit photo"]
     ]
+  },
+  "servicesPage": {
+    "title": "All Pet Care Services",
+    "subtitle": "Pick the service that fits your pet's routine, comfort, and personality.",
+    "back": "Back to landing",
+    "primary": "Book this service",
+    "filters": ["All", "At Sitter Home", "At Your Home", "Daily Care"],
+    "highlights": ["Verified sitters", "Transparent pricing", "Secure payments", "24/7 support"]
   },
   "how": {
     "title": "How it works",

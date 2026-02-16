@@ -156,7 +156,12 @@ export function LandingPage() {
         </section>
 
         <section id="services" className="panel landing-section services-panel">
-          <h2 className="section-title">{t.services.title}</h2>
+          <div className="services-header">
+            <h2 className="section-title">{t.services.title}</h2>
+            <Link href="/services" className="btn btn-secondary services-see-all">
+              {t.services.seeAll}
+            </Link>
+          </div>
           <div className="grid services-grid">
             {t.services.items.slice(0, 3).map(([title, desc], index) => (
               <article className="card service-card" key={title}>
@@ -207,6 +212,38 @@ export function LandingPage() {
             </div>
           </div>
           <img src={sitterImage} alt={t.sitter.title} className="banner-image" loading="lazy" />
+        </section>
+
+        <section className="panel landing-section testimonials-panel compact-testimonials">
+          <h2 className="section-title">{t.testimonials.title}</h2>
+          <div className="testimonials-grid">
+            {t.testimonials.items.map(([name, city, quote]) => (
+              <article className="card testimonial-card" key={name + city}>
+                <div className="avatar-badge">{name.slice(0, 1)}</div>
+                <h3>{name} — {city}</h3>
+                <p>"{quote}"</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="panel landing-section final-cta compact-final-cta">
+          <h2 className="section-title">{t.final.title}</h2>
+          <div className="actions">
+            <Link href="/auth" className="btn btn-primary">{t.final.cta}</Link>
+          </div>
+        </section>
+
+        <section className="panel landing-section faq-compact">
+          <h2 className="section-title">{t.faq.title}</h2>
+          <div className="faq-list">
+            {t.faq.items.map(([q, a]) => (
+              <details className="faq-item" key={q}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </div>
         </section>
       </main>
     </div>
