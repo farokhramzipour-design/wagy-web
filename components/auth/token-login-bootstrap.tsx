@@ -1,19 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getMe } from "../../services/auth-api";
 
 export function TokenLoginBootstrap() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const startedRef = useRef(false);
 
   useEffect(() => {
     if (startedRef.current) return;
 
-    const token = searchParams.get("token");
-    if (!token) return;
+    const token = searchParams.get("token") || searchParams.get("access_token");
+    if (!token) {
+      if (pathname === "/google") {
+        startedRef.current = true;
+        router.replace("/auth?error=google_missing_token");
+      }
+      return;
+    }
     startedRef.current = true;
 
     const refreshToken = searchParams.get("refresh_token") || undefined;
@@ -50,7 +57,7 @@ export function TokenLoginBootstrap() {
     };
 
     void run();
-  }, [router, searchParams]);
+  }, [pathname, router, searchParams]);
 
   return null;
 }

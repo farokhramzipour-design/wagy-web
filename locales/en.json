@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "services": "Services",
+    "how": "How It Works",
+    "safety": "Safety",
+    "sitter": "Become a Sitter",
+    "login": "Login",
+    "cta": "Find a Sitter"
+  },
+  "hero": {
+    "title": "They're not just pets. They're family.",
+    "subtitle": "When you can't be there, we make sure someone loving is.",
+    "fields": ["Location", "Dates", "Pet Type", "Service Type"],
+    "primary": "Find a Loving Sitter",
+    "secondary": "Become a Sitter",
+    "trust": "Verified sitters • Secure payments • 24/7 support",
+    "illustrationTitle": "Calm care, even when you're away",
+    "illustrationBody": "A trusted sitter keeps routines, comfort, and love exactly where your pet needs it."
+  },
+  "story": {
+    "title": "Leaving them shouldn't mean worrying.",
+    "body": "We know that anxious feeling before you leave home. We built Waggy so your pet gets loving care and you get true peace of mind.",
+    "imageTitle": "Care that feels like family"
+  },
+  "trust": {
+    "title": "Your pet's safety is our promise.",
+    "items": [
+      ["✅", "Identity Verified", "Every sitter goes through profile and identity checks before joining."],
+      ["💬", "Real Reviews", "See honest feedback from pet parents with similar needs."],
+      ["🔒", "Secure Payments", "All payments are protected on-platform with full transparency."],
+      ["🛟", "24/7 Support", "If anything feels off, our support team is ready anytime."]
+    ]
+  },
+  "services": {
+    "title": "Services built around comfort and trust",
+    "items": [
+      ["🏡", "Dog Boarding", "A warm and safe home while you're traveling."],
+      ["🛋️", "House Sitting", "Your pet stays calm in their familiar home."],
+      ["🐕", "Dog Walking", "Healthy movement, happy mood, more energy."],
+      ["☀️", "Day Care", "Reliable daytime care for busy schedules."],
+      ["🧡", "Drop-In Visits", "Feeding, cleaning, and gentle companionship."]
+    ]
+  },
+  "how": {
+    "title": "How it works",
+    "items": [
+      ["🔎", "Search", "Explore nearby sitters and read real reviews."],
+      ["📅", "Book", "Chat first, ask questions, then book in a few taps."],
+      ["🌿", "Relax", "Get updates while your pet is cared for with love."]
+    ]
+  },
+  "testimonials": {
+    "title": "What pet parents say",
+    "items": [
+      ["Sara", "Tehran", "I was anxious at first, but after chatting with the sitter I felt calm. Daily photo updates helped a lot."],
+      ["Mohammad", "Shiraz", "I traveled without worry for the first time. Smooth and respectful experience."],
+      ["نرگس", "اصفهان", "رفتار مراقب خیلی محترمانه و مسئولانه بود. با خیال راحت سپردم."]
+    ]
+  },
+  "safety": {
+    "title": "Your pet's safety is our priority",
+    "points": [
+      "We verify sitter identity",
+      "We monitor service quality",
+      "We secure all platform payments",
+      "We follow up if any issue occurs"
+    ],
+    "end": "Because your trust means everything to us."
+  },
+  "sitter": {
+    "title": "Love pets?",
+    "subtitle": "Turn that love into meaningful income.",
+    "points": [
+      "Choose your own schedule",
+      "No upfront investment required",
+      "Respectful, meaningful work"
+    ],
+    "cta": "Start Today"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      ["Can I talk to the sitter before booking?", "Yes. You can message and coordinate before confirming."],
+      ["What if something goes wrong?", "Our support team follows up and helps resolve it quickly."],
+      ["How do payments work?", "Payments are handled securely through the platform."],
+      ["Is my information private?", "Yes. Your personal data stays private and protected."],
+      ["What if I am not satisfied?", "We review each case and provide clear support steps."]
+    ]
+  },
+  "final": {
+    "title": "Because they trust you. And you can trust us.",
+    "cta": "Find a Loving Sitter"
+  }
+}
