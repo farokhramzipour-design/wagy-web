@@ -11,7 +11,12 @@ RUN npm install --no-audit --no-fund && npm cache clean --force
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN rm -rf .next \
+ && echo "=== BUILD INPUT: app/page.tsx ===" \
+ && sed -n '1,80p' app/page.tsx \
+ && grep -q "landing-shell" app/page.tsx \
+ && ! grep -q "Welcome back, Friend" app/page.tsx \
+ && npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
