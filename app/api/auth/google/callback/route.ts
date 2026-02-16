@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "../../../../../lib/api-client";
 import { API_ENDPOINTS } from "../../../../../lib/api-endpoints";
-import { normalizeName, normalizeRole, serializeSession } from "../../../../../lib/session";
 
-const SESSION_COOKIE = "waggy_session";
-const ACCESS_COOKIE = "waggy_access_token";
-const REFRESH_COOKIE = "waggy_refresh_token";
 const NEXT_COOKIE = "waggy_auth_next";
 
 type TokenResponse = {
@@ -15,25 +11,6 @@ type TokenResponse = {
   expires_in: number;
   user_id?: number | null;
 };
-
-type MeResponse = {
-  phone_e164?: string;
-  email?: string | null;
-};
-
-async function fetchMe(accessToken: string): Promise<MeResponse | null> {
-  try {
-    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.auth.me}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    });
-    if (!response.ok) return null;
-    return (await response.json()) as MeResponse;
-  } catch {
-    return null;
-  }
-}
 
 async function resolveTokens(callbackUrl: URL): Promise<TokenResponse | null> {
   const directAccess = callbackUrl.searchParams.get("access_token");
@@ -73,36 +50,12 @@ export async function GET(request: Request) {
     return NextResponse.redirect(failUrl);
   }
 
-  const me = await fetchMe(tokens.access_token);
-  const name = normalizeName(me?.phone_e164 || me?.email || "Google User");
-  const nextFromCookie = request.headers
-    .get("cookie")
-    ?.split(";")
-    .map((v) => v.trim())
-    .find((entry) => entry.startsWith(`${NEXT_COOKIE}=`))
-    ?.split("=")[1];
-  const decodedNext = nextFromCookie ? decodeURIComponent(nextFromCookie) : "";
-  const safeNext = decodedNext.startsWith("/app") ? decodedNext : "/app/dashboard";
+  const redirectUrl = new URL("/", request.url);
+  redirectUrl.searchParams.set("token", tokens.access_token);
+  redirectUrl.searchParams.set("refresh_token", tokens.refresh_token);
+  redirectUrl.searchParams.set("expires_in", String(Math.max(tokens.expires_in || 3600, 60)));
 
-  const response = NextResponse.redirect(new URL(safeNext, request.url));
-  response.cookies.set(SESSION_COOKIE, serializeSession({ role: normalizeRole("user"), name }), {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7
-  });
-  response.cookies.set(ACCESS_COOKIE, tokens.access_token, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: Math.max(tokens.expires_in || 3600, 60)
-  });
-  response.cookies.set(REFRESH_COOKIE, tokens.refresh_token, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30
-  });
+  const response = NextResponse.redirect(redirectUrl);
   response.cookies.set(NEXT_COOKIE, "", {
     httpOnly: true,
     sameSite: "lax",
@@ -112,4 +65,3 @@ export async function GET(request: Request) {
 
   return response;
 }
-

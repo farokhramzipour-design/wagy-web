@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { TokenLoginBootstrap } from '../components/auth/token-login-bootstrap';
 
 export default function HomePage() {
   return (
     <main className="container">
+      <TokenLoginBootstrap />
       <section className="hero">
         <h1>Trusted pet care, simplified.</h1>
         <p>
