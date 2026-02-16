@@ -12,6 +12,12 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN rm -rf .next \
+ && echo "=== ROUTE FILES (app/*page*) ===" \
+ && find app -maxdepth 3 -type f \( -name "page.tsx" -o -name "page.ts" -o -name "page.jsx" -o -name "page.js" -o -name "layout.tsx" -o -name "layout.ts" -o -name "layout.jsx" -o -name "layout.js" \) | sort \
+ && [ ! -f app/page.js ] \
+ && [ ! -f app/page.jsx ] \
+ && [ ! -f app/layout.js ] \
+ && [ ! -f app/layout.jsx ] \
  && echo "=== BUILD INPUT: app/page.tsx ===" \
  && sed -n '1,80p' app/page.tsx \
  && grep -q "landing-shell" app/page.tsx \
