@@ -10,8 +10,47 @@ type Lang = "en" | "fa";
 
 const content = { en, fa };
 
-function stars(count = 5) {
-  return "★".repeat(count);
+function CountUp({
+  target,
+  lang,
+  suffix
+}: {
+  target: number;
+  lang: Lang;
+  suffix: string;
+}) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const frames = 28;
+    let current = 0;
+    const step = target / frames;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        setValue(target);
+        clearInterval(timer);
+      } else {
+        setValue(current);
+      }
+    }, 24);
+    return () => clearInterval(timer);
+  }, [target]);
+
+  const rounded = target % 1 === 0 ? Math.round(value) : Number(value.toFixed(1));
+  const text =
+    typeof rounded === "number"
+      ? lang === "fa"
+        ? rounded.toLocaleString("fa-IR")
+        : rounded.toLocaleString("en-US")
+      : String(rounded);
+
+  return (
+    <strong className="stat-value">
+      {text}
+      {suffix}
+    </strong>
+  );
 }
 
 export function LandingPage() {
@@ -31,6 +70,7 @@ export function LandingPage() {
   }, [lang]);
 
   const t = useMemo(() => content[lang], [lang]);
+  const trustBadges = t.hero.trust.split(" • ");
 
   return (
     <div className="landing-shell">
@@ -65,22 +105,21 @@ export function LandingPage() {
       <main className="container">
         <section className="hero landing-section">
           <div className="hero-layout">
-            <div>
+            <div className="hero-copy">
               <h1>{t.hero.title}</h1>
               <p>{t.hero.subtitle}</p>
+              <div className="hero-badges">
+                {trustBadges.map((badge) => (
+                  <span className="trust-badge" key={badge}>
+                    {badge}
+                  </span>
+                ))}
+              </div>
               <div className="actions">
                 <Link href="/auth" className="btn btn-primary">{t.hero.primary}</Link>
                 <Link href="/auth" className="btn btn-accent">{t.hero.secondary}</Link>
               </div>
-              <p className="note">{t.hero.trust}</p>
-            </div>
-            <div className="hero-side">
-              <article className="hero-illustration card">
-                <p className="hero-illustration-emoji">🐶🧑‍🦰🐾</p>
-                <h3>{t.hero.illustrationTitle}</h3>
-                <p>{t.hero.illustrationBody}</p>
-              </article>
-              <form className="search-card" onSubmit={(e) => e.preventDefault()}>
+              <form className="search-card hero-search" onSubmit={(e) => e.preventDefault()}>
                 <input className="text-input" placeholder={t.hero.fields[0]} />
                 <input className="text-input" placeholder={t.hero.fields[1]} />
                 <input className="text-input" placeholder={t.hero.fields[2]} />
@@ -88,6 +127,31 @@ export function LandingPage() {
                 <button className="btn btn-primary" type="submit">{t.nav.cta}</button>
               </form>
             </div>
+            <div className="hero-side">
+              <article className="hero-photo card">
+                <div className="photo-placeholder">{t.hero.photoLabel}</div>
+                <div className="floating-card rating-card">
+                  <strong>4.9</strong>
+                  <span>{t.hero.ratingLabel}</span>
+                </div>
+                <div className="floating-card verified-card">
+                  <strong>{t.hero.verifiedLabel}</strong>
+                </div>
+                <h3>{t.hero.illustrationTitle}</h3>
+                <p>{t.hero.illustrationBody}</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="social-proof-bar">
+          <div className="social-proof-grid">
+            {t.socialProof.items.map((item) => (
+              <article className="social-proof-card" key={item.label}>
+                <CountUp target={item.value} suffix={item.suffix} lang={lang} />
+                <span className="stat-label">{item.label}</span>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -98,8 +162,7 @@ export function LandingPage() {
               <p className="story-copy">{t.story.body}</p>
             </div>
             <article className="story-image card">
-              <p className="story-image-emoji">🐕‍🦺💙</p>
-              <p>{t.story.imageTitle}</p>
+              <div className="photo-placeholder">{t.story.imageTitle}</div>
             </article>
           </div>
         </section>
@@ -107,9 +170,9 @@ export function LandingPage() {
         <section className="panel landing-section">
           <h2 className="section-title">{t.trust.title}</h2>
           <div className="grid trust-grid">
-            {t.trust.items.map(([icon, title, desc]) => (
-              <article className="card" key={title}>
-                <p className="trust-icon">{icon}</p>
+            {t.trust.items.map(([title, desc]) => (
+              <article className="card trust-card" key={title}>
+                <span className="trust-chip">{title}</span>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </article>
@@ -120,11 +183,14 @@ export function LandingPage() {
         <section id="services" className="panel landing-section">
           <h2 className="section-title">{t.services.title}</h2>
           <div className="grid services-grid">
-            {t.services.items.map(([icon, title, desc]) => (
+            {t.services.items.map(([title, desc, photo]) => (
               <article className="card" key={title}>
-                <p className="service-icon">{icon}</p>
+                <div className="service-photo">{photo}</div>
                 <h3>{title}</h3>
                 <p>{desc}</p>
+                <Link href="/auth" className="service-link">
+                  {t.nav.cta}
+                </Link>
               </article>
             ))}
           </div>
@@ -132,10 +198,10 @@ export function LandingPage() {
 
         <section id="how" className="panel landing-section">
           <h2 className="section-title">{t.how.title}</h2>
-          <div className="grid steps-grid">
-            {t.how.items.map(([icon, title, desc]) => (
-              <article className="card" key={title}>
-                <p className="step-icon">{icon}</p>
+          <div className="flow-grid">
+            {t.how.items.map(([title, desc], index) => (
+              <article className="flow-step" key={title}>
+                <span className="flow-index">{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </article>
@@ -143,7 +209,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="panel landing-section">
+        <section className="panel landing-section testimonials-panel">
           <h2 className="section-title">{t.testimonials.title}</h2>
           <div className="testimonials-grid">
             {t.testimonials.items.map(([name, city, quote]) => (
@@ -158,13 +224,20 @@ export function LandingPage() {
         </section>
 
         <section id="safety" className="panel landing-section safety-panel">
-          <h2 className="section-title">{t.safety.title}</h2>
-          <ul className="list">
-            {t.safety.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-          <p className="note">{t.safety.end}</p>
+          <div className="safety-layout">
+            <article className="card safety-photo-card">
+              <div className="photo-placeholder">{t.safety.photoLabel}</div>
+            </article>
+            <div>
+              <h2 className="section-title">{t.safety.title}</h2>
+              <ul className="list">
+                {t.safety.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+              <p className="note">{t.safety.end}</p>
+            </div>
+          </div>
         </section>
 
         <section id="become" className="panel landing-section sitter-panel">
@@ -205,4 +278,8 @@ export function LandingPage() {
       </main>
     </div>
   );
+}
+
+function stars(count = 5) {
+  return "★".repeat(count);
 }

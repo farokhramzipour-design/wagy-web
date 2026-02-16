@@ -14,8 +14,18 @@
     "primary": "Find a Loving Sitter",
     "secondary": "Become a Sitter",
     "trust": "Verified sitters • Secure payments • 24/7 support",
+    "photoLabel": "Sitter and pet photo",
+    "ratingLabel": "Average rating",
+    "verifiedLabel": "Verified",
     "illustrationTitle": "Calm care, even when you're away",
     "illustrationBody": "A trusted sitter keeps routines, comfort, and love exactly where your pet needs it."
+  },
+  "socialProof": {
+    "items": [
+      { "value": 10000, "suffix": "+", "label": "Happy Pet Parents" },
+      { "value": 4.9, "suffix": "★", "label": "Average Rating" },
+      { "value": 500, "suffix": "+", "label": "Verified Sitters" }
+    ]
   },
   "story": {
     "title": "Leaving them shouldn't mean worrying.",
@@ -25,28 +35,29 @@
   "trust": {
     "title": "Your pet's safety is our promise.",
     "items": [
-      ["✅", "Identity Verified", "Every sitter goes through profile and identity checks before joining."],
-      ["💬", "Real Reviews", "See honest feedback from pet parents with similar needs."],
-      ["🔒", "Secure Payments", "All payments are protected on-platform with full transparency."],
-      ["🛟", "24/7 Support", "If anything feels off, our support team is ready anytime."]
+      ["Identity Verified", "Every sitter goes through profile and identity checks before joining."],
+      ["Real Reviews", "See honest feedback from pet parents with similar needs."],
+      ["Secure Payments", "All payments are protected on-platform with full transparency."],
+      ["24/7 Support", "If anything feels off, our support team is ready anytime."]
     ]
   },
   "services": {
     "title": "Services built around comfort and trust",
     "items": [
-      ["🏡", "Dog Boarding", "A warm and safe home while you're traveling."],
-      ["🛋️", "House Sitting", "Your pet stays calm in their familiar home."],
-      ["🐕", "Dog Walking", "Healthy movement, happy mood, more energy."],
-      ["☀️", "Day Care", "Reliable daytime care for busy schedules."],
-      ["🧡", "Drop-In Visits", "Feeding, cleaning, and gentle companionship."]
+      ["Dog Boarding", "A warm and safe home while you're traveling.", "Home-style care photo"],
+      ["House Sitting", "Your pet stays calm in their familiar home.", "In-home sitter photo"],
+      ["Dog Walking", "Healthy movement, happy mood, more energy.", "Outdoor walk photo"],
+      ["Day Care", "Reliable daytime care for busy schedules.", "Daycare play photo"],
+      ["Drop-In Visits", "Feeding, cleaning, and gentle companionship.", "Drop-in visit photo"]
     ]
   },
   "how": {
     "title": "How it works",
     "items": [
-      ["🔎", "Search", "Explore nearby sitters and read real reviews."],
-      ["📅", "Book", "Chat first, ask questions, then book in a few taps."],
-      ["🌿", "Relax", "Get updates while your pet is cared for with love."]
+      ["Search", "Explore nearby sitters and read real reviews."],
+      ["Meet", "Message the sitter, ask questions, and confirm expectations."],
+      ["Book", "Reserve your preferred service with secure payment."],
+      ["Relax", "Receive updates while your pet is cared for with love."]
     ]
   },
   "testimonials": {
@@ -59,6 +70,7 @@
   },
   "safety": {
     "title": "Your pet's safety is our priority",
+    "photoLabel": "Safety and care standards photo",
     "points": [
       "We verify sitter identity",
       "We monitor service quality",
