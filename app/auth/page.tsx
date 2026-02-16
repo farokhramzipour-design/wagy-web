@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { AuthForm } from '../../components/auth/auth-form';
 
 export default function AuthPage({
@@ -11,9 +10,6 @@ export default function AuthPage({
   return (
     <main className="container">
       <AuthForm nextPath={next} />
-      <div className="note">
-        <Link href="/landing">Back to landing</Link>
-      </div>
     </main>
   );
 }

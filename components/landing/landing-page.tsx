@@ -133,12 +133,6 @@ export function LandingPage() {
             <div className="hero-side">
               <article className="hero-photo card">
                 <img src={heroImage} alt={t.hero.photoLabel} className="hero-photo-image" loading="lazy" />
-                <div className="floating-card rating-card">
-                  <strong>4.9</strong>
-                </div>
-                <div className="floating-card verified-card">
-                  <strong>{t.hero.verifiedLabel}</strong>
-                </div>
               </article>
             </div>
           </div>
