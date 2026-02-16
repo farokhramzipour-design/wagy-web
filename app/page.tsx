@@ -17,39 +17,46 @@ const content = {
       cta: "Find a Sitter"
     },
     hero: {
-      title: "When you're away, feel completely at ease ❤️",
+      title: "They're not just pets. They're family.",
       subtitle:
-        "Trusted, verified pet sitters near you. Someone who cares for your family member with love.",
+        "When you can't be there, we make sure someone loving is.",
       fields: ["Location", "Dates", "Pet Type", "Service Type"],
-      primary: "Find a Trusted Sitter",
-      secondary: "I Want to Become a Sitter",
-      trust: "Verified identity • Real reviews • Support always available"
+      primary: "Find a Loving Sitter",
+      secondary: "Become a Sitter",
+      trust: "Verified sitters • Secure payments • 24/7 support",
+      illustrationTitle: "Calm care, even when you're away",
+      illustrationBody: "A trusted sitter keeps routines, comfort, and love exactly where your pet needs it."
+    },
+    story: {
+      title: "Leaving them shouldn't mean worrying.",
+      body: "We know that anxious feeling before you leave home. We built Waggy so your pet gets loving care and you get true peace of mind.",
+      imageTitle: "Care that feels like family"
     },
     trust: {
-      title: "We take safety seriously, first",
+      title: "Your pet's safety is our promise.",
       items: [
-        ["Verified Sitters", "Every sitter is reviewed and approved before taking bookings."],
-        ["Real User Reviews", "Authentic experiences from people just like you."],
-        ["Secure Payments", "Payments stay protected through the platform."],
-        ["24/7 Support", "Our team is available whenever you need help."]
+        ["✅", "Identity Verified", "Every sitter goes through profile and identity checks before joining."],
+        ["💬", "Real Reviews", "See honest feedback from pet parents with similar needs."],
+        ["🔒", "Secure Payments", "All payments are protected on-platform with full transparency."],
+        ["🛟", "24/7 Support", "If anything feels off, our support team is ready anytime."]
       ]
     },
     services: {
       title: "Services built around comfort and trust",
       items: [
-        ["Boarding", "A warm and safe home while you're traveling."],
-        ["House Sitting", "Your pet stays calm in their familiar home."],
-        ["Dog Walking", "Healthy movement, happy mood, more energy."],
-        ["Day Care", "Reliable daytime care for busy schedules."],
-        ["Drop-In Visits", "Feeding, cleaning, and gentle companionship."]
+        ["🏡", "Dog Boarding", "A warm and safe home while you're traveling."],
+        ["🛋️", "House Sitting", "Your pet stays calm in their familiar home."],
+        ["🐕", "Dog Walking", "Healthy movement, happy mood, more energy."],
+        ["☀️", "Day Care", "Reliable daytime care for busy schedules."],
+        ["🧡", "Drop-In Visits", "Feeding, cleaning, and gentle companionship."]
       ]
     },
     how: {
       title: "How it works",
       items: [
-        ["1. Search", "Explore nearby sitters and read real reviews."],
-        ["2. Chat", "Message first, ask questions, and confirm details."],
-        ["3. Relax", "Book with confidence and receive full updates."]
+        ["🔎", "Search", "Explore nearby sitters and read real reviews."],
+        ["📅", "Book", "Chat first, ask questions, then book in a few taps."],
+        ["🌿", "Relax", "Get updates while your pet is cared for with love."]
       ]
     },
     testimonials: {
@@ -57,7 +64,7 @@ const content = {
       items: [
         ["Sara", "Tehran", "I was anxious at first, but after chatting with the sitter I felt calm. Daily photo updates helped a lot."],
         ["Mohammad", "Shiraz", "I traveled without worry for the first time. Smooth and respectful experience."],
-        ["Narges", "Isfahan", "Very responsible and caring behavior. I truly trusted the process."]
+        ["نرگس", "اصفهان", "رفتار مراقب خیلی محترمانه و مسئولانه بود. با خیال راحت سپردم."]
       ]
     },
     safety: {
@@ -91,8 +98,8 @@ const content = {
       ]
     },
     final: {
-      title: "They're not just pets... they're family ❤️",
-      cta: "Find a Trusted Sitter"
+      title: "Because they trust you. And you can trust us.",
+      cta: "Find a Loving Sitter"
     }
   },
   fa: {
@@ -105,39 +112,46 @@ const content = {
       cta: "پیدا کردن مراقب"
     },
     hero: {
-      title: "وقتی کنارش نیستی، خیالت راحت باشه ❤️",
+      title: "اون‌ها فقط حیوان خونگی نیستن… خانواده‌ان ❤️",
       subtitle:
-        "مراقبین تاییدشده و قابل اعتماد، نزدیک تو. کسی که با محبت از عضو خانواده‌ات مراقبت می‌کنه.",
+        "وقتی تو کنارش نیستی، ما مطمئن می‌شیم یک آدم مهربون کنارش هست.",
       fields: ["موقعیت", "تاریخ‌ها", "نوع پت", "نوع سرویس"],
       primary: "پیدا کردن مراقب مطمئن",
       secondary: "من می‌خوام مراقب بشم",
-      trust: "احراز هویت شده • نظرات واقعی کاربران • پشتیبانی همیشه در دسترس"
+      trust: "مراقبین تاییدشده • پرداخت امن • پشتیبانی ۲۴/۷",
+      illustrationTitle: "مراقبت آروم و مطمئن، حتی وقتی نیستی",
+      illustrationBody: "یک مراقب قابل اعتماد، روال روزانه و آرامش پتت رو حفظ می‌کنه.",
+    },
+    story: {
+      title: "نبودن کنار اون‌ها نباید با نگرانی همراه باشه.",
+      body: "ما اضطراب قبل از سفر رو می‌فهمیم. واگی رو ساختیم تا پت شما مراقبت عاشقانه بگیره و شما با خیال راحت کارهای خودت رو انجام بدی.",
+      imageTitle: "مراقبتی که حس خانواده می‌ده"
     },
     trust: {
-      title: "ما اول امنیت رو جدی می‌گیریم",
+      title: "امنیت حیوانت قول ماست.",
       items: [
-        ["احراز هویت کامل", "هر مراقب قبل از شروع فعالیت، بررسی و تایید می‌شود."],
-        ["نظرات واقعی کاربران", "تجربه‌های واقعی از افرادی مثل شما."],
-        ["پرداخت امن", "پرداخت فقط از طریق پلتفرم، بدون ریسک."],
-        ["پشتیبانی پاسخگو", "در هر ساعت از شبانه‌روز کنار شما هستیم."]
+        ["✅", "احراز هویت کامل", "هر مراقب قبل از شروع فعالیت، بررسی و تایید می‌شود."],
+        ["💬", "نظرات واقعی کاربران", "تجربه‌های واقعی از افرادی مثل شما."],
+        ["🔒", "پرداخت امن", "پرداخت فقط از طریق پلتفرم، بدون ریسک."],
+        ["🛟", "پشتیبانی پاسخگو", "در هر ساعت از شبانه‌روز کنار شما هستیم."]
       ]
     },
     services: {
       title: "سرویس‌ها",
       items: [
-        ["نگهداری شبانه", "وقتی سفر هستی، حیوانت تو یه محیط امن و گرم می‌مونه."],
-        ["مراقبت در منزل خودت", "حیوانت در فضای آشنا و راحت خودش می‌مونه."],
-        ["پیاده‌روی و بازی", "تحرک، انرژی و شادی بیشتر."],
-        ["مراقبت روزانه", "چند ساعت مراقبت مطمئن وقتی سرت شلوغه."],
-        ["سرزدن کوتاه", "غذا دادن، تمیزکاری و نوازش با محبت."]
+        ["🏡", "نگهداری شبانه", "وقتی سفر هستی، حیوانت تو یه محیط امن و گرم می‌مونه."],
+        ["🛋️", "مراقبت در منزل خودت", "حیوانت در فضای آشنا و راحت خودش می‌مونه."],
+        ["🐕", "پیاده‌روی و بازی", "تحرک، انرژی و شادی بیشتر."],
+        ["☀️", "مراقبت روزانه", "چند ساعت مراقبت مطمئن وقتی سرت شلوغه."],
+        ["🧡", "سرزدن کوتاه", "غذا دادن، تمیزکاری و نوازش با محبت."]
       ]
     },
     how: {
       title: "چطور کار می‌کنه",
       items: [
-        ["۱. جستجو کن", "مراقبین اطرافت رو ببین و نظرات رو بخون."],
-        ["۲. ارتباط بگیر", "قبل از رزرو، پیام بده و سوال بپرس."],
-        ["۳. با خیال راحت بسپار", "مراقبت امن و پیگیری کامل."]
+        ["🔎", "جستجو", "مراقبین اطرافت رو ببین و نظرات رو بخون."],
+        ["📅", "رزرو", "اول پیام بده، هماهنگ کن، بعد رزروت رو نهایی کن."],
+        ["🌿", "با خیال راحت", "با آپدیت‌های منظم، آرامش کامل داشته باش."]
       ]
     },
     testimonials: {
@@ -179,8 +193,8 @@ const content = {
       ]
     },
     final: {
-      title: "اون‌ها فقط حیوان خونگی نیستن… خانواده‌ان ❤️",
-      cta: "با خیال راحت مراقب مطمئن پیدا کن"
+      title: "چون اون‌ها به تو اعتماد دارن… و تو می‌تونی به ما اعتماد کنی.",
+      cta: "پیدا کردن مراقب مهربان"
     }
   }
 } as const;
@@ -247,21 +261,42 @@ export default function HomePage() {
               </div>
               <p className="note">{t.hero.trust}</p>
             </div>
-            <form className="search-card" onSubmit={(e) => e.preventDefault()}>
-              <input className="text-input" placeholder={t.hero.fields[0]} />
-              <input className="text-input" placeholder={t.hero.fields[1]} />
-              <input className="text-input" placeholder={t.hero.fields[2]} />
-              <input className="text-input" placeholder={t.hero.fields[3]} />
-              <button className="btn btn-primary" type="submit">{t.nav.cta}</button>
-            </form>
+            <div className="hero-side">
+              <article className="hero-illustration card">
+                <p className="hero-illustration-emoji">🐶🧑‍🦰🐾</p>
+                <h3>{t.hero.illustrationTitle}</h3>
+                <p>{t.hero.illustrationBody}</p>
+              </article>
+              <form className="search-card" onSubmit={(e) => e.preventDefault()}>
+                <input className="text-input" placeholder={t.hero.fields[0]} />
+                <input className="text-input" placeholder={t.hero.fields[1]} />
+                <input className="text-input" placeholder={t.hero.fields[2]} />
+                <input className="text-input" placeholder={t.hero.fields[3]} />
+                <button className="btn btn-primary" type="submit">{t.nav.cta}</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section className="panel landing-section story-block">
+          <div className="story-layout">
+            <div>
+              <h2 className="section-title">{t.story.title}</h2>
+              <p className="story-copy">{t.story.body}</p>
+            </div>
+            <article className="story-image card">
+              <p className="story-image-emoji">🐕‍🦺💙</p>
+              <p>{t.story.imageTitle}</p>
+            </article>
           </div>
         </section>
 
         <section className="panel landing-section">
           <h2 className="section-title">{t.trust.title}</h2>
           <div className="grid trust-grid">
-            {t.trust.items.map(([title, desc]) => (
+            {t.trust.items.map(([icon, title, desc]) => (
               <article className="card" key={title}>
+                <p className="trust-icon">{icon}</p>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </article>
@@ -272,8 +307,9 @@ export default function HomePage() {
         <section id="services" className="panel landing-section">
           <h2 className="section-title">{t.services.title}</h2>
           <div className="grid services-grid">
-            {t.services.items.map(([title, desc]) => (
+            {t.services.items.map(([icon, title, desc]) => (
               <article className="card" key={title}>
+                <p className="service-icon">{icon}</p>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </article>
@@ -284,8 +320,9 @@ export default function HomePage() {
         <section id="how" className="panel landing-section">
           <h2 className="section-title">{t.how.title}</h2>
           <div className="grid steps-grid">
-            {t.how.items.map(([title, desc]) => (
+            {t.how.items.map(([icon, title, desc]) => (
               <article className="card" key={title}>
+                <p className="step-icon">{icon}</p>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </article>
@@ -295,10 +332,11 @@ export default function HomePage() {
 
         <section className="panel landing-section">
           <h2 className="section-title">{t.testimonials.title}</h2>
-          <div className="grid testimonials-grid">
+          <div className="testimonials-grid">
             {t.testimonials.items.map(([name, city, quote]) => (
               <article className="card" key={name + city}>
                 <p className="stars" aria-label="5 stars">{stars(5)}</p>
+                <div className="avatar-badge">{name.slice(0, 1)}</div>
                 <h3>{name} — {city}</h3>
                 <p>"{quote}"</p>
               </article>

@@ -336,6 +336,30 @@ a {
   align-items: stretch;
 }
 
+.hero-side {
+  display: grid;
+  gap: 16px;
+}
+
+.hero-illustration {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(14, 165, 164, 0.12), transparent),
+    linear-gradient(165deg, rgba(14, 165, 164, 0.06), #fff);
+}
+
+.hero-illustration h3 {
+  margin: 8px 0 6px;
+}
+
+.hero-illustration p {
+  color: var(--neutral-600);
+}
+
+.hero-illustration-emoji {
+  font-size: 28px;
+  margin: 0;
+}
+
 .search-card {
   border: 1px solid var(--neutral-200);
   border-radius: var(--radius-card);
@@ -359,7 +383,17 @@ a {
 }
 
 .testimonials-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 24px;
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+}
+
+.testimonials-grid .card {
+  min-width: min(86vw, 360px);
+  scroll-snap-align: start;
 }
 
 .stars {
@@ -368,8 +402,53 @@ a {
   letter-spacing: 1px;
 }
 
+.avatar-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
 .safety-panel {
   background: linear-gradient(165deg, rgba(14, 165, 164, 0.05), rgba(255, 255, 255, 0.95));
+}
+
+.story-block {
+  background:
+    linear-gradient(180deg, rgba(14, 165, 164, 0.04), rgba(255, 255, 255, 0.95));
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.story-copy {
+  margin-top: 12px;
+}
+
+.story-image {
+  text-align: center;
+}
+
+.story-image-emoji {
+  font-size: 40px;
+  margin: 0 0 8px;
+}
+
+.trust-icon,
+.service-icon,
+.step-icon {
+  margin: 0 0 10px;
+  font-size: 24px;
 }
 
 .sitter-panel {
@@ -473,7 +552,8 @@ a {
   }
 
   .hero-layout,
-  .sitter-layout {
+  .sitter-layout,
+  .story-layout {
     grid-template-columns: 1fr;
   }
 
@@ -497,9 +577,22 @@ a {
 
   .services-grid,
   .steps-grid,
-  .testimonials-grid,
   .trust-grid,
   .app-kpi-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .testimonials-grid .card {
+    min-width: 0;
   }
 }
