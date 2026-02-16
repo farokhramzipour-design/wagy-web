@@ -20,13 +20,25 @@ RUN rm -rf .next \
  && [ ! -f app/layout.jsx ] \
  && echo "=== BUILD INPUT: app/page.tsx ===" \
  && sed -n '1,80p' app/page.tsx \
- && grep -q "landing-shell" app/page.tsx \
- && ! grep -q "Welcome back, Friend" app/page.tsx \
+ && grep -q "LandingPage" app/page.tsx \
+ && echo "=== BUILD INPUT: app/landing/page.tsx ===" \
+ && sed -n '1,80p' app/landing/page.tsx \
+ && grep -q "LandingPage" app/landing/page.tsx \
+ && echo "=== BUILD INPUT: components/landing/landing-page.tsx ===" \
+ && sed -n '1,80p' components/landing/landing-page.tsx \
+ && grep -q "landing-shell" components/landing/landing-page.tsx \
+ && ! grep -q "Welcome back, Friend" components/landing/landing-page.tsx \
  && npm run build \
  && echo "=== BUILD OUTPUT: .next/server/app/page.js ===" \
- && grep -n "landing-shell\\|app-shell\\|Welcome back, Friend" .next/server/app/page.js \
- && grep -q "landing-shell" .next/server/app/page.js \
- && ! grep -q "Welcome back, Friend" .next/server/app/page.js
+ && grep -n "landing-page\\|app-shell\\|Welcome back, Friend" .next/server/app/page.js \
+ && ! grep -q "Welcome back, Friend" .next/server/app/page.js \
+ && echo "=== BUILD OUTPUT: .next/server/app/landing/page.js ===" \
+ && grep -n "landing-page\\|Welcome back, Friend" .next/server/app/landing/page.js \
+ && grep -q "landing-page" .next/server/app/landing/page.js \
+ && echo "=== BUILD OUTPUT: component chunk ===" \
+ && grep -RIn "landing-shell\\|Welcome back, Friend" .next/server | head -n 20 \
+ && grep -RInq "landing-shell" .next/server \
+ && ! grep -q "Welcome back, Friend" .next/server/app/landing/page.js
 
 FROM node:20-alpine AS runner
 WORKDIR /app
