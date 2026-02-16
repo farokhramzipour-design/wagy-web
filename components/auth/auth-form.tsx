@@ -3,12 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { ApiError } from "../../lib/api-client";
-import {
-  getGoogleLoginUrl,
-  getMe,
-  requestOtp,
-  verifyOtp
-} from "../../services/auth-api";
+import { getMe, requestOtp, verifyOtp } from "../../services/auth-api";
 
 type Props = {
   nextPath: string;
@@ -20,7 +15,10 @@ export function AuthForm({ nextPath }: Props) {
   const [otpRequested, setOtpRequested] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string>("");
-  const googleLoginUrl = useMemo(() => getGoogleLoginUrl(), []);
+  const googleLoginUrl = useMemo(
+    () => `/api/auth/google/login?next=${encodeURIComponent(nextPath)}`,
+    [nextPath]
+  );
 
   const handleRequestOtp = async (event: FormEvent) => {
     event.preventDefault();

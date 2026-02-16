@@ -32,7 +32,10 @@ export async function POST(request: Request) {
     }
   }
 
-  const response = NextResponse.redirect(new URL("/", request.url));
+  const response = new NextResponse(null, {
+    status: 303,
+    headers: { Location: "/" }
+  });
   response.cookies.set(SESSION_COOKIE, "", {
     httpOnly: true,
     sameSite: "lax",
