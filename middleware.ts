@@ -33,6 +33,10 @@ async function refreshAccessToken(refreshToken: string): Promise<RefreshResponse
 
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/landing", request.url));
+  }
+
   const session = parseSession(request.cookies.get(SESSION_COOKIE)?.value);
   const accessToken = request.cookies.get(ACCESS_COOKIE)?.value;
   const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value;
@@ -76,5 +80,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/app/:path*", "/auth"]
+  matcher: ["/", "/app/:path*", "/auth"]
 };
