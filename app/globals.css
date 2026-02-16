@@ -887,52 +887,57 @@ html[dir="rtl"] .flow-grid {
 }
 
 .landing-hero-card .hero-layout {
-  padding: 48px 44px 26px;
+  padding: 34px 30px 20px;
   position: relative;
+  gap: 18px;
 }
 
 .hero-copy h1 {
-  max-width: 560px;
+  max-width: 520px;
   margin: 0;
-  font-size: 54px;
-  line-height: 1.14;
+  font-size: 44px;
+  line-height: 1.2;
   color: #103745;
 }
 
 html[dir="rtl"] .hero-copy h1 {
   letter-spacing: -0.01em;
+  font-size: 36px;
+  line-height: 1.35;
 }
 
 .hero-copy > p {
-  margin-top: 12px;
-  max-width: 560px;
-  font-size: 24px;
-  line-height: 1.45;
+  margin-top: 8px;
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.55;
   color: #37556a;
 }
 
 .hero-search-inline {
-  margin-top: 20px;
+  margin-top: 16px;
   grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   border-radius: 14px;
-  padding: 10px;
+  padding: 8px;
   background: rgba(255, 255, 255, 0.92);
 }
 
 .hero-search-inline .text-input {
-  padding: 11px 12px;
-  font-size: 14px;
+  padding: 10px 11px;
+  font-size: 13px;
 }
 
 .hero-search-inline .btn {
   white-space: nowrap;
-  min-height: 44px;
+  min-height: 40px;
+  padding-inline: 16px;
 }
 
 .hero-badges {
-  margin-top: 12px;
+  margin-top: 8px;
+  gap: 6px;
 }
 
 .hero-side {
@@ -945,14 +950,18 @@ html[dir="rtl"] .hero-copy h1 {
   box-shadow: none;
   background: transparent;
   padding: 0;
-  min-height: 430px;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  max-height: 320px;
+  overflow: hidden;
 }
 
 .hero-photo-image {
   width: 100%;
   height: 100%;
-  min-height: 430px;
+  min-height: 0;
   object-fit: cover;
+  object-position: center;
   border-radius: 20px;
   display: block;
 }
@@ -1023,6 +1032,15 @@ html[dir="rtl"] .verified-card {
 
 .services-see-all {
   white-space: nowrap;
+}
+
+html[dir="rtl"] .landing-nav-links {
+  font-size: 12px;
+}
+
+html[dir="rtl"] .landing-header-actions .btn {
+  font-size: 12px;
+  padding: 10px 14px;
 }
 
 .services-grid {
@@ -1110,15 +1128,20 @@ html[dir="rtl"] .verified-card {
   }
 
   .hero-copy h1 {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .hero-copy > p {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .hero-search-inline {
     grid-template-columns: 1fr;
+  }
+
+  .hero-photo {
+    aspect-ratio: 16 / 10;
+    max-height: none;
   }
 
   .services-header {
