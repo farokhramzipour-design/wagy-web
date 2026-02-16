@@ -1,28 +1,14 @@
 import './globals.css';
-import Link from 'next/link';
 
 export const metadata = {
   title: 'Waggy',
-  description: 'Waggy clean restart'
+  description: 'Loving care for your best friend'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr">
-      <body>
-        <header className="topbar">
-          <div className="container">
-            <Link href="/" className="brand">Waggy</Link>
-            <nav className="nav">
-              <Link href="/">Services</Link>
-              <Link href="/auth">Become a Sitter</Link>
-              <Link href="/auth">Auth</Link>
-              <Link href="/app/dashboard">Dashboard</Link>
-            </nav>
-          </div>
-        </header>
-        {children}
-      </body>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body>{children}</body>
     </html>
   );
 }
