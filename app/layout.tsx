@@ -8,13 +8,14 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <body>
         <header className="topbar">
           <div className="container">
             <Link href="/" className="brand">Waggy</Link>
             <nav className="nav">
-              <Link href="/">Home</Link>
+              <Link href="/">Services</Link>
+              <Link href="/auth">Become a Sitter</Link>
               <Link href="/auth">Auth</Link>
               <Link href="/app/dashboard">Dashboard</Link>
             </nav>

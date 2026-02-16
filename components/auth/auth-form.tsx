@@ -77,8 +77,8 @@ export function AuthForm({ nextPath }: Props) {
 
   return (
     <section className="panel">
-      <h1>Auth</h1>
-      <p>Login with OTP or continue with Google OAuth.</p>
+      <h1>Welcome back</h1>
+      <p>Quick sign-in, warm support, and trusted care for your best friend.</p>
 
       {!otpRequested ? (
         <form onSubmit={handleRequestOtp} className="auth-form">
@@ -97,7 +97,7 @@ export function AuthForm({ nextPath }: Props) {
             <button type="submit" className="btn btn-primary" disabled={loading}>
               {loading ? "Sending..." : "Request OTP"}
             </button>
-            <a href={googleLoginUrl} className="btn btn-secondary">
+            <a href={googleLoginUrl} className="btn btn-accent">
               Continue with Google
             </a>
             <Link href="/" className="btn btn-secondary">
