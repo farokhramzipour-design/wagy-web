@@ -11,12 +11,8 @@ export default function AuthPage({
   return (
     <main className="container">
       <AuthForm nextPath={next} />
-      <p className="note">
-        Session/tokens are stored in HTTP-only cookies: <code>waggy_session</code>,{" "}
-        <code>waggy_access_token</code>, <code>waggy_refresh_token</code>.
-      </p>
       <div className="note">
-        <Link href="/">Back to home</Link>
+        <Link href="/landing">Back to landing</Link>
       </div>
     </main>
   );

@@ -111,5 +111,35 @@
   "final": {
     "title": "Because they trust you. And you can trust us.",
     "cta": "Find a Loving Sitter"
+  },
+  "auth": {
+    "title": "Welcome back",
+    "subtitle": "Quick sign-in, warm support, and trusted care for your best friend.",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "+989121234567",
+    "otpLabel": "OTP code",
+    "otpPlaceholder": "123456",
+    "requestOtp": "Request OTP",
+    "verifyOtp": "Verify OTP",
+    "changePhone": "Change phone",
+    "google": "Continue with Google",
+    "sending": "Sending...",
+    "verifying": "Verifying...",
+    "backHome": "Back Home",
+    "messages": {
+      "otpSent": "OTP sent.",
+      "otpRequestFailed": "OTP request failed",
+      "otpVerifyFailed": "OTP verify failed"
+    },
+    "showcase": {
+      "title": "Care starts with trust.",
+      "subtitle": "Join a trusted community of pet parents and verified sitters.",
+      "points": [
+        "Verified sitter profiles",
+        "Secure platform payments",
+        "24/7 responsive support"
+      ],
+      "imageAlt": "Pet sitter caring for a dog"
+    }
   }
 }
