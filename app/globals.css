@@ -87,6 +87,14 @@ a {
   font-size: 14px;
 }
 
+.inline-form {
+  display: inline-flex;
+}
+
+.inline-form button {
+  cursor: pointer;
+}
+
 .btn-primary {
   background: #0f766e;
   color: #fff;
