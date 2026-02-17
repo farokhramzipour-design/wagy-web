@@ -53,7 +53,7 @@ export function TokenLoginBootstrap() {
         return;
       }
 
-      router.replace("/");
+      window.location.href = "/";
     };
 
     void run();

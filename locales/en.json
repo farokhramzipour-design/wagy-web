@@ -5,7 +5,10 @@
     "safety": "Safety",
     "sitter": "Become a Sitter",
     "login": "Login",
-    "cta": "Find Your Perfect Sitter"
+    "cta": "Find Your Perfect Sitter",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
   },
   "hero": {
     "title": "Peace of Mind for You. Pure Joy for Them.",

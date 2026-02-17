@@ -7,6 +7,8 @@ import en from "../../locales/en.json";
 import fa from "../../locales/fa.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Header } from "../layout/header";
+import type { SessionData } from "@/lib/session";
 
 type Lang = "en" | "fa";
 
@@ -55,7 +57,7 @@ function CountUp({
   );
 }
 
-export function LandingPage() {
+export function LandingPage({ user }: { user: SessionData | null }) {
   const [lang, setLang] = useState<Lang>("en");
 
   useEffect(() => {
@@ -90,37 +92,7 @@ export function LandingPage() {
         <TokenLoginBootstrap />
       </Suspense>
 
-      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
-        <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-6 grid grid-cols-1 justify-items-start py-3 gap-4 lg:grid-cols-[auto_1fr_auto] lg:items-center lg:py-0 lg:min-h-[72px]">
-          <Link href="/" className="text-[22px] font-bold tracking-tight text-neutral-900">Waggy</Link>
-          <nav className="flex gap-4 text-sm text-neutral-700 justify-self-start lg:justify-self-center rtl:text-xs">
-            <a href="#services">{t.nav.services}</a>
-            <a href="#how">{t.nav.how}</a>
-            <a href="#safety">{t.nav.safety}</a>
-            <a href="#become">{t.nav.sitter}</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <div className="inline-flex items-center border border-neutral-200 rounded-full overflow-hidden bg-white" role="group" aria-label="language">
-              <button className={`border-0 bg-transparent text-neutral-700 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "en" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("en")}>
-                EN
-              </button>
-              <button className={`border-0 bg-transparent text-neutral-700 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "fa" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("fa")}>
-                FA
-              </button>
-            </div>
-            <Link href="/auth">
-              <Button variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-900 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5 rtl:text-xs rtl:px-3.5 rtl:py-2.5">
-                {t.nav.login}
-              </Button>
-            </Link>
-            <Link href="/auth">
-              <Button className="rounded-[12px] h-auto py-3 px-5 bg-[#0ea5a4] hover:bg-[#0b7c7b] rtl:text-xs rtl:px-3.5 rtl:py-2.5">
-                {t.nav.cta}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header user={user} lang={lang} setLang={setLang} />
 
       <main className="w-full max-w-[1280px] mx-auto px-4 lg:px-6">
         <section className="mt-6 p-0 overflow-hidden rounded-[20px] border border-[#dbe5e7] bg-[radial-gradient(140%_120%_at_0%_0%,rgba(14,165,164,0.16),rgba(255,255,255,0)_55%),radial-gradient(120%_100%_at_100%_0%,rgba(255,107,107,0.12),rgba(255,255,255,0)_48%),linear-gradient(180deg,#eff8f7,#f9fcfb)] relative before:content-[''] before:absolute before:-left-[120px] before:-top-[120px] before:w-[300px] before:h-[300px] before:rounded-full before:bg-[radial-gradient(circle,rgba(14,124,123,0.18),transparent_70%)] before:pointer-events-none">
