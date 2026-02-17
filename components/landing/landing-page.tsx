@@ -133,7 +133,7 @@ export function LandingPage() {
                 </span>
                 {t.hero.highDemand}
               </div>
-              <h1 className="m-0 text-[32px] lg:text-[44px] leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-[36px] rtl:leading-[1.35]">{t.hero.title}</h1>
+              <h1 className="m-0 text-3xl lg:text-4xl leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-4xl rtl:leading-[1.35]">{t.hero.title}</h1>
               <p className="mt-2 max-w-[520px] text-[16px] lg:text-[18px] leading-[1.55] text-[#37556a] m-0">{t.hero.subtitle}</p>
               
               <div className="mt-4 p-2 bg-white/92 border border-neutral-200 shadow-sm rounded-[16px]">
@@ -185,7 +185,7 @@ export function LandingPage() {
 
         <section id="services" className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
-            <h2 className="m-0 text-[34px] lg:text-[46px] leading-[1.25] text-[#103745] text-center lg:text-start font-bold">{t.services.title}</h2>
+            <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#103745] text-center lg:text-start font-bold">{t.services.title}</h2>
             <Link href="/services">
               <Button variant="secondary" className="whitespace-nowrap bg-transparent border border-neutral-200 text-neutral-800 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5">
                 {t.services.seeAll}
@@ -201,7 +201,7 @@ export function LandingPage() {
                   className="w-full h-[170px] object-cover block"
                   loading="lazy"
                 />
-                <h3 className="mx-4 mt-3.5 mb-1.5 text-[28px] text-[#123749] font-bold">{title}</h3>
+                <h3 className="mx-4 mt-3.5 mb-1.5 text-xl text-[#123749] font-bold">{title}</h3>
                 <p className="mx-4 my-0 text-base text-neutral-600">{desc}</p>
               </article>
             ))}
@@ -209,7 +209,7 @@ export function LandingPage() {
         </section>
 
         <section id="how" className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
-          <h2 className="m-0 text-[34px] lg:text-[42px] leading-[1.25] text-[#103745] text-center font-bold">{t.how.title}</h2>
+          <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#103745] text-center font-bold">{t.how.title}</h2>
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-4 gap-3 rtl:rtl">
             {t.how.items.map(([title, desc], index) => (
               <article className="border border-neutral-200 bg-white rounded-2xl shadow-sm p-[18px] relative" key={title}>
@@ -223,7 +223,7 @@ export function LandingPage() {
 
         <section id="safety" className="mt-[18px] rounded-[20px] p-[26px] grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-5 bg-[linear-gradient(165deg,rgba(14,165,164,0.05),rgba(255,255,255,0.95))] border border-neutral-200 shadow-sm">
           <div>
-            <h2 className="m-0 text-[34px] lg:text-[48px] leading-[1.25] text-[#123749] font-bold">{t.safety.title}</h2>
+            <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#123749] font-bold">{t.safety.title}</h2>
             <ul className="mt-3 ps-5 text-neutral-600 list-disc">
               {t.safety.points.slice(0, 3).map((point) => (
                 <li key={point} className="mt-1.5">{point}</li>
@@ -235,7 +235,7 @@ export function LandingPage() {
 
         <section id="become" className="mt-[18px] rounded-[20px] p-[26px] grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-5 bg-[linear-gradient(165deg,rgba(255,107,107,0.06),rgba(255,255,255,0.95))] border border-neutral-200 shadow-sm">
           <div>
-            <h2 className="m-0 text-[34px] lg:text-[48px] leading-[1.25] text-[#123749] font-bold">{t.sitter.title}</h2>
+            <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#123749] font-bold">{t.sitter.title}</h2>
             <p className="mt-2 text-neutral-600">{t.sitter.subtitle}</p>
             <div className="mt-6 flex gap-3 flex-wrap">
               <Link href="/auth">
@@ -249,12 +249,12 @@ export function LandingPage() {
         </section>
 
         <section className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
-          <h2 className="m-0 text-[36px] leading-[1.25] text-[#103745] text-center font-bold">{t.testimonials.title}</h2>
+          <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#103745] text-center font-bold">{t.testimonials.title}</h2>
           <div className="mt-6 flex overflow-x-auto gap-4 pb-1.5 snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:overflow-visible lg:snap-none lg:pb-0">
             {t.testimonials.items.map(([name, city, quote]) => (
               <article className="min-w-[min(86vw,360px)] snap-start lg:min-w-0 p-6 rounded-[16px] border border-neutral-200 bg-[linear-gradient(160deg,#fff,#f9fffe)] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-250" key={name + city}>
                 <div className="w-10 h-10 rounded-full bg-[#d1faf9] text-[#0b7c7b] inline-flex items-center justify-center font-bold mb-2">{name.slice(0, 1)}</div>
-                <h3 className="m-0 mb-1 text-[22px] leading-[1.3] font-semibold text-neutral-800">{name} — {city}</h3>
+                <h3 className="m-0 mb-1 text-lg leading-[1.3] font-semibold text-neutral-800">{name} — {city}</h3>
                 <div className="flex items-center gap-1 mb-2 text-xs font-medium text-[#0ea5a4]">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -268,7 +268,7 @@ export function LandingPage() {
         </section>
 
         <section className="mt-[18px] rounded-[20px] p-6 text-center bg-gradient-to-br from-[#0ea5a4] to-[#2dd4bf] border border-neutral-200 shadow-sm">
-          <h2 className="m-0 text-[36px] leading-[1.25] text-white font-bold">{t.final.title}</h2>
+          <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-white font-bold">{t.final.title}</h2>
           <div className="mt-6 flex justify-center gap-3 flex-wrap">
             <Link href="/auth">
               <Button className="rounded-[12px] h-auto py-3 px-5 bg-[#0ea5a4] text-white shadow-sm hover:bg-[#0b7c7b] border border-transparent hover:-translate-y-px transition-all bg-white text-[#0ea5a4] hover:bg-neutral-50">
@@ -279,7 +279,7 @@ export function LandingPage() {
         </section>
 
         <section className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
-          <h2 className="m-0 text-[36px] leading-[1.25] text-[#103745] text-center font-bold">{t.faq.title}</h2>
+          <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#103745] text-center font-bold">{t.faq.title}</h2>
           <div className="mt-6 grid gap-3">
             {t.faq.items.map(([q, a]) => (
               <details className="border border-neutral-200 rounded-[12px] bg-white p-4 shadow-sm group" key={q}>
