@@ -5,11 +5,11 @@
     "safety": "Safety",
     "sitter": "Become a Sitter",
     "login": "Login",
-    "cta": "Find a Sitter"
+    "cta": "Find Your Perfect Sitter"
   },
   "hero": {
-    "title": "They're not just pets. They're family.",
-    "subtitle": "When you can't be there, we make sure someone loving is.",
+    "title": "Peace of Mind for You. Pure Joy for Them.",
+    "subtitle": "Join 15,000+ happy pet parents. Trusted local care when you can't be there.",
     "fields": ["Location", "Dates", "Pet Type", "Service Type"],
     "primary": "Find a Loving Sitter",
     "secondary": "Become a Sitter",
@@ -18,7 +18,9 @@
     "ratingLabel": "Average rating",
     "verifiedLabel": "Verified",
     "illustrationTitle": "Calm care, even when you're away",
-    "illustrationBody": "A trusted sitter keeps routines, comfort, and love exactly where your pet needs it."
+    "illustrationBody": "A trusted sitter keeps routines, comfort, and love exactly where your pet needs it.",
+    "step1": "Step 1 of 3: Check Availability",
+    "highDemand": "High demand in your area"
   },
   "socialProof": {
     "items": [
@@ -74,8 +76,9 @@
     "items": [
       ["Sara", "Tehran", "I was anxious at first, but after chatting with the sitter I felt calm. Daily photo updates helped a lot."],
       ["Mohammad", "Shiraz", "I traveled without worry for the first time. Smooth and respectful experience."],
-      ["نرگس", "اصفهان", "رفتار مراقب خیلی محترمانه و مسئولانه بود. با خیال راحت سپردم."]
-    ]
+      ["Narges", "Isfahan", "The sitter was very respectful and responsible. I left my pet with peace of mind."]
+    ],
+    "verified": "Verified Owner"
   },
   "safety": {
     "title": "Your pet's safety is our priority",

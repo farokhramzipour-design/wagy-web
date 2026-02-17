@@ -126,14 +126,33 @@ export function LandingPage() {
         <section className="mt-6 p-0 overflow-hidden rounded-[20px] border border-[#dbe5e7] bg-[radial-gradient(140%_120%_at_0%_0%,rgba(14,165,164,0.16),rgba(255,255,255,0)_55%),radial-gradient(120%_100%_at_100%_0%,rgba(255,107,107,0.12),rgba(255,255,255,0)_48%),linear-gradient(180deg,#eff8f7,#f9fcfb)] relative before:content-[''] before:absolute before:-left-[120px] before:-top-[120px] before:w-[300px] before:h-[300px] before:rounded-full before:bg-[radial-gradient(circle,rgba(14,124,123,0.18),transparent_70%)] before:pointer-events-none">
           <div className="p-[28px_20px_20px] lg:p-[34px_30px_20px] relative grid gap-[18px] grid-cols-1 lg:grid-cols-[1.2fr_1fr] lg:gap-6 items-stretch">
             <div className="grid content-start gap-3.5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-xs font-medium mb-4 border border-orange-100 w-fit">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                </span>
+                {t.hero.highDemand}
+              </div>
               <h1 className="m-0 text-[32px] lg:text-[44px] leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-[36px] rtl:leading-[1.35]">{t.hero.title}</h1>
               <p className="mt-2 max-w-[520px] text-[16px] lg:text-[18px] leading-[1.55] text-[#37556a] m-0">{t.hero.subtitle}</p>
-              <form className="mt-4 grid grid-cols-1 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto] items-center gap-2 rounded-[14px] p-2 bg-white/92 border border-neutral-200 shadow-sm" onSubmit={(e) => e.preventDefault()}>
-                <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[0]} />
-                <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[1]} />
-                <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[3]} />
-                <Button className="h-auto min-h-[40px] px-4 whitespace-nowrap rounded-[12px] bg-[#0ea5a4] hover:bg-[#0b7c7b]" type="submit">{t.nav.cta}</Button>
-              </form>
+              
+              <div className="mt-4 p-2 bg-white/92 border border-neutral-200 shadow-sm rounded-[16px]">
+                <div className="px-2 pb-1 text-xs font-medium text-neutral-500 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#0ea5a4]"></span>
+                  {t.hero.step1}
+                </div>
+                <form className="grid grid-cols-1 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto] items-center gap-2" onSubmit={(e) => e.preventDefault()}>
+                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[0]} />
+                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[1]} />
+                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[3]} />
+                  <Button className="h-auto min-h-[40px] px-4 whitespace-nowrap rounded-[12px] bg-[#ff6b6b] hover:bg-[#ff5252] text-white shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5" type="submit">
+                    {t.nav.cta}
+                    <svg className="w-4 h-4 ms-1.5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </Button>
+                </form>
+              </div>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {trustBadges.map((badge) => (
                   <span className="border border-neutral-200 bg-white rounded-full text-xs text-neutral-600 px-2.5 py-1.5" key={badge}>{badge}</span>
@@ -153,7 +172,12 @@ export function LandingPage() {
             {t.socialProof.items.map((item) => (
               <article className="border border-neutral-200 bg-[#f7fbfb] rounded-xl shadow-none p-3.5 text-center" key={item.label}>
                 <CountUp target={item.value} suffix={item.suffix} lang={lang} />
-                <span className="block mt-1.5 text-neutral-600 text-[13px]">{item.label}</span>
+                <span className="mt-1.5 flex items-center justify-center gap-1 text-neutral-600 text-[13px]">
+                  {item.label}
+                  <svg className="w-3.5 h-3.5 text-[#0ea5a4]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                  </svg>
+                </span>
               </article>
             ))}
           </div>
@@ -230,7 +254,13 @@ export function LandingPage() {
             {t.testimonials.items.map(([name, city, quote]) => (
               <article className="min-w-[min(86vw,360px)] snap-start lg:min-w-0 p-6 rounded-[16px] border border-neutral-200 bg-[linear-gradient(160deg,#fff,#f9fffe)] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-250" key={name + city}>
                 <div className="w-10 h-10 rounded-full bg-[#d1faf9] text-[#0b7c7b] inline-flex items-center justify-center font-bold mb-2">{name.slice(0, 1)}</div>
-                <h3 className="m-0 mb-2 text-[22px] leading-[1.3] font-semibold text-neutral-800">{name} — {city}</h3>
+                <h3 className="m-0 mb-1 text-[22px] leading-[1.3] font-semibold text-neutral-800">{name} — {city}</h3>
+                <div className="flex items-center gap-1 mb-2 text-xs font-medium text-[#0ea5a4]">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  {t.testimonials.verified}
+                </div>
                 <p className="m-0 text-base text-neutral-600">"{quote}"</p>
               </article>
             ))}
