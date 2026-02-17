@@ -182,7 +182,33 @@
     "addresses": {
       "title": "آدرس‌های من",
       "add": "افزودن آدرس",
-      "empty": "هنوز آدرسی ثبت نکردی."
+      "empty": "هنوز آدرسی ثبت نکردی.",
+      "form": {
+        "title": "افزودن آدرس جدید",
+        "mapStep": "انتخاب موقعیت",
+        "detailsStep": "جزئیات آدرس",
+        "searchMap": "جستجوی موقعیت...",
+        "confirmLocation": "تایید موقعیت",
+        "label": "عنوان (مثلاً خانه، محل کار)",
+        "country": "کد کشور",
+        "province": "شناسه استان",
+        "city": "شناسه شهر",
+        "postalCode": "کد پستی",
+        "addressLine1": "آدرس خط ۱",
+        "addressLine2": "آدرس خط ۲ (واحد، طبقه)",
+        "isDefault": "تنظیم به عنوان پیش‌فرض"
+      },
+      "actions": {
+        "save": "ذخیره آدرس",
+        "cancel": "لغو",
+        "saving": "در حال ذخیره..."
+      },
+      "validation": {
+        "labelRequired": "عنوان الزامی است",
+        "addressRequired": "جزئیات آدرس الزامی است",
+        "success": "آدرس با موفقیت اضافه شد",
+        "error": "خطا در افزودن آدرس"
+      }
     },
     "transactions": {
       "title": "تراکنش‌ها",

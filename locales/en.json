@@ -182,7 +182,33 @@
     "addresses": {
       "title": "My Addresses",
       "add": "Add Address",
-      "empty": "No addresses added yet."
+      "empty": "No addresses added yet.",
+      "form": {
+        "title": "Add New Address",
+        "mapStep": "Select Location",
+        "detailsStep": "Address Details",
+        "searchMap": "Search location...",
+        "confirmLocation": "Confirm Location",
+        "label": "Label (e.g., Home, Work)",
+        "country": "Country Code",
+        "province": "Province ID",
+        "city": "City ID",
+        "postalCode": "Postal Code",
+        "addressLine1": "Address Line 1",
+        "addressLine2": "Address Line 2 (Unit, Floor)",
+        "isDefault": "Set as default address"
+      },
+      "actions": {
+        "save": "Save Address",
+        "cancel": "Cancel",
+        "saving": "Saving..."
+      },
+      "validation": {
+        "labelRequired": "Label is required",
+        "addressRequired": "Address details are required",
+        "success": "Address added successfully",
+        "error": "Failed to add address"
+      }
     },
     "transactions": {
       "title": "Transactions",
