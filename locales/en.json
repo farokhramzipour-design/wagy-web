@@ -168,6 +168,42 @@
       "calendar": "Calendar",
       "requests": "Requests"
     },
+    "home": {
+      "welcome": "Welcome back, {name}!",
+      "ready": "Ready to find the perfect care for your furry friend?",
+      "search": {
+        "where": "Where",
+        "when": "When",
+        "zip": "Zip code or address",
+        "dates": "Select dates",
+        "button": "Search",
+        "services": {
+          "boarding": "Boarding",
+          "houseSitting": "House Sitting",
+          "dogWalking": "Dog Walking",
+          "dropIn": "Drop-In Visits"
+        }
+      },
+      "upcoming": "Upcoming Bookings",
+      "viewAll": "View all",
+      "stayWith": "Stay with {sitter}",
+      "for": "For {pet}",
+      "messageSitter": "Message Sitter",
+      "modifyBooking": "Modify Booking",
+      "recommended": "Recommended for You",
+      "seeMore": "See more",
+      "perNight": "per night",
+      "reviews": "reviews",
+      "messages": "Messages",
+      "new": "new",
+      "viewAllMessages": "View all messages",
+      "yourPets": "Your Pets",
+      "refer": {
+        "title": "Refer a friend",
+        "desc": "Give $20, get $20 when you refer a friend to Waggy.",
+        "button": "Invite Friends"
+      }
+    },
     "pets": {
       "title": "My Pets",
       "add": "Add Pet",
