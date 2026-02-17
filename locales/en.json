@@ -147,5 +147,39 @@
       ],
       "imageAlt": "Pet sitter caring for a dog"
     }
+  },
+  "dashboard": {
+    "nav": {
+      "overview": "Overview",
+      "pets": "My Pets",
+      "orders": "Orders",
+      "addresses": "Addresses",
+      "transactions": "Transactions",
+      "becomeSitter": "Become a Sitter",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "welcome": "Welcome back, {name}"
+    },
+    "pets": {
+      "title": "My Pets",
+      "add": "Add Pet",
+      "empty": "No pets added yet."
+    },
+    "orders": {
+      "title": "My Orders",
+      "empty": "No orders yet."
+    },
+    "addresses": {
+      "title": "My Addresses",
+      "add": "Add Address",
+      "empty": "No addresses added yet."
+    },
+    "transactions": {
+      "title": "Transactions",
+      "empty": "No transactions found."
+    }
   }
 }

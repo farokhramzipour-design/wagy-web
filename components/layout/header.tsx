@@ -23,9 +23,10 @@ const content = { en, fa };
 
 interface HeaderProps {
   user: SessionData | null;
+  showNavLinks?: boolean;
 }
 
-export function Header({ user }: HeaderProps) {
+export function Header({ user, showNavLinks = true }: HeaderProps) {
   const { lang, setLang } = useLanguage();
   const t = useMemo(() => content[lang], [lang]);
 
@@ -39,12 +40,14 @@ export function Header({ user }: HeaderProps) {
       <div className="w-full max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
         <Link href="/landing" className="text-2xl font-bold tracking-tight text-[#0ea5a4]">Waggy</Link>
         
-        <nav className="hidden md:flex gap-6 text-sm font-medium text-neutral-600">
-          <Link href="/landing#services" className="hover:text-[#0ea5a4] transition-colors">{t.nav.services}</Link>
-          <Link href="/landing#how" className="hover:text-[#0ea5a4] transition-colors">{t.nav.how}</Link>
-          <Link href="/landing#safety" className="hover:text-[#0ea5a4] transition-colors">{t.nav.safety}</Link>
-          <Link href="/landing#become" className="hover:text-[#0ea5a4] transition-colors">{t.nav.sitter}</Link>
-        </nav>
+        {showNavLinks && (
+          <nav className="hidden md:flex gap-6 text-sm font-medium text-neutral-600">
+            <Link href="/landing#services" className="hover:text-[#0ea5a4] transition-colors">{t.nav.services}</Link>
+            <Link href="/landing#how" className="hover:text-[#0ea5a4] transition-colors">{t.nav.how}</Link>
+            <Link href="/landing#safety" className="hover:text-[#0ea5a4] transition-colors">{t.nav.safety}</Link>
+            <Link href="/landing#become" className="hover:text-[#0ea5a4] transition-colors">{t.nav.sitter}</Link>
+          </nav>
+        )}
 
         <div className="flex items-center gap-3">
           <div className="flex items-center bg-neutral-100 rounded-full p-1">
