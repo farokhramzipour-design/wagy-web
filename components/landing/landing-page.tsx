@@ -90,10 +90,10 @@ export function LandingPage() {
         <TokenLoginBootstrap />
       </Suspense>
 
-      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white/88 backdrop-blur-md">
+      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
         <div className="w-full max-w-[1280px] mx-auto px-4 lg:px-6 grid grid-cols-1 justify-items-start py-3 gap-4 lg:grid-cols-[auto_1fr_auto] lg:items-center lg:py-0 lg:min-h-[72px]">
-          <Link href="/" className="text-[22px] font-bold tracking-tight text-neutral-800">Waggy</Link>
-          <nav className="flex gap-4 text-sm text-neutral-600 justify-self-start lg:justify-self-center rtl:text-xs">
+          <Link href="/" className="text-[22px] font-bold tracking-tight text-neutral-900">Waggy</Link>
+          <nav className="flex gap-4 text-sm text-neutral-700 justify-self-start lg:justify-self-center rtl:text-xs">
             <a href="#services">{t.nav.services}</a>
             <a href="#how">{t.nav.how}</a>
             <a href="#safety">{t.nav.safety}</a>
@@ -101,15 +101,15 @@ export function LandingPage() {
           </nav>
           <div className="flex items-center gap-2">
             <div className="inline-flex items-center border border-neutral-200 rounded-full overflow-hidden bg-white" role="group" aria-label="language">
-              <button className={`border-0 bg-transparent text-neutral-600 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "en" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("en")}>
+              <button className={`border-0 bg-transparent text-neutral-700 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "en" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("en")}>
                 EN
               </button>
-              <button className={`border-0 bg-transparent text-neutral-600 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "fa" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("fa")}>
+              <button className={`border-0 bg-transparent text-neutral-700 text-xs font-semibold px-3 py-2 cursor-pointer ${lang === "fa" ? "bg-[#d1faf9] text-[#0b7c7b]" : ""}`} onClick={() => setLang("fa")}>
                 FA
               </button>
             </div>
             <Link href="/auth">
-              <Button variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-800 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5 rtl:text-xs rtl:px-3.5 rtl:py-2.5">
+              <Button variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-900 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5 rtl:text-xs rtl:px-3.5 rtl:py-2.5">
                 {t.nav.login}
               </Button>
             </Link>
