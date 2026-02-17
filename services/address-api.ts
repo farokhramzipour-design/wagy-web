@@ -42,6 +42,7 @@ export async function getAddresses(token?: string) {
   return apiFetch<Address[]>("/api/v1/addresses", {
     method: "GET",
     token,
+    cache: "no-store",
   });
 }
 
