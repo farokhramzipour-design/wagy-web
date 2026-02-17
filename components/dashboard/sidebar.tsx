@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useLanguage } from "@/components/providers/language-provider";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
+import { SessionData } from "@/lib/session";
 import {
   LayoutDashboard,
   PawPrint,
@@ -13,15 +14,23 @@ import {
   MapPin,
   CreditCard,
   LogOut,
-  HeartHandshake
+  HeartHandshake,
+  ShieldAlert
 } from "lucide-react";
 
 const content = { en, fa };
 
-export function Sidebar() {
+interface SidebarProps {
+  session?: SessionData | null;
+}
+
+export function Sidebar({ session }: SidebarProps) {
   const pathname = usePathname();
   const { lang } = useLanguage();
   const t = content[lang].dashboard.nav;
+  const tOverview = content[lang].dashboard.overview;
+  
+  const isAdmin = session?.isAdmin ?? false;
 
   const links = [
     {
@@ -76,6 +85,16 @@ export function Sidebar() {
       </div>
 
       <div className="mt-auto p-4 border-t border-neutral-200 space-y-1">
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors mb-2"
+          >
+            <ShieldAlert className="w-4 h-4" />
+            {tOverview.adminPanel}
+          </Link>
+        )}
+        
         <Link
             href="/become-sitter"
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors"

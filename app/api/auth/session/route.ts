@@ -11,12 +11,16 @@ type SessionPayload = {
   access_token?: string;
   refresh_token?: string;
   access_expires_in?: number;
+  isAdmin?: boolean;
+  isProvider?: boolean;
 };
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as SessionPayload;
   const role = normalizeRole(body.role);
   const name = normalizeName(body.name);
+  const isAdmin = Boolean(body.isAdmin);
+  const isProvider = Boolean(body.isProvider);
   const accessToken = typeof body.access_token === "string" ? body.access_token : "";
   const refreshToken = typeof body.refresh_token === "string" ? body.refresh_token : "";
   const accessExpiresIn =
@@ -25,7 +29,7 @@ export async function POST(request: Request) {
       : 60 * 60;
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(SESSION_COOKIE, serializeSession({ role, name }), {
+  response.cookies.set(SESSION_COOKIE, serializeSession({ role, name, isAdmin, isProvider }), {
     httpOnly: true,
     sameSite: "lax",
     path: "/",

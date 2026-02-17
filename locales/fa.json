@@ -161,7 +161,12 @@
     },
     "overview": {
       "title": "پیشخوان",
-      "welcome": "خوش آمدی، {name}"
+      "welcome": "خوش آمدی، {name}",
+      "adminPanel": "پنل مدیریت",
+      "becomeSitter": "مراقب شو",
+      "providerCenter": "مرکز مراقبین",
+      "calendar": "تقویم",
+      "requests": "درخواست‌ها"
     },
     "pets": {
       "title": "پت‌های من",

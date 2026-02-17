@@ -35,7 +35,11 @@ export function AuthForm({ nextPath }: Props) {
     codePlaceholder: "______",
     verify: "تأیید و ورود",
     resend: "ارسال مجدد کد",
-    resendTimer: (seconds: number) => `ارسال مجدد (${seconds})`,
+    resendTimer: (seconds: number) => {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `ارسال مجدد (${mins}:${secs.toString().padStart(2, '0')})`;
+    },
     editPhone: "ویرایش شماره",
     sending: "در حال ارسال...",
     verifying: "در حال بررسی...",
@@ -54,6 +58,16 @@ export function AuthForm({ nextPath }: Props) {
   const [message, setMessage] = useState<string>("");
   const [messageType, setMessageType] = useState<"success" | "error" | "">("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [resendTimer]);
   
   const googleLoginUrl = useMemo(
     () => `/api/auth/google/login?next=${encodeURIComponent(nextPath)}`,
@@ -88,6 +102,7 @@ export function AuthForm({ nextPath }: Props) {
       const response = await requestOtp({ phone: normalizedPhone });
       setSubmittedPhone(normalizedPhone);
       setStep("otp");
+      setResendTimer(120);
       setMessage(response.message || t.otpSent);
       setMessageType("success");
       // Auto focus OTP input logic could go here
@@ -112,9 +127,13 @@ export function AuthForm({ nextPath }: Props) {
       setIsSuccess(true);
       
       let displayName = submittedPhone;
+      let isAdmin = false;
+      let isProvider = false;
       try {
         const me = await getMe(token.access_token);
         displayName = me.phone_e164 || submittedPhone;
+        isAdmin = me.is_admin;
+        isProvider = me.is_provider;
       } catch {
         // Keep phone as fallback
       }
@@ -123,8 +142,10 @@ export function AuthForm({ nextPath }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          role: "user",
+          role: isAdmin ? "admin" : "user",
           name: displayName,
+          isAdmin,
+          isProvider,
           access_token: token.access_token,
           refresh_token: token.refresh_token,
           access_expires_in: token.expires_in
@@ -153,6 +174,7 @@ export function AuthForm({ nextPath }: Props) {
     setMessageType("");
     try {
       const response = await requestOtp({ phone: submittedPhone });
+      setResendTimer(120);
       setMessage(response.message || t.otpSent);
       setMessageType("success");
     } catch (error) {
@@ -352,12 +374,15 @@ export function AuthForm({ nextPath }: Props) {
                 <div className="flex justify-center">
                   <button 
                     type="button" 
-                    className="flex items-center gap-2 text-[#0e7c7b] text-sm font-semibold hover:bg-[#0e7c7b]/5 px-3 py-2 rounded-lg transition-colors" 
+                    className={cn(
+                      "flex items-center gap-2 text-[#0e7c7b] text-sm font-semibold hover:bg-[#0e7c7b]/5 px-3 py-2 rounded-lg transition-colors",
+                      (loading || resendTimer > 0) && "opacity-50 cursor-not-allowed"
+                    )}
                     onClick={handleResendOtp}
-                    disabled={loading}
+                    disabled={loading || resendTimer > 0}
                   >
-                    <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
-                    {t.resend}
+                    <RefreshCw className={cn("w-4 h-4", loading && "animate-spin", resendTimer > 0 && "hidden")} />
+                    {resendTimer > 0 ? t.resendTimer(resendTimer) : t.resend}
                   </button>
                 </div>
               </form>

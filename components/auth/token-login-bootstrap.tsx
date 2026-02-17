@@ -29,9 +29,13 @@ export function TokenLoginBootstrap() {
 
     const run = async () => {
       let displayName = "Google User";
+      let isAdmin = false;
+      let isProvider = false;
       try {
         const me = await getMe(token);
         displayName = me.phone_e164 || me.email || displayName;
+        isAdmin = me.is_admin;
+        isProvider = me.is_provider;
       } catch {
         // Keep fallback display name.
       }
@@ -40,8 +44,10 @@ export function TokenLoginBootstrap() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          role: "user",
+          role: isAdmin ? "admin" : "user",
           name: displayName,
+          isAdmin,
+          isProvider,
           access_token: token,
           refresh_token: refreshToken,
           access_expires_in: expiresIn

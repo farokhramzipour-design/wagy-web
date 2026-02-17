@@ -16,7 +16,7 @@ export default function AppLayout({
     <div className="min-h-screen bg-neutral-50">
       <Header user={session} showNavLinks={false} />
       <div className="flex max-w-7xl mx-auto">
-        <Sidebar />
+        <Sidebar session={session} />
         <main className="flex-1 p-6">
           {children}
         </main>

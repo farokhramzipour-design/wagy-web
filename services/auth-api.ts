@@ -33,11 +33,22 @@ export interface RefreshAccessTokenResponse {
 
 export interface MeResponse {
   user_id: number;
-  email?: string | null;
+  email: string | null;
   phone_e164: string;
   status: string;
+  is_base_verified: boolean;
+  is_admin: boolean;
+  admin_role: string;
+  is_provider: boolean;
+  provider_id: number | null;
+  provider_status: string | null;
+  provider_is_active: boolean | null;
+  provider_verified: boolean | null;
   locale: string;
   timezone: string;
+  last_login_at: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export async function requestOtp(payload: OtpRequestPayload) {

@@ -3,6 +3,8 @@ export type SessionRole = "user" | "admin";
 export interface SessionData {
   role: SessionRole;
   name: string;
+  isAdmin: boolean;
+  isProvider: boolean;
 }
 
 const DEFAULT_NAME = "Guest";
@@ -28,7 +30,9 @@ export function parseSession(raw: string | undefined): SessionData | null {
     const parsed = JSON.parse(decodeURIComponent(raw)) as Partial<SessionData>;
     return {
       role: normalizeRole(parsed.role),
-      name: normalizeName(parsed.name)
+      name: normalizeName(parsed.name),
+      isAdmin: Boolean(parsed.isAdmin),
+      isProvider: Boolean(parsed.isProvider)
     };
   } catch {
     return null;

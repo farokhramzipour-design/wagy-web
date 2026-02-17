@@ -161,7 +161,12 @@
     },
     "overview": {
       "title": "Dashboard",
-      "welcome": "Welcome back, {name}"
+      "welcome": "Welcome back, {name}",
+      "adminPanel": "Admin Panel",
+      "becomeSitter": "Become a Sitter",
+      "providerCenter": "Provider Center",
+      "calendar": "Calendar",
+      "requests": "Requests"
     },
     "pets": {
       "title": "My Pets",

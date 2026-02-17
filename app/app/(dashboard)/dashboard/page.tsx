@@ -14,6 +14,9 @@ export default function DashboardPage() {
 
   const role = session?.role ?? 'user';
   const name = session?.name ?? 'Friend';
+  const isAdmin = session?.isAdmin ?? false;
+  const isProvider = session?.isProvider ?? false;
+
   const cards = role === "admin"
     ? [
         "Pending approvals: 4",
@@ -75,8 +78,28 @@ export default function DashboardPage() {
           <Button asChild variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-800 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5">
             <Link href="/">Public Home</Link>
           </Button>
+          
+          {!isProvider && (
+            <Button asChild variant="outline" className="rounded-[12px] h-auto py-3 px-5 border-[#0ea5a4] text-[#0ea5a4] hover:bg-[#0ea5a4]/10">
+              <Link href="/become-sitter">{t.overview.becomeSitter}</Link>
+            </Button>
+          )}
         </div>
       </section>
+
+      {isProvider && (
+        <section className="p-6 rounded-[16px] border border-neutral-200 bg-white/92 shadow-sm">
+          <h1 className="m-0 mb-3 text-[36px] leading-[1.2] font-bold text-neutral-800">{t.overview.providerCenter}</h1>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button asChild variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-800 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5">
+              <Link href="/provider/calendar">{t.overview.calendar}</Link>
+            </Button>
+            <Button asChild variant="secondary" className="bg-transparent border border-neutral-200 text-neutral-800 hover:bg-neutral-100 rounded-[12px] h-auto py-3 px-5">
+              <Link href="/provider/requests">{t.overview.requests}</Link>
+            </Button>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
