@@ -15,6 +15,7 @@ import { User, LogOut, LayoutDashboard } from "lucide-react";
 import type { SessionData } from "@/lib/session";
 import en from "../../locales/en.json";
 import fa from "../../locales/fa.json";
+import { useLanguage } from "@/components/providers/language-provider";
 
 type Lang = "en" | "fa";
 
@@ -22,11 +23,10 @@ const content = { en, fa };
 
 interface HeaderProps {
   user: SessionData | null;
-  lang: Lang;
-  setLang: (lang: Lang) => void;
 }
 
-export function Header({ user, lang, setLang }: HeaderProps) {
+export function Header({ user }: HeaderProps) {
+  const { lang, setLang } = useLanguage();
   const t = useMemo(() => content[lang], [lang]);
 
   const handleLogout = async () => {

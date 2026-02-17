@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { BedDouble, Home, Footprints, Sun, Dog } from "lucide-react";
 import { Header } from "@/components/layout/header";
 import type { SessionData } from "@/lib/session";
+import { useLanguage } from "@/components/providers/language-provider";
 
 type Lang = "en" | "fa";
 type ServiceCategory = "all" | "overnight" | "daytime";
@@ -61,21 +62,8 @@ const serviceMetadata = [
 ];
 
 export default function ServicesPageClient({ user }: { user: SessionData | null }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang } = useLanguage();
   const [filter, setFilter] = useState<ServiceCategory>("all");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("waggy_lang");
-    if (saved === "fa" || saved === "en") {
-      setLang(saved);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("waggy_lang", lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
-  }, [lang]);
 
   const t = useMemo(() => content[lang], [lang]);
 
@@ -112,7 +100,7 @@ export default function ServicesPageClient({ user }: { user: SessionData | null 
 
   return (
     <div className="bg-white min-h-screen text-neutral-900">
-      <Header user={user} lang={lang} setLang={setLang} />
+      <Header user={user} />
 
       <main className="w-full max-w-4xl mx-auto px-4 lg:px-6 py-12">
         <div className="flex flex-wrap gap-3 mb-12 justify-start">

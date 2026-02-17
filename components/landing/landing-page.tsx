@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "../layout/header";
 import type { SessionData } from "@/lib/session";
+import { useLanguage } from "@/components/providers/language-provider";
 
 type Lang = "en" | "fa";
 
@@ -58,20 +59,7 @@ function CountUp({
 }
 
 export function LandingPage({ user }: { user: SessionData | null }) {
-  const [lang, setLang] = useState<Lang>("en");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("waggy_lang");
-    if (saved === "fa" || saved === "en") {
-      setLang(saved);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("waggy_lang", lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
-  }, [lang]);
+  const { lang } = useLanguage();
 
   const t = useMemo(() => content[lang], [lang]);
   const trustBadges = t.hero.trust.split(" • ");
@@ -92,7 +80,7 @@ export function LandingPage({ user }: { user: SessionData | null }) {
         <TokenLoginBootstrap />
       </Suspense>
 
-      <Header user={user} lang={lang} setLang={setLang} />
+      <Header user={user} />
 
       <main className="w-full max-w-[1280px] mx-auto px-4 lg:px-6">
         <section className="mt-6 p-0 overflow-hidden rounded-[20px] border border-[#dbe5e7] bg-[radial-gradient(140%_120%_at_0%_0%,rgba(14,165,164,0.16),rgba(255,255,255,0)_55%),radial-gradient(120%_100%_at_100%_0%,rgba(255,107,107,0.12),rgba(255,255,255,0)_48%),linear-gradient(180deg,#eff8f7,#f9fcfb)] relative before:content-[''] before:absolute before:-left-[120px] before:-top-[120px] before:w-[300px] before:h-[300px] before:rounded-full before:bg-[radial-gradient(circle,rgba(14,124,123,0.18),transparent_70%)] before:pointer-events-none">

@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { ArrowLeft, Check, KeyRound, Loader2, Phone, RefreshCw, Edit2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/providers/language-provider";
 
 type Props = {
   nextPath: string;
@@ -17,6 +18,8 @@ type Props = {
 type Step = "phone" | "otp";
 
 export function AuthForm({ nextPath }: Props) {
+  const { setLang } = useLanguage();
+
   const t = {
     title: "خوشحالیم که برگشتی!",
     cardTitle: "ورود | ثبت‌نام",
@@ -71,9 +74,7 @@ export function AuthForm({ nextPath }: Props) {
   }, [submittedPhone, countryCode]);
 
   useEffect(() => {
-    localStorage.setItem("waggy_lang", "fa");
-    document.documentElement.lang = "fa";
-    document.documentElement.dir = "rtl";
+    setLang("fa");
   }, []);
 
   const handleRequestOtp = async (event: FormEvent) => {

@@ -1,4 +1,6 @@
 import './globals.css';
+import { cookies } from 'next/headers';
+import { LanguageProvider } from '@/components/providers/language-provider';
 
 export const metadata = {
   title: 'Waggy',
@@ -6,9 +8,17 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = cookies();
+  const lang = (cookieStore.get("waggy_lang")?.value as "en" | "fa") || "en";
+  const dir = lang === "fa" ? "rtl" : "ltr";
+
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <body>{children}</body>
+    <html lang={lang} dir={dir} suppressHydrationWarning>
+      <body>
+        <LanguageProvider initialLang={lang}>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
