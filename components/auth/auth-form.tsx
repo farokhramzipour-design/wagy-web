@@ -21,7 +21,7 @@ export function AuthForm({ nextPath }: Props) {
     title: "خوشحالیم که برگشتی!",
     cardTitle: "ورود | ثبت‌نام",
     phoneLabel: "شماره موبایل",
-    phonePlaceholder: "۰۹۱۲ ۱۲۳ ۴۵۶۷",
+    phonePlaceholder: "۹۱۲ ۱۲۳ ۴۵۶۷",
     sendCode: "ارسال کد تأیید",
     or: "یا",
     google: "ورود با حساب گوگل",
@@ -36,7 +36,7 @@ export function AuthForm({ nextPath }: Props) {
     editPhone: "ویرایش شماره",
     sending: "در حال ارسال...",
     verifying: "در حال بررسی...",
-    otpSent: "کد تأیید ارسال شد",
+    otpSent: "کد تأیید با موفقیت ارسال شد",
     otpRequestFailed: "ارسال کد ناموفق بود",
     otpVerifyFailed: "کد وارد شده صحیح نیست",
     imageAlt: "مراقب در حال نگهداری از سگ"
@@ -49,6 +49,7 @@ export function AuthForm({ nextPath }: Props) {
   const [submittedPhone, setSubmittedPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string>("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
   const [isSuccess, setIsSuccess] = useState(false);
   
   const googleLoginUrl = useMemo(
@@ -81,15 +82,18 @@ export function AuthForm({ nextPath }: Props) {
     
     setLoading(true);
     setMessage("");
+    setMessageType("");
     try {
       const response = await requestOtp({ phone: normalizedPhone });
       setSubmittedPhone(normalizedPhone);
       setStep("otp");
       setMessage(response.message || t.otpSent);
+      setMessageType("success");
       // Auto focus OTP input logic could go here
     } catch (error) {
       const text = error instanceof ApiError ? `${t.otpRequestFailed} (${error.status})` : t.otpRequestFailed;
       setMessage(text);
+      setMessageType("error");
     } finally {
       setLoading(false);
     }
@@ -101,6 +105,7 @@ export function AuthForm({ nextPath }: Props) {
 
     setLoading(true);
     setMessage("");
+    setMessageType("");
     try {
       const token = await verifyOtp({ phone: submittedPhone, otp });
       setIsSuccess(true);
@@ -133,6 +138,7 @@ export function AuthForm({ nextPath }: Props) {
     } catch (error) {
       const text = error instanceof ApiError ? `${t.otpVerifyFailed} (${error.status})` : t.otpVerifyFailed;
       setMessage(text);
+      setMessageType("error");
       setIsSuccess(false);
     } finally {
       setLoading(false);
@@ -143,12 +149,15 @@ export function AuthForm({ nextPath }: Props) {
     if (!submittedPhone) return;
     setLoading(true);
     setMessage("");
+    setMessageType("");
     try {
       const response = await requestOtp({ phone: submittedPhone });
       setMessage(response.message || t.otpSent);
+      setMessageType("success");
     } catch (error) {
       const text = error instanceof ApiError ? `${t.otpRequestFailed} (${error.status})` : t.otpRequestFailed;
       setMessage(text);
+      setMessageType("error");
     } finally {
       setLoading(false);
     }
@@ -199,7 +208,14 @@ export function AuthForm({ nextPath }: Props) {
                       className="h-14 pr-10 pl-4 rounded-xl bg-slate-50 border-slate-200 focus:bg-white focus:border-[#0e7c7b] focus:ring-[#0e7c7b]/20 transition-all font-medium text-lg placeholder:text-slate-400 text-left dir-ltr"
                       placeholder={t.phonePlaceholder}
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, "");
+                        if (val.startsWith("0")) {
+                           setPhone(val.substring(1));
+                        } else {
+                           setPhone(val.slice(0, 10));
+                        }
+                      }}
                       required
                       dir="ltr"
                     />
@@ -212,7 +228,7 @@ export function AuthForm({ nextPath }: Props) {
                     "w-full h-14 rounded-xl text-lg font-bold shadow-lg shadow-[#0e7c7b]/20 bg-[#0e7c7b] hover:bg-[#0b6b6a] text-white transition-all active:scale-[0.98]",
                     loading && "opacity-80 cursor-not-allowed"
                   )}
-                  disabled={loading || !phone}
+                  disabled={loading || !phone || phone.length !== 10}
                 >
                   {loading ? (
                     <Loader2 className="w-6 h-6 animate-spin" />
@@ -264,14 +280,14 @@ export function AuthForm({ nextPath }: Props) {
                 </a>
               </form>
             ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-6 animate-in slide-in-from-right-8 duration-500">
+              <form onSubmit={handleVerifyOtp} className="space-y-6 animate-in slide-in-from-right-8 duration-500 pt-8">
                 <div>
                    <h3 className="text-xl font-bold text-[#123749] mb-1">{t.otpTitle}</h3>
                    <div className="flex items-center gap-2 text-sm text-slate-500">
                      <span>{t.otpSubtitle}</span>
                    </div>
-                   <div className="flex items-center gap-2 mt-2 bg-slate-50 p-2 rounded-lg w-fit border border-slate-100">
-                     <span className="font-bold text-[#0e7c7b] dir-ltr text-lg">{maskedPhone}</span>
+                   <div className="flex items-center gap-2 mt-2 bg-slate-50 p-2 rounded-lg w-fit border border-slate-100" dir="ltr">
+                     <span className="font-bold text-[#0e7c7b] text-lg">{maskedPhone}</span>
                      <button
                         type="button"
                         className="p-1 hover:bg-slate-200 rounded-md transition-colors text-slate-400 hover:text-slate-600"
@@ -346,10 +362,18 @@ export function AuthForm({ nextPath }: Props) {
               </form>
             )}
             
-            {/* Error Message */}
+            {/* Message Display */}
             {message && !isSuccess ? (
-               <div className="mt-6 p-4 rounded-xl bg-red-50 text-red-600 text-sm flex items-center justify-center gap-2 font-medium border border-red-100 animate-in fade-in slide-in-from-top-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+               <div className={cn(
+                 "mt-6 p-4 rounded-xl text-sm flex items-center justify-center gap-2 font-medium border animate-in fade-in slide-in-from-top-2",
+                 messageType === "success" 
+                   ? "bg-green-50 text-green-700 border-green-100" 
+                   : "bg-red-50 text-red-600 border-red-100"
+               )}>
+                 <div className={cn(
+                   "w-1.5 h-1.5 rounded-full",
+                   messageType === "success" ? "bg-green-500" : "bg-red-500"
+                 )} />
                  {message}
                </div>
             ) : null}
