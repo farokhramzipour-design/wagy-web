@@ -1,6 +1,7 @@
 import './globals.css';
 import { cookies } from 'next/headers';
 import { LanguageProvider } from '@/components/providers/language-provider';
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: 'Waggy',
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <LanguageProvider initialLang={lang}>
           {children}
+          <Toaster />
         </LanguageProvider>
       </body>
     </html>

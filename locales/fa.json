@@ -166,7 +166,14 @@
     "pets": {
       "title": "پت‌های من",
       "add": "افزودن پت",
-      "empty": "هنوز پتی اضافه نکردی."
+      "empty": "هنوز پتی اضافه نکردی.",
+      "list": {
+        "breed": "نژاد",
+        "age": "سن",
+        "gender": "جنسیت",
+        "male": "نر",
+        "female": "ماده"
+      }
     },
     "orders": {
       "title": "سفارش‌های من",
@@ -180,6 +187,104 @@
     "transactions": {
       "title": "تراکنش‌ها",
       "empty": "تراکنشی یافت نشد."
+    }
+  },
+  "petForm": {
+    "title": "درباره پت خود بگویید",
+    "subtitle": "توضیحاتی در مورد حیوان خانگی خود ارائه دهید",
+    "sections": {
+      "details": "جزئیات پت",
+      "additional": "جزئیات تکمیلی",
+      "care": "اطلاعات مراقبتی",
+      "health": "اطلاعات سلامتی",
+      "gallery": "گالری تصاویر"
+    },
+    "fields": {
+      "type": "نوع پت چیست؟",
+      "name": "نام",
+      "weight": "وزن (کیلوگرم)",
+      "age": "سن",
+      "years": "سال",
+      "months": "ماه",
+      "gender": "جنسیت",
+      "breed": "نژاد",
+      "breedPlaceholder": "همه نژادهایی که صدق می‌کند را وارد کنید. اگر میکس است، 'میکس' را هم اضافه کنید.",
+      "microchipped": "میکروچیپ دارد؟",
+      "spayedNeutered": "عقیم شده؟",
+      "houseTrained": "آموزش دستشویی دارد؟",
+      "friendlyChildren": "رابطه با کودکان؟",
+      "friendlyDogs": "رابطه با سگ‌ها؟",
+      "friendlyCats": "رابطه با گربه‌ها؟",
+      "adoptionDate": "تاریخ سرپرستی",
+      "about": "درباره پت",
+      "aboutPlaceholder": "توضیحی درباره پت خود بنویسید",
+      "toiletBreak": "نیاز به دستشویی",
+      "energyLevel": "سطح انرژی",
+      "feedingSchedule": "برنامه غذایی",
+      "alone": "تنها ماندن",
+      "medication": "دارو (همه موارد صدق‌کننده را انتخاب کنید)",
+      "additionalInfo": "نکته دیگری که مراقب باید بداند؟",
+      "additionalInfoPlaceholder": "دستورالعمل‌هایی برای پیاده‌روی، غذا دادن یا سایر مراقبت‌ها",
+      "vetInfo": "اطلاعات دامپزشکی",
+      "vetInfoPlaceholder": "نام، آدرس و شماره تلفن دامپزشک را وارد کنید",
+      "insurance": "بیمه پت",
+      "insurancePlaceholder": "این به شما کمک می‌کند اطلاعات پت را یکجا داشته باشید اما برای رزرو در واگی الزامی نیست",
+      "photoGallery": "با افزودن تصاویر، پت خود را معرفی کنید.",
+      "addPhoto": "افزودن عکس"
+    },
+    "placeholders": {
+      "name": "نام",
+      "specify": "لطفا مشخص کنید",
+      "selectBreed": "انتخاب نژاد",
+      "microchipId": "شماره میکروچیپ"
+    },
+    "options": {
+      "dog": "سگ",
+      "cat": "گربه",
+      "male": "نر",
+      "female": "ماده",
+      "microchipped": "دارد",
+      "notMicrochipped": "ندارد",
+      "spayed": "عقیم شده",
+      "notSpayed": "عقیم نشده",
+      "houseTrained": "آموزش دیده",
+      "notHouseTrained": "آموزش ندیده",
+      "dependsHouseTrained": "بستگی دارد",
+      "friendly": "دوستانه",
+      "notFriendly": "غیر دوستانه",
+      "unsure": "مطمئن نیستم",
+      "depends": "بستگی دارد",
+      "highEnergy": "انرژی بالا",
+      "moderateEnergy": "انرژی متوسط",
+      "lowEnergy": "انرژی پایین",
+      "morning": "صبح‌ها غذا می‌خورد",
+      "twice": "دو بار در روز غذا می‌خورد",
+      "specialFeeding": "دستورالعمل خاص برای غذا",
+      "oneHour": "می‌تواند ۱ ساعت یا کمتر تنها بماند",
+      "fourHours": "می‌تواند ۱ تا ۴ ساعت تنها بماند",
+      "eightHours": "می‌تواند ۴ تا ۸ ساعت تنها بماند",
+      "customAlone": "دستورالعمل خاص برای تنهایی",
+      "pill": "قرص",
+      "topical": "موضعی",
+      "injection": "تزریقی",
+      "everyHour": "هر ساعت",
+      "every2Hours": "هر ۲ ساعت",
+      "every4Hours": "هر ۴ ساعت",
+      "every8Hours": "هر ۸ ساعت",
+      "specialInstructions": "دستورالعمل خاص",
+      "noInsurance": "بدون بیمه",
+      "addProvider": "افزودن شرکت بیمه"
+    },
+    "actions": {
+      "save": "ذخیره پت",
+      "cancel": "پت ندارم",
+      "saving": "در حال ذخیره..."
+    },
+    "validation": {
+      "nameRequired": "لطفا نام پت خود را وارد کنید",
+      "breedRequired": "لطفا نژاد را انتخاب کنید",
+      "success": "پت با موفقیت اضافه شد!",
+      "error": "مشکلی پیش آمد. لطفا دوباره تلاش کنید."
     }
   }
 }

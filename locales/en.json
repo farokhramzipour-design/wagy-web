@@ -166,7 +166,14 @@
     "pets": {
       "title": "My Pets",
       "add": "Add Pet",
-      "empty": "No pets added yet."
+      "empty": "No pets added yet.",
+      "list": {
+        "breed": "Breed",
+        "age": "Age",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female"
+      }
     },
     "orders": {
       "title": "My Orders",
@@ -180,6 +187,104 @@
     "transactions": {
       "title": "Transactions",
       "empty": "No transactions found."
+    }
+  },
+  "petForm": {
+    "title": "Tell us about your pet",
+    "subtitle": "Provide a description of your pet",
+    "sections": {
+      "details": "Pet Details",
+      "additional": "Additional details",
+      "care": "Care info",
+      "health": "Health info",
+      "gallery": "Photo Gallery"
+    },
+    "fields": {
+      "type": "What type of pet?",
+      "name": "Name",
+      "weight": "Weight (kg)",
+      "age": "Age",
+      "years": "Years",
+      "months": "Months",
+      "gender": "Sex",
+      "breed": "Breed",
+      "breedPlaceholder": "Enter all breeds that apply. If your dog is mixed breed, add 'Mixed' as well.",
+      "microchipped": "Microchipped?",
+      "spayedNeutered": "Spayed/Neutered?",
+      "houseTrained": "House trained?",
+      "friendlyChildren": "Friendly with children?",
+      "friendlyDogs": "Friendly with dogs?",
+      "friendlyCats": "Friendly with cats?",
+      "adoptionDate": "Adoption date",
+      "about": "About your pet",
+      "aboutPlaceholder": "Add a description of your pet",
+      "toiletBreak": "Toilet break",
+      "energyLevel": "Energy level",
+      "feedingSchedule": "Feeding schedule",
+      "alone": "Can be left alone",
+      "medication": "Medication (select all that apply)",
+      "additionalInfo": "Anything else a sitter should know?",
+      "additionalInfoPlaceholder": "Add instructions for walking, feeding, or other care",
+      "vetInfo": "Veterinary Info",
+      "vetInfoPlaceholder": "Add your vet's name, address and phone number",
+      "insurance": "Pet insurance provider",
+      "insurancePlaceholder": "This helps you track your pet info all in one place but is not required to book on Waggy",
+      "photoGallery": "Show off your pet by adding photos and curating photos taken during your bookings.",
+      "addPhoto": "Add photo"
+    },
+    "placeholders": {
+      "name": "Name",
+      "specify": "Please specify",
+      "selectBreed": "Select breed",
+      "microchipId": "Microchip ID"
+    },
+    "options": {
+      "dog": "Dog",
+      "cat": "Cat",
+      "male": "Male",
+      "female": "Female",
+      "microchipped": "Microchipped",
+      "notMicrochipped": "Not microchipped",
+      "spayed": "Spayed/Neutered",
+      "notSpayed": "Not spayed/neutered",
+      "houseTrained": "House trained",
+      "notHouseTrained": "Not house trained",
+      "dependsHouseTrained": "Depends if house trained",
+      "friendly": "Friendly",
+      "notFriendly": "Not friendly",
+      "unsure": "Unsure",
+      "depends": "Depends",
+      "highEnergy": "High energy level",
+      "moderateEnergy": "Moderate energy level",
+      "lowEnergy": "Low energy level",
+      "morning": "Needs to be fed in the morning",
+      "twice": "Needs to be fed twice a day",
+      "specialFeeding": "Special instructions for feeding",
+      "oneHour": "Can be left alone for 1 hour or less",
+      "fourHours": "Can be left alone for 1-4 hours",
+      "eightHours": "Can be left alone for 4-8 hours",
+      "customAlone": "Special instructions for time alone",
+      "pill": "Pill",
+      "topical": "Topical",
+      "injection": "Injection",
+      "everyHour": "Every hour",
+      "every2Hours": "Every 2 hours",
+      "every4Hours": "Every 4 hours",
+      "every8Hours": "Every 8 hours",
+      "specialInstructions": "Special instructions",
+      "noInsurance": "No insurance",
+      "addProvider": "Add provider"
+    },
+    "actions": {
+      "save": "Save pet",
+      "cancel": "I don't have any pets",
+      "saving": "Saving..."
+    },
+    "validation": {
+      "nameRequired": "Please enter your pet's name",
+      "breedRequired": "Please select a breed",
+      "success": "Pet added successfully!",
+      "error": "Something went wrong. Please try again."
     }
   }
 }
