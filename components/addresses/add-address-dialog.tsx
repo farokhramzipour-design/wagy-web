@@ -22,9 +22,9 @@ export default function AddAddressDialog({ t }: AddAddressDialogProps) {
   const [loading, setLoading] = useState(false);
   
   const [formData, setFormData] = useState<CreateAddressDto>({
-    country_code: "IR",
-    province_id: 0,
-    city_id: 0,
+    country: "IR",
+    province: "",
+    city: "",
     postal_code: "",
     address_line1: "",
     address_line2: "",
@@ -64,8 +64,15 @@ export default function AddAddressDialog({ t }: AddAddressDialogProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.label || !formData.address_line1) {
+    
+    // Form validation
+    if (!formData.label?.trim()) {
       toast.error(t.validation.labelRequired);
+      return;
+    }
+    
+    if (!formData.address_line1?.trim()) {
+      toast.error(t.validation.addressRequired || "Address line 1 is required");
       return;
     }
 
@@ -78,9 +85,9 @@ export default function AddAddressDialog({ t }: AddAddressDialogProps) {
       // Reset form
       setStep("map");
       setFormData({
-        country_code: "IR",
-        province_id: 0,
-        city_id: 0,
+        country: "IR",
+        province: "",
+        city: "",
         postal_code: "",
         address_line1: "",
         address_line2: "",
@@ -105,17 +112,17 @@ export default function AddAddressDialog({ t }: AddAddressDialogProps) {
       setTimeout(() => {
         setStep("map");
         setFormData({
-          country_code: "IR",
-          province_id: 0,
-          city_id: 0,
-          postal_code: "",
-          address_line1: "",
-          address_line2: "",
-          lat: 0,
-          lng: 0,
-          label: "",
-          is_default: false,
-        });
+            country: "IR",
+            province: "",
+            city: "",
+            postal_code: "",
+            address_line1: "",
+            address_line2: "",
+            lat: 0,
+            lng: 0,
+            label: "",
+            is_default: false,
+          });
         setTempLocation(null);
       }, 300);
     }
@@ -195,21 +202,13 @@ export default function AddAddressDialog({ t }: AddAddressDialogProps) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="postal_code">{t.form.postalCode}</Label>
+                <Label htmlFor="postal_code">
+                  {t.form.postalCode} <span className="text-muted-foreground text-xs font-normal">({t.common?.optional || "Optional"})</span>
+                </Label>
                 <Input
                   id="postal_code"
                   value={formData.postal_code}
                   onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })}
-                />
-              </div>
-              
-               <div className="space-y-2">
-                <Label htmlFor="country_code">{t.form.country}</Label>
-                <Input
-                  id="country_code"
-                  value={formData.country_code}
-                  onChange={(e) => setFormData({ ...formData, country_code: e.target.value })}
-                  disabled // Mocked
                 />
               </div>
             </div>

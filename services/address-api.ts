@@ -17,9 +17,9 @@ export interface Address {
 }
 
 export interface CreateAddressDto {
-  country_code: string;
-  province_id: number;
-  city_id: number;
+  country: string;
+  province: string;
+  city: string;
   postal_code: string;
   address_line1: string;
   address_line2: string;
@@ -74,16 +74,26 @@ export async function createAddressClient(data: CreateAddressDto) {
 
 // Mock function for reverse geocoding
 export async function getAddressFromCoordinates(lat: number, lng: number): Promise<Partial<CreateAddressDto>> {
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  const response = await fetch(`/api/addresses/reverse-geocode?lat=${lat}&lon=${lng}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch address details");
+  }
+
+  const data = await response.json();
 
   return {
-    country_code: "IR",
-    province_id: 1,
-    city_id: 1,
-    postal_code: "1234567890",
-    address_line1: `Mock Address at ${lat.toFixed(4)}, ${lng.toFixed(4)}`,
-    address_line2: "Unit 1, No 1",
-    label: "",
+    country: data.country,
+    province: data.province,
+    city: data.city,
+    postal_code: data.postal_code,
+    address_line1: data.address,
+    address_line2: "",
   };
 }
 
