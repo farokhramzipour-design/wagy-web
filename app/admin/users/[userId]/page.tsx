@@ -1,42 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { 
-  UserDetailResponse 
-} from "@/services/admin-api";
 import { getUserDetailAction, updateUserStatusAction } from "@/app/admin/users/actions";
-import { Button } from "@/components/ui/button";
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription 
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/components/providers/language-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Loader2, 
-  ArrowLeft, 
-  Mail, 
-  Phone, 
-  Calendar, 
-  Shield, 
-  CheckCircle, 
-  XCircle,
-  MessageSquare,
-  Briefcase
-} from "lucide-react";
-import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -47,10 +22,32 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { useLanguage } from "@/components/providers/language-provider";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
+import {
+  UserDetailResponse
+} from "@/services/admin-api";
+import {
+  ArrowLeft,
+  Calendar,
+  CheckCircle,
+  Loader2,
+  Mail,
+  Phone,
+  XCircle
+} from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const content = { en, fa };
 
@@ -89,7 +86,7 @@ export default function UserDetailsPage() {
 
   const handleStatusUpdate = async () => {
     if (!data) return;
-    
+
     setUpdatingStatus(true);
     try {
       await updateUserStatusAction(userId, newStatus, statusReason);
@@ -125,26 +122,27 @@ export default function UserDetailsPage() {
   }
 
   const { user, provider_profile, bookings_as_owner, bookings_as_provider, conversations } = data;
+  const isRtl = lang === "fa";
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="outline" size="icon" onClick={() => router.push("/admin/users")}>
-          <ArrowLeft className="h-4 w-4" />
+          {isRtl ? <ArrowLeft className="h-4 w-4 rotate-180" /> : <ArrowLeft className="h-4 w-4" />}
         </Button>
         <h1 className="text-2xl font-bold tracking-tight">{t.detailsTitle}</h1>
-        <div className="ml-auto flex gap-2">
+        <div className="ms-auto flex gap-2">
           <Dialog open={statusDialogOpen} onOpenChange={setStatusDialogOpen}>
             <DialogTrigger asChild>
               <Button variant={user.status === "active" ? "destructive" : "default"}>
                 {user.status === "active" ? (
                   <>
-                    <XCircle className="mr-2 h-4 w-4" />
+                    <XCircle className="me-2 h-4 w-4" />
                     {t.suspendUser}
                   </>
                 ) : (
                   <>
-                    <CheckCircle className="mr-2 h-4 w-4" />
+                    <CheckCircle className="me-2 h-4 w-4" />
                     {t.activateUser}
                   </>
                 )}
@@ -173,8 +171,8 @@ export default function UserDetailsPage() {
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="reason">{t.reason}</Label>
-                  <Textarea 
-                    id="reason" 
+                  <Textarea
+                    id="reason"
                     placeholder={t.reasonPlaceholder}
                     value={statusReason}
                     onChange={(e) => setStatusReason(e.target.value)}
@@ -186,7 +184,7 @@ export default function UserDetailsPage() {
                   {t.cancel}
                 </Button>
                 <Button onClick={handleStatusUpdate} disabled={updatingStatus}>
-                  {updatingStatus && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {updatingStatus && <Loader2 className="me-2 h-4 w-4 animate-spin" />}
                   {t.updateStatus}
                 </Button>
               </DialogFooter>
@@ -222,7 +220,7 @@ export default function UserDetailsPage() {
             </div>
             <div className="flex items-center gap-3 text-sm">
               <Phone className="h-4 w-4 text-muted-foreground" />
-              <span>{user.phone_e164}</span>
+              <span dir="ltr" className={isRtl ? "ms-auto" : "me-auto"}>{user.phone_e164}</span>
             </div>
             <div className="flex items-center gap-3 text-sm">
               <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -243,7 +241,7 @@ export default function UserDetailsPage() {
                 <TabsTrigger value="bookings">{t.bookings}</TabsTrigger>
                 {user.is_provider && <TabsTrigger value="provider">{t.providerInfo}</TabsTrigger>}
               </TabsList>
-              
+
               <TabsContent value="overview" className="space-y-4 mt-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <Card>
@@ -252,7 +250,7 @@ export default function UserDetailsPage() {
                       <CardDescription>{t.asOwner}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold">{bookings_as_owner?.length || 0}</div>
+                      <div className="text-2xl font-bold flex items-center justify-start">{bookings_as_owner?.length || 0}</div>
                     </CardContent>
                   </Card>
                   <Card>
@@ -261,11 +259,11 @@ export default function UserDetailsPage() {
                       <CardDescription>{t.activeChats}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-2xl font-bold">{conversations?.length || 0}</div>
+                      <div className="text-2xl font-bold flex items-center justify-start">{conversations?.length || 0}</div>
                     </CardContent>
                   </Card>
                 </div>
-                
+
                 <div>
                   <h3 className="font-semibold mb-2">{t.recentActivity}</h3>
                   <div className="text-sm text-muted-foreground">
@@ -273,7 +271,7 @@ export default function UserDetailsPage() {
                   </div>
                 </div>
               </TabsContent>
-              
+
               <TabsContent value="bookings" className="mt-4">
                 <h3 className="font-semibold mb-2">{t.bookingHistory}</h3>
                 <p className="text-sm text-muted-foreground mb-4">
