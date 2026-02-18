@@ -1,4 +1,19 @@
 import { AuthForm } from '../../components/auth/auth-form';
+import { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import en from '../../locales/en.json';
+import fa from '../../locales/fa.json';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = cookies();
+  const lang = (cookieStore.get("waggy_lang")?.value as "en" | "fa") || "en";
+  const dict = lang === 'fa' ? fa : en;
+
+  return {
+    title: dict.metadata.auth.title,
+    description: dict.metadata.auth.description,
+  };
+}
 
 export default function AuthPage({
   searchParams

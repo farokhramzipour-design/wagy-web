@@ -1,4 +1,12 @@
 {
+  "metadata": {
+    "title": "Waggy - Professional Pet Care Services",
+    "description": "Trusted pet sitting, dog walking, and grooming services. Book experienced pet caregivers in your area for your furry friends.",
+    "auth": {
+      "title": "Sign In",
+      "description": "Sign in to Waggy to book pet care services."
+    }
+  },
   "nav": {
     "services": "Services",
     "how": "How It Works",

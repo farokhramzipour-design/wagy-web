@@ -1,15 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import { TokenLoginBootstrap } from "../auth/token-login-bootstrap";
-import en from "../../locales/en.json";
-import fa from "../../locales/fa.json";
+import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Header } from "../layout/header";
 import type { SessionData } from "@/lib/session";
-import { useLanguage } from "@/components/providers/language-provider";
+import Image from "next/image";
+import Link from "next/link";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import en from "../../locales/en.json";
+import fa from "../../locales/fa.json";
+import { TokenLoginBootstrap } from "../auth/token-login-bootstrap";
+import { Header } from "../layout/header";
 
 type Lang = "en" | "fa";
 
@@ -95,7 +96,7 @@ export function LandingPage({ user }: { user: SessionData | null }) {
               </div>
               <h1 className="m-0 text-3xl lg:text-4xl leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-4xl rtl:leading-[1.35]">{t.hero.title}</h1>
               <p className="mt-2 max-w-[520px] text-[16px] lg:text-[18px] leading-[1.55] text-[#37556a] m-0">{t.hero.subtitle}</p>
-              
+
               <div className="mt-4 p-2 bg-white/92 border border-neutral-200 shadow-sm rounded-[16px]">
                 <div className="px-2 pb-1 text-xs font-medium text-neutral-500 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#0ea5a4]"></span>
@@ -119,9 +120,16 @@ export function LandingPage({ user }: { user: SessionData | null }) {
                 ))}
               </div>
             </div>
-            <div className="grid gap-4 items-end">
-              <article className="relative grid gap-3 bg-gradient-to-br from-white to-[#f0fbfa] p-0 rounded-[20px] border-0 shadow-none overflow-hidden aspect-[16/10] lg:max-h-[320px] lg:min-h-0 lg:aspect-auto">
-                <img src={heroImage} alt={t.hero.photoLabel} className="w-full h-full min-h-0 object-cover object-center rounded-[20px] block" loading="lazy" />
+            <div className="grid gap-4 items-end h-full">
+              <article className="relative w-full bg-gradient-to-br from-white to-[#f0fbfa] p-0 rounded-[20px] border-0 shadow-none overflow-hidden aspect-[16/10] lg:h-full lg:min-h-[320px]">
+                <Image
+                  src={heroImage}
+                  alt={t.hero.photoLabel}
+                  fill
+                  className="object-cover object-center rounded-[20px]"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </article>
             </div>
           </div>
@@ -135,7 +143,7 @@ export function LandingPage({ user }: { user: SessionData | null }) {
                 <span className="mt-1.5 flex items-center justify-center gap-1 text-neutral-600 text-[13px]">
                   {item.label}
                   <svg className="w-3.5 h-3.5 text-[#0ea5a4]" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                   </svg>
                 </span>
               </article>
@@ -155,12 +163,15 @@ export function LandingPage({ user }: { user: SessionData | null }) {
           <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
             {t.services.items.slice(0, 3).map(([title, desc], index) => (
               <article className="p-0 pb-4 overflow-hidden rounded-[14px] border border-neutral-200 bg-white shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-250" key={title}>
-                <img
-                  src={serviceImages[index]}
-                  alt={title}
-                  className="w-full h-[170px] object-cover block"
-                  loading="lazy"
-                />
+                <div className="relative w-full h-[170px]">
+                  <Image
+                    src={serviceImages[index]}
+                    alt={title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                </div>
                 <h3 className="mx-4 mt-3.5 mb-1.5 text-xl text-[#123749] font-bold">{title}</h3>
                 <p className="mx-4 my-0 text-base text-neutral-600">{desc}</p>
               </article>
@@ -190,7 +201,15 @@ export function LandingPage({ user }: { user: SessionData | null }) {
               ))}
             </ul>
           </div>
-          <img src={safetyImage} alt={t.safety.photoLabel} className="w-full h-[220px] lg:h-[260px] object-cover rounded-2xl border border-[#dfe8ea]" loading="lazy" />
+          <div className="relative w-full h-[220px] lg:h-[260px]">
+            <Image
+              src={safetyImage}
+              alt={t.safety.photoLabel}
+              fill
+              className="object-cover rounded-2xl border border-[#dfe8ea]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
         </section>
 
         <section id="become" className="mt-[18px] rounded-[20px] p-[26px] grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-5 bg-[linear-gradient(165deg,rgba(255,107,107,0.06),rgba(255,255,255,0.95))] border border-neutral-200 shadow-sm">
@@ -205,7 +224,15 @@ export function LandingPage({ user }: { user: SessionData | null }) {
               </Link>
             </div>
           </div>
-          <img src={sitterImage} alt={t.sitter.title} className="w-full h-[220px] lg:h-[260px] object-cover rounded-2xl border border-[#dfe8ea]" loading="lazy" />
+          <div className="relative w-full h-[220px] lg:h-[260px]">
+            <Image
+              src={sitterImage}
+              alt={t.sitter.title}
+              fill
+              className="object-cover rounded-2xl border border-[#dfe8ea]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
         </section>
 
         <section className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
@@ -217,7 +244,7 @@ export function LandingPage({ user }: { user: SessionData | null }) {
                 <h3 className="m-0 mb-1 text-lg leading-[1.3] font-semibold text-neutral-800">{name} — {city}</h3>
                 <div className="flex items-center gap-1 mb-2 text-xs font-medium text-[#0ea5a4]">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                   </svg>
                   {t.testimonials.verified}
                 </div>
