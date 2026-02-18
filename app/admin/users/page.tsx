@@ -1,33 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AdminUser } from "@/services/admin-api";
 import { getUsersAction } from "@/app/admin/users/actions";
 import { useLanguage } from "@/components/providers/language-provider";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
-import { Search, ChevronLeft, ChevronRight, Loader2, Eye } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { AdminUser } from "@/services/admin-api";
+import { ChevronLeft, ChevronRight, Eye, Loader2, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const content = { en, fa };
@@ -36,16 +36,17 @@ export default function UsersPage() {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = (content[lang] as any).admin.users;
-  
+  const isRtl = lang === "fa";
+
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [total, setTotal] = useState(0);
-  
+
   // Filters
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [userType, setUserType] = useState("all");
-  
+
   // Pagination
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(10);
@@ -126,10 +127,10 @@ export default function UsersPage() {
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className={`absolute top-2.5 h-4 w-4 text-muted-foreground ${isRtl ? "right-2.5" : "left-2.5"}`} />
               <Input
                 placeholder={t.searchPlaceholder}
-                className="pl-8"
+                className={isRtl ? "pr-8" : "pl-8"}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -146,7 +147,7 @@ export default function UsersPage() {
                   <SelectItem value="pending">{t.pending}</SelectItem>
                 </SelectContent>
               </Select>
-              
+
               <Select value={userType} onValueChange={setUserType}>
                 <SelectTrigger className="w-[150px]">
                   <SelectValue placeholder={t.userType} />
@@ -169,8 +170,8 @@ export default function UsersPage() {
                   <TableHead>{t.contact}</TableHead>
                   <TableHead>{t.roles}</TableHead>
                   <TableHead>{t.status}</TableHead>
-                  <TableHead>{t.createdAt}</TableHead>
-                  <TableHead className="text-right">{t.actions}</TableHead>
+                  <TableHead className="text-start">{t.createdAt}</TableHead>
+                  <TableHead className="text-end">{t.actions}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -207,7 +208,7 @@ export default function UsersPage() {
                       <TableCell>
                         <div className="flex flex-col text-sm">
                           <span>{user.email}</span>
-                          <span className="text-muted-foreground">{user.phone_e164}</span>
+                          <span className="text-muted-foreground text-left" dir="ltr">{user.phone_e164}</span>
                         </div>
                       </TableCell>
                       <TableCell>
@@ -225,7 +226,7 @@ export default function UsersPage() {
                       <TableCell className="text-muted-foreground">
                         {new Date(user.created_at).toLocaleDateString()}
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-end">
                         <Button 
                           variant="ghost" 
                           size="icon"
@@ -255,7 +256,7 @@ export default function UsersPage() {
                 onClick={() => handlePageChange(skip - limit)}
                 disabled={skip === 0 || loading}
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className={`h-4 w-4 ${isRtl ? "rotate-180" : ""}`} />
                 {t.previous}
               </Button>
               <Button
@@ -265,7 +266,7 @@ export default function UsersPage() {
                 disabled={skip + limit >= total || loading}
               >
                 {t.next}
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className={`h-4 w-4 ${isRtl ? "rotate-180" : ""}`} />
               </Button>
             </div>
           </div>
