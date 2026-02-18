@@ -316,7 +316,7 @@ export const adminApi = {
   },
 
   updateServiceStep: async (serviceId: number, stepId: number, data: UpdateServiceStepRequest, token?: string) => {
-    return apiFetch<ServiceStep>(`/api/v1/admin/service-types/${serviceId}/steps/${stepId}`, {
+    return apiFetch<ServiceStep>(`/api/v1/admin/service-types/steps/${stepId}`, {
       method: "PUT",
       body: JSON.stringify(data),
       token,
@@ -324,7 +324,7 @@ export const adminApi = {
   },
 
   deleteServiceStep: async (serviceId: number, stepId: number, token?: string) => {
-    return apiFetch<void>(`/api/v1/admin/service-types/${serviceId}/steps/${stepId}`, {
+    return apiFetch<void>(`/api/v1/admin/service-types/steps/${stepId}`, {
       method: "DELETE",
       token,
     });
