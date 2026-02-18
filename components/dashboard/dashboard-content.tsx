@@ -438,7 +438,7 @@ export function DashboardContent({ userName = "Pet Parent", isProvider = false, 
             <Card className="border-l-4 border-l-purple-500">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg">{tProvider.providerCenter}</CardTitle>
-                <CardDescription>{t.provider.desc}</CardDescription>
+                <CardDescription>Manage your services and bookings</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button asChild variant="outline" className="w-full justify-start">

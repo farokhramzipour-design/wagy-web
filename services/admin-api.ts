@@ -176,7 +176,180 @@ export interface TransactionListResponse {
   items: TransactionItem[];
 }
 
+export interface ServiceStep {
+  step_id: number;
+  service_type_id: number;
+  step_number: number;
+  title_en: string;
+  title_fa: string;
+  description: string;
+  is_required: boolean;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateServiceStepRequest {
+  step_number: number;
+  title_en: string;
+  title_fa: string;
+  description: string;
+  is_required: boolean;
+}
+
+export interface UpdateServiceStepRequest {
+  step_number?: number;
+  title_en?: string;
+  title_fa?: string;
+  description?: string;
+  is_required?: boolean;
+}
+
+export interface ToggleServiceStepRequest {
+  is_active: boolean;
+}
+
+export interface ReorderServiceStepsRequest {
+  ordered_step_ids: number[];
+}
+
+export interface ServiceType {
+  service_type_id: number;
+  name_en: string;
+  name_fa: string;
+  description: string;
+  icon_media_id: number;
+  icon_url: string;
+  icon_thumb_url: string;
+  display_order: number;
+  color: string;
+  is_active: boolean;
+  total_providers: number;
+  steps: ServiceStep[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ServiceTypeListResponse {
+  items: ServiceType[];
+}
+
+export interface CreateServiceTypeRequest {
+  name_en: string;
+  name_fa: string;
+  description: string;
+  icon_media_id: number;
+  display_order: number;
+  color: string;
+  is_active: boolean;
+}
+
+export interface MediaUploadResponse {
+  media_id: number;
+  url: string;
+  thumb_url: string;
+  mime_type: string;
+  size_bytes: number;
+  width: number;
+  height: number;
+  created_at: string;
+}
+
 export const adminApi = {
+  uploadMedia: async (file: File, mediaType: string = "other", token?: string) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("media_type", mediaType);
+
+    // Don't set Content-Type header manually for FormData, let the browser/fetch handle it
+    return apiFetch<MediaUploadResponse>("/api/v1/media/upload", {
+      method: "POST",
+      body: formData,
+      token,
+    });
+  },
+
+  getServiceTypes: async (token?: string) => {
+    return apiFetch<ServiceTypeListResponse>("/api/v1/admin/service-types", {
+      method: "GET",
+      token,
+    });
+  },
+
+  getServiceTypeById: async (id: number, token?: string) => {
+    return apiFetch<ServiceType>(`/api/v1/admin/service-types/${id}`, {
+      method: "GET",
+      token,
+    });
+  },
+
+  createServiceType: async (data: CreateServiceTypeRequest, token?: string) => {
+    return apiFetch<ServiceType>("/api/v1/admin/service-types", {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  updateServiceType: async (id: number, data: CreateServiceTypeRequest, token?: string) => {
+    return apiFetch<ServiceType>(`/api/v1/admin/service-types/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  deleteServiceType: async (id: number, token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/${id}`, {
+      method: "DELETE",
+      token,
+    });
+  },
+
+  // Steps API
+  createServiceStep: async (serviceId: number, data: CreateServiceStepRequest, token?: string) => {
+    return apiFetch<ServiceStep>(`/api/v1/admin/service-types/${serviceId}/steps`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  updateServiceStep: async (serviceId: number, stepId: number, data: UpdateServiceStepRequest, token?: string) => {
+    return apiFetch<ServiceStep>(`/api/v1/admin/service-types/${serviceId}/steps/${stepId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  deleteServiceStep: async (serviceId: number, stepId: number, token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/${serviceId}/steps/${stepId}`, {
+      method: "DELETE",
+      token,
+    });
+  },
+
+  toggleServiceStep: async (serviceId: number, data: ToggleServiceStepRequest, token?: string) => {
+    // Note: The user provided URL is /api/v1/admin/service-types/{service_id}/toggle
+    // which implies it toggles the service or steps feature on the service.
+    // If it was for a specific step, it would likely have step_id.
+    // Assuming this toggles the service active status or steps active status globally for the service.
+    return apiFetch<void>(`/api/v1/admin/service-types/${serviceId}/toggle`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  reorderServiceSteps: async (serviceId: number, orderedStepIds: number[], token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/${serviceId}/steps/reorder`, {
+      method: "POST",
+      body: JSON.stringify({ ordered_step_ids: orderedStepIds }),
+      token,
+    });
+  },
+
   getUsers: async (params: {
     user_type?: string;
     status_filter?: string;
