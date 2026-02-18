@@ -4,6 +4,7 @@ export interface SessionData {
   role: SessionRole;
   name: string;
   isAdmin: boolean;
+  adminRole: string | null;
   isProvider: boolean;
 }
 
@@ -32,6 +33,7 @@ export function parseSession(raw: string | undefined): SessionData | null {
       role: normalizeRole(parsed.role),
       name: normalizeName(parsed.name),
       isAdmin: Boolean(parsed.isAdmin),
+      adminRole: typeof parsed.adminRole === "string" ? parsed.adminRole : null,
       isProvider: Boolean(parsed.isProvider)
     };
   } catch {

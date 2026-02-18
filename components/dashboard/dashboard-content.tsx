@@ -164,13 +164,15 @@ const MOCK_MESSAGES: Message[] = [
 interface DashboardContentProps {
   userName?: string;
   isProvider?: boolean;
+  isAdmin?: boolean;
 }
 
-export function DashboardContent({ userName = "Pet Parent", isProvider = false }: DashboardContentProps) {
+export function DashboardContent({ userName = "Pet Parent", isProvider = false, isAdmin = false }: DashboardContentProps) {
   const [activeService, setActiveService] = useState("boarding");
   const { lang } = useLanguage();
   const t = content[lang].dashboard.home;
   const tProvider = content[lang].dashboard.overview;
+  const tAdmin = (content[lang] as any).admin || {};
 
   const serviceTypes = [
     { id: "boarding", label: t.search.services.boarding },
@@ -442,13 +444,31 @@ export function DashboardContent({ userName = "Pet Parent", isProvider = false }
                 <Button asChild variant="outline" className="w-full justify-start">
                   <Link href="/provider/calendar">
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {t.provider.calendar}
+                    {tProvider.calendar}
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-start">
                   <Link href="/provider/requests">
                     <MessageSquare className="mr-2 h-4 w-4" />
-                    {t.provider.requests}
+                    {tProvider.requests}
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Admin Panel */}
+          {isAdmin && (
+            <Card className="border-l-4 border-l-red-500 bg-red-50/50">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg text-red-700">{tAdmin.panelTitle || "Admin Panel"}</CardTitle>
+                <CardDescription>{tAdmin.subtitle || "Manage platform"}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full bg-red-600 hover:bg-red-700 text-white">
+                  <Link href="/admin">
+                    <ShieldCheck className="mr-2 h-4 w-4" />
+                    {tAdmin.open || "Open Panel"}
                   </Link>
                 </Button>
               </CardContent>

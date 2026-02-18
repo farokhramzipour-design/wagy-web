@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,11 +11,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, LayoutDashboard } from "lucide-react";
+import { User, LogOut, LayoutDashboard, Menu } from "lucide-react";
 import type { SessionData } from "@/lib/session";
 import en from "../../locales/en.json";
 import fa from "../../locales/fa.json";
 import { useLanguage } from "@/components/providers/language-provider";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle
+} from "@/components/ui/sheet";
 
 type Lang = "en" | "fa";
 
@@ -24,11 +30,15 @@ const content = { en, fa };
 interface HeaderProps {
   user: SessionData | null;
   showNavLinks?: boolean;
+  mobileNav?: React.ReactNode;
 }
 
-export function Header({ user, showNavLinks = true }: HeaderProps) {
+export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
   const { lang, setLang } = useLanguage();
   const t = useMemo(() => content[lang], [lang]);
+  const [open, setOpen] = useState(false);
+
+  const isRtl = lang === "fa";
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -38,7 +48,28 @@ export function Header({ user, showNavLinks = true }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
       <div className="w-full max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
-        <Link href="/landing" className="text-2xl font-bold tracking-tight text-[#0ea5a4]">Waggy</Link>
+        <div className="flex items-center gap-4">
+          {mobileNav && (
+            <div className="lg:hidden">
+              <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="-ml-2">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Open menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side={isRtl ? "right" : "left"} className="w-64 p-0 pt-10">
+                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                   {/* Pass a callback to close the sheet when a link is clicked */}
+                   <div onClick={() => setOpen(false)} className="h-full">
+                     {mobileNav}
+                   </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          )}
+          <Link href="/landing" className="text-2xl font-bold tracking-tight text-[#0ea5a4]">Waggy</Link>
+        </div>
         
         {showNavLinks && (
           <nav className="hidden md:flex gap-6 text-sm font-medium text-neutral-600">

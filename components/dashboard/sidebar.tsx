@@ -22,9 +22,11 @@ const content = { en, fa };
 
 interface SidebarProps {
   session?: SessionData | null;
+  className?: string;
+  onLinkClick?: () => void;
 }
 
-export function Sidebar({ session }: SidebarProps) {
+export function DashboardSidebarNav({ session, className, onLinkClick }: SidebarProps) {
   const pathname = usePathname();
   const { lang } = useLanguage();
   const t = content[lang].dashboard.nav;
@@ -61,7 +63,7 @@ export function Sidebar({ session }: SidebarProps) {
   ];
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 border-r border-neutral-200 bg-white min-h-[calc(100vh-64px)] sticky top-16 self-start">
+    <div className={cn("flex flex-col h-full bg-white", className)}>
       <div className="p-4 space-y-1">
         {links.map((link) => {
           const Icon = link.icon;
@@ -70,6 +72,7 @@ export function Sidebar({ session }: SidebarProps) {
             <Link
               key={link.href}
               href={link.href}
+              onClick={onLinkClick}
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                 isActive
@@ -88,6 +91,7 @@ export function Sidebar({ session }: SidebarProps) {
         {isAdmin && (
           <Link
             href="/admin"
+            onClick={onLinkClick}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors mb-2"
           >
             <ShieldAlert className="w-4 h-4" />
@@ -97,6 +101,7 @@ export function Sidebar({ session }: SidebarProps) {
         
         <Link
             href="/become-sitter"
+            onClick={onLinkClick}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors"
         >
             <HeartHandshake className="w-4 h-4" />
@@ -112,6 +117,14 @@ export function Sidebar({ session }: SidebarProps) {
           </button>
         </form>
       </div>
+    </div>
+  );
+}
+
+export function Sidebar({ session }: SidebarProps) {
+  return (
+    <aside className="hidden lg:flex flex-col w-64 border-r border-neutral-200 bg-white min-h-[calc(100vh-64px)] sticky top-16 self-start">
+      <DashboardSidebarNav session={session} />
     </aside>
   );
 }

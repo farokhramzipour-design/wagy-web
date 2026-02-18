@@ -12,6 +12,7 @@ type SessionPayload = {
   refresh_token?: string;
   access_expires_in?: number;
   isAdmin?: boolean;
+  adminRole?: string | null;
   isProvider?: boolean;
 };
 
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
   const role = normalizeRole(body.role);
   const name = normalizeName(body.name);
   const isAdmin = Boolean(body.isAdmin);
+  const adminRole = typeof body.adminRole === "string" ? body.adminRole : null;
   const isProvider = Boolean(body.isProvider);
   const accessToken = typeof body.access_token === "string" ? body.access_token : "";
   const refreshToken = typeof body.refresh_token === "string" ? body.refresh_token : "";
@@ -29,7 +31,7 @@ export async function POST(request: Request) {
       : 60 * 60;
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(SESSION_COOKIE, serializeSession({ role, name, isAdmin, isProvider }), {
+  response.cookies.set(SESSION_COOKIE, serializeSession({ role, name, isAdmin, adminRole, isProvider }), {
     httpOnly: true,
     sameSite: "lax",
     path: "/",

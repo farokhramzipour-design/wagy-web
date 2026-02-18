@@ -128,14 +128,17 @@ export function AuthForm({ nextPath }: Props) {
       
       let displayName = submittedPhone;
       let isAdmin = false;
+      let adminRole: string | null = null;
       let isProvider = false;
       try {
         const me = await getMe(token.access_token);
+        console.log("Me Response:", me); // Debugging
         displayName = me.phone_e164 || submittedPhone;
         isAdmin = me.is_admin;
+        adminRole = me.admin_role?.toLowerCase() || null;
         isProvider = me.is_provider;
-      } catch {
-        // Keep phone as fallback
+      } catch (e) {
+        console.error("Failed to fetch me:", e);
       }
 
       const sessionResponse = await fetch("/api/auth/session", {
@@ -145,6 +148,7 @@ export function AuthForm({ nextPath }: Props) {
           role: isAdmin ? "admin" : "user",
           name: displayName,
           isAdmin,
+          adminRole,
           isProvider,
           access_token: token.access_token,
           refresh_token: token.refresh_token,

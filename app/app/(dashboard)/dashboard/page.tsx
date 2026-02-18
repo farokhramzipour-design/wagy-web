@@ -6,8 +6,9 @@ export default function DashboardPage() {
   const session = parseSession(cookies().get('waggy_session')?.value);
   const name = session?.name ?? 'Friend';
   const isProvider = session?.isProvider ?? false;
+  const isAdmin = session?.isAdmin ?? false;
 
   return (
-    <DashboardContent userName={name} isProvider={isProvider} />
+    <DashboardContent userName={name} isProvider={isProvider} isAdmin={isAdmin} />
   );
 }

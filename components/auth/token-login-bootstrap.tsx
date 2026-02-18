@@ -30,14 +30,17 @@ export function TokenLoginBootstrap() {
     const run = async () => {
       let displayName = "Google User";
       let isAdmin = false;
+      let adminRole: string | null = null;
       let isProvider = false;
       try {
         const me = await getMe(token);
+        console.log("Me Response (Bootstrap):", me); // Debugging
         displayName = me.phone_e164 || me.email || displayName;
         isAdmin = me.is_admin;
+        adminRole = me.admin_role?.toLowerCase() || null;
         isProvider = me.is_provider;
-      } catch {
-        // Keep fallback display name.
+      } catch (e) {
+        console.error("Failed to fetch me (Bootstrap):", e);
       }
 
       const response = await fetch("/api/auth/session", {
@@ -47,6 +50,7 @@ export function TokenLoginBootstrap() {
           role: isAdmin ? "admin" : "user",
           name: displayName,
           isAdmin,
+          adminRole,
           isProvider,
           access_token: token,
           refresh_token: refreshToken,

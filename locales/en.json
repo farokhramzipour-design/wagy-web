@@ -353,5 +353,23 @@
       "success": "Pet added successfully!",
       "error": "Something went wrong. Please try again."
     }
+  },
+  "admin": {
+    "panelTitle": "Admin Panel",
+    "welcome": "Welcome back,",
+    "subtitle": "Manage your platform, users, and services from one central dashboard.",
+    "manageServices": "Manage Services",
+    "manageServicesDesc": "Add or modify platform services.",
+    "usersList": "Users List",
+    "usersListDesc": "Access and manage all registered users.",
+    "providerServices": "Provider Services",
+    "providerServicesDesc": "Manage sitter applications and services.",
+    "transactionsList": "Transactions",
+    "transactionsListDesc": "View and audit all platform transactions.",
+    "reports": "Reports",
+    "reportsDesc": "View system reports and analytics.",
+    "manageAdmins": "Manage Admins",
+    "manageAdminsDesc": "Add or remove admins and operators.",
+    "open": "Open"
   }
 }
