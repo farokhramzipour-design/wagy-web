@@ -44,7 +44,7 @@ import { Textarea } from "@/components/ui/textarea";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { ServiceStep, ServiceType } from "@/services/admin-api";
-import { ArrowDown, ArrowLeft, ArrowUp, Edit, Loader2, Plus, Trash } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowUp, Edit, List, Loader2, Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -62,7 +62,7 @@ export default function ServiceStepsPage({ params }: { params: { id: string } })
   const [loading, setLoading] = useState(true);
   const [service, setService] = useState<ServiceType | null>(null);
   const [steps, setSteps] = useState<ServiceStep[]>([]);
-  
+
   // Dialog states
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -90,7 +90,7 @@ export default function ServiceStepsPage({ params }: { params: { id: string } })
       // The user mentioned "step_number". Let's assume step_number is the order.
       const sortedSteps = (data.steps || []).sort((a, b) => a.step_number - b.step_number);
       setSteps(sortedSteps);
-      
+
       // Set next step number
       if (sortedSteps.length > 0) {
         setFormData(prev => ({ ...prev, step_number: sortedSteps[sortedSteps.length - 1].step_number + 1 }));
@@ -297,6 +297,14 @@ export default function ServiceStepsPage({ params }: { params: { id: string } })
                       </TableCell>
                       <TableCell className="text-end">
                         <div className="flex justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => router.push(`/admin/services/${serviceId}/steps/${step.step_id}/fields`)}
+                            title={t.fields || "Fields"}
+                          >
+                            <List className="h-4 w-4" />
+                          </Button>
                           <Button variant="ghost" size="icon" onClick={() => openEdit(step)}>
                             <Edit className="h-4 w-4" />
                           </Button>

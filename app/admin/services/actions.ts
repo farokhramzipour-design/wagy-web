@@ -1,6 +1,6 @@
 "use server";
 
-import { adminApi, CreateServiceStepRequest, CreateServiceTypeRequest, MediaUploadResponse, ServiceStep, ServiceType, ServiceTypeListResponse, ToggleServiceStepRequest, UpdateServiceStepRequest } from "@/services/admin-api";
+import { adminApi, CreateServiceStepFieldRequest, CreateServiceStepRequest, CreateServiceTypeRequest, MediaUploadResponse, ServiceStep, ServiceStepField, ServiceType, ServiceTypeListResponse, ToggleServiceStepRequest, UpdateServiceStepRequest } from "@/services/admin-api";
 import { cookies } from "next/headers";
 
 const ACCESS_TOKEN_COOKIE = "waggy_access_token";
@@ -73,4 +73,21 @@ export async function toggleServiceStepAction(serviceId: number, data: ToggleSer
 export async function reorderServiceStepsAction(serviceId: number, orderedStepIds: number[]): Promise<void> {
   const token = getAccessToken();
   return await adminApi.reorderServiceSteps(serviceId, orderedStepIds, token);
+}
+
+// Fields Actions
+
+export async function getServiceStepFieldsAction(stepId: number): Promise<ServiceStepField[]> {
+  const token = getAccessToken();
+  return await adminApi.getServiceStepFields(stepId, token);
+}
+
+export async function createServiceStepFieldAction(stepId: number, data: CreateServiceStepFieldRequest): Promise<ServiceStepField> {
+  const token = getAccessToken();
+  return await adminApi.createServiceStepField(stepId, data, token);
+}
+
+export async function deleteServiceStepFieldAction(stepId: number, fieldId: number): Promise<void> {
+  const token = getAccessToken();
+  return await adminApi.deleteServiceStepField(stepId, fieldId, token);
 }

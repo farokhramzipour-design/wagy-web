@@ -176,6 +176,62 @@ export interface TransactionListResponse {
   items: TransactionItem[];
 }
 
+export interface ServiceStepField {
+  field_id: number;
+  step_id: number;
+  field_key: string;
+  label_en: string;
+  label_fa: string;
+  field_type: string;
+  is_required: boolean;
+  min_value?: number;
+  max_value?: number;
+  min_length?: number;
+  max_length?: number;
+  pattern?: string;
+  placeholder_en?: string;
+  placeholder_fa?: string;
+  help_text_en?: string;
+  help_text_fa?: string;
+  display_order: number;
+  default_value?: string;
+  options?: any; // For select, radio, etc.
+  depends_on_field?: string;
+  depends_on_value?: string;
+  is_filterable?: boolean;
+  filter_type?: string;
+  is_searchable?: boolean;
+  filter_priority?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateServiceStepFieldRequest {
+  field_key: string;
+  label_en: string;
+  label_fa: string;
+  field_type: string;
+  is_required: boolean;
+  min_value?: number | null;
+  max_value?: number | null;
+  min_length?: number | null;
+  max_length?: number | null;
+  pattern?: string | null;
+  placeholder_en?: string | null;
+  placeholder_fa?: string | null;
+  help_text_en?: string | null;
+  help_text_fa?: string | null;
+  display_order: number;
+  default_value?: string | null;
+  options?: any;
+  depends_on_field?: string | null;
+  depends_on_value?: string | null;
+  is_filterable?: boolean;
+  filter_type?: string | null;
+  is_searchable?: boolean;
+  filter_priority?: number;
+}
+
 export interface ServiceStep {
   step_id: number;
   service_type_id: number;
@@ -187,6 +243,7 @@ export interface ServiceStep {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  fields?: ServiceStepField[];
 }
 
 export interface CreateServiceStepRequest {
@@ -346,6 +403,29 @@ export const adminApi = {
     return apiFetch<void>(`/api/v1/admin/service-types/${serviceId}/steps/reorder`, {
       method: "POST",
       body: JSON.stringify({ ordered_step_ids: orderedStepIds }),
+      token,
+    });
+  },
+
+  // Fields API
+  getServiceStepFields: async (stepId: number, token?: string) => {
+    return apiFetch<ServiceStepField[]>(`/api/v1/admin/service-types/steps/${stepId}/fields`, {
+      method: "GET",
+      token,
+    });
+  },
+
+  createServiceStepField: async (stepId: number, data: CreateServiceStepFieldRequest, token?: string) => {
+    return apiFetch<ServiceStepField>(`/api/v1/admin/service-types/steps/${stepId}/fields`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  deleteServiceStepField: async (stepId: number, fieldId: number, token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/steps/${stepId}/fields/${fieldId}`, {
+      method: "DELETE",
       token,
     });
   },
