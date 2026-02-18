@@ -74,6 +74,108 @@ export interface UpdateUserStatusResponse {
   reason?: string;
 }
 
+export interface TransactionUser {
+  user_id: number;
+  name: string;
+  email: string;
+  phone_e164: string;
+}
+
+export interface PaymentDetails {
+  payment_id: number;
+  booking_id: number;
+  kind: string;
+  status: string;
+  gateway: string;
+  authority: string;
+  ref_id: string;
+  tracking_code: string;
+  payer_user_id: number;
+  payee_user_id: number;
+  amount_minor: number;
+  currency_code: string;
+  paid_at: string;
+  verified_at: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WalletTransactionDetails {
+  wallet_tx_id: number;
+  wallet_id: number;
+  wallet_user_id: number;
+  reason: string;
+  amount_minor: number;
+  balance_after_minor: number;
+  description: string;
+  related_payment_id: number;
+  related_booking_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WalletChargeDetails {
+  charge_id: number;
+  wallet_id: number;
+  user_id: number;
+  amount_minor: number;
+  currency_code: string;
+  method: string;
+  status: string;
+  gateway_authority: string;
+  gateway_ref_id: string;
+  bank_reference: string;
+  charge_reference: string;
+  wallet_tx_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WithdrawalDetails {
+  withdrawal_id: number;
+  wallet_id: number;
+  user_id: number;
+  amount_minor: number;
+  currency_code: string;
+  status: string;
+  bank_account_name: string;
+  bank_account_number: string;
+  bank_name: string;
+  reviewed_by_admin_id: number;
+  reviewed_at: string;
+  admin_note: string;
+  bank_transfer_reference: string;
+  completed_at: string;
+  wallet_tx_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TransactionItem {
+  transaction_type: string;
+  transaction_id: number;
+  amount_minor?: number;
+  currency_code?: string;
+  status?: string;
+  direction: string;
+  summary: string;
+  created_at: string;
+  updated_at?: string;
+  primary_user?: TransactionUser;
+  counterparty_user?: TransactionUser;
+  payment?: PaymentDetails;
+  wallet_transaction?: WalletTransactionDetails;
+  wallet_charge?: WalletChargeDetails;
+  withdrawal?: WithdrawalDetails;
+}
+
+export interface TransactionListResponse {
+  total: number;
+  skip: number;
+  limit: number;
+  items: TransactionItem[];
+}
+
 export const adminApi = {
   getUsers: async (params: {
     user_type?: string;
@@ -97,6 +199,30 @@ export const adminApi = {
 
   getUserDetail: async (userId: number, limit: number = 20, token?: string) => {
     return apiFetch<UserDetailResponse>(`/api/v1/admin/users/${userId}/detail?limit=${limit}`, {
+      method: "GET",
+      token,
+    });
+  },
+
+  getTransactions: async (params: {
+    source?: string;
+    user_id?: number;
+    booking_id?: number;
+    from_datetime?: string;
+    to_datetime?: string;
+    skip?: number;
+    limit?: number;
+  }, token?: string) => {
+    const searchParams = new URLSearchParams();
+    if (params.source) searchParams.append("source", params.source);
+    if (params.user_id) searchParams.append("user_id", params.user_id.toString());
+    if (params.booking_id) searchParams.append("booking_id", params.booking_id.toString());
+    if (params.from_datetime) searchParams.append("from_datetime", params.from_datetime);
+    if (params.to_datetime) searchParams.append("to_datetime", params.to_datetime);
+    if (params.skip !== undefined) searchParams.append("skip", params.skip.toString());
+    if (params.limit !== undefined) searchParams.append("limit", params.limit.toString());
+
+    return apiFetch<TransactionListResponse>(`/api/v1/admin/finance/transactions?${searchParams.toString()}`, {
       method: "GET",
       token,
     });

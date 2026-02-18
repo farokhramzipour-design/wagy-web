@@ -452,6 +452,36 @@
       "errorUpdate": "به‌روزرسانی وضعیت ناموفق بود",
       "errorFetch": "دریافت اطلاعات ناموفق بود"
     },
+    "transactions": {
+      "title": "تراکنش‌ها",
+      "subtitle": "مشاهده و مدیریت تمام تراکنش‌های مالی.",
+      "listTitle": "لیست تراکنش‌ها",
+      "listDesc": "لیست جامع تمام پرداخت‌ها، شارژ کیف پول و برداشت‌ها.",
+      "source": "منبع",
+      "allSources": "همه منابع",
+      "payment": "پرداخت",
+      "walletTransaction": "تراکنش کیف پول",
+      "walletCharge": "شارژ کیف پول",
+      "withdrawal": "برداشت",
+      "userId": "شناسه کاربر",
+      "bookingId": "شناسه رزرو",
+      "dateRange": "بازه زمانی",
+      "startDate": "تاریخ شروع",
+      "endDate": "تاریخ پایان",
+      "type": "نوع",
+      "amount": "مبلغ",
+      "currency": "ارز",
+      "status": "وضعیت",
+      "direction": "جهت",
+      "summary": "خلاصه",
+      "createdAt": "تاریخ ایجاد",
+      "primaryUser": "کاربر اصلی",
+      "counterparty": "طرف مقابل",
+      "details": "جزئیات",
+      "debit": "بدهکار",
+      "credit": "بستانکار",
+      "noTransactions": "هیچ تراکنشی یافت نشد."
+    },
     "open": "باز کردن"
   }
 }

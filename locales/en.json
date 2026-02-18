@@ -21,7 +21,12 @@
   "hero": {
     "title": "Peace of Mind for You. Pure Joy for Them.",
     "subtitle": "Join 15,000+ happy pet parents. Trusted local care when you can't be there.",
-    "fields": ["Location", "Dates", "Pet Type", "Service Type"],
+    "fields": [
+      "Location",
+      "Dates",
+      "Pet Type",
+      "Service Type"
+    ],
     "primary": "Find a Loving Sitter",
     "secondary": "Become a Sitter",
     "trust": "Verified sitters • Secure payments • 24/7 support",
@@ -35,9 +40,21 @@
   },
   "socialProof": {
     "items": [
-      { "value": 10000, "suffix": "+", "label": "Happy Pet Parents" },
-      { "value": 4.9, "suffix": "★", "label": "Average Rating" },
-      { "value": 500, "suffix": "+", "label": "Verified Sitters" }
+      {
+        "value": 10000,
+        "suffix": "+",
+        "label": "Happy Pet Parents"
+      },
+      {
+        "value": 4.9,
+        "suffix": "★",
+        "label": "Average Rating"
+      },
+      {
+        "value": 500,
+        "suffix": "+",
+        "label": "Verified Sitters"
+      }
     ]
   },
   "story": {
@@ -48,21 +65,53 @@
   "trust": {
     "title": "Your pet's safety is our promise.",
     "items": [
-      ["Identity Verified", "Every sitter goes through profile and identity checks before joining."],
-      ["Real Reviews", "See honest feedback from pet parents with similar needs."],
-      ["Secure Payments", "All payments are protected on-platform with full transparency."],
-      ["24/7 Support", "If anything feels off, our support team is ready anytime."]
+      [
+        "Identity Verified",
+        "Every sitter goes through profile and identity checks before joining."
+      ],
+      [
+        "Real Reviews",
+        "See honest feedback from pet parents with similar needs."
+      ],
+      [
+        "Secure Payments",
+        "All payments are protected on-platform with full transparency."
+      ],
+      [
+        "24/7 Support",
+        "If anything feels off, our support team is ready anytime."
+      ]
     ]
   },
   "services": {
     "title": "Services built around comfort and trust",
     "seeAll": "See all services",
     "items": [
-      ["Dog Boarding", "A warm and safe home while you're traveling.", "Home-style care photo"],
-      ["House Sitting", "Your pet stays calm in their familiar home.", "In-home sitter photo"],
-      ["Dog Walking", "Healthy movement, happy mood, more energy.", "Outdoor walk photo"],
-      ["Day Care", "Reliable daytime care for busy schedules.", "Daycare play photo"],
-      ["Drop-In Visits", "Feeding, cleaning, and gentle companionship.", "Drop-in visit photo"]
+      [
+        "Dog Boarding",
+        "A warm and safe home while you're traveling.",
+        "Home-style care photo"
+      ],
+      [
+        "House Sitting",
+        "Your pet stays calm in their familiar home.",
+        "In-home sitter photo"
+      ],
+      [
+        "Dog Walking",
+        "Healthy movement, happy mood, more energy.",
+        "Outdoor walk photo"
+      ],
+      [
+        "Day Care",
+        "Reliable daytime care for busy schedules.",
+        "Daycare play photo"
+      ],
+      [
+        "Drop-In Visits",
+        "Feeding, cleaning, and gentle companionship.",
+        "Drop-in visit photo"
+      ]
     ]
   },
   "servicesPage": {
@@ -70,24 +119,58 @@
     "subtitle": "Pick the service that fits your pet's routine, comfort, and personality.",
     "back": "Back to landing",
     "primary": "Book this service",
-    "filters": ["All", "At Sitter Home", "At Your Home", "Daily Care"],
-    "highlights": ["Verified sitters", "Transparent pricing", "Secure payments", "24/7 support"]
+    "filters": [
+      "All",
+      "At Sitter Home",
+      "At Your Home",
+      "Daily Care"
+    ],
+    "highlights": [
+      "Verified sitters",
+      "Transparent pricing",
+      "Secure payments",
+      "24/7 support"
+    ]
   },
   "how": {
     "title": "How it works",
     "items": [
-      ["Search", "Explore nearby sitters and read real reviews."],
-      ["Meet", "Message the sitter, ask questions, and confirm expectations."],
-      ["Book", "Reserve your preferred service with secure payment."],
-      ["Relax", "Receive updates while your pet is cared for with love."]
+      [
+        "Search",
+        "Explore nearby sitters and read real reviews."
+      ],
+      [
+        "Meet",
+        "Message the sitter, ask questions, and confirm expectations."
+      ],
+      [
+        "Book",
+        "Reserve your preferred service with secure payment."
+      ],
+      [
+        "Relax",
+        "Receive updates while your pet is cared for with love."
+      ]
     ]
   },
   "testimonials": {
     "title": "What pet parents say",
     "items": [
-      ["Sara", "Tehran", "I was anxious at first, but after chatting with the sitter I felt calm. Daily photo updates helped a lot."],
-      ["Mohammad", "Shiraz", "I traveled without worry for the first time. Smooth and respectful experience."],
-      ["Narges", "Isfahan", "The sitter was very respectful and responsible. I left my pet with peace of mind."]
+      [
+        "Sara",
+        "Tehran",
+        "I was anxious at first, but after chatting with the sitter I felt calm. Daily photo updates helped a lot."
+      ],
+      [
+        "Mohammad",
+        "Shiraz",
+        "I traveled without worry for the first time. Smooth and respectful experience."
+      ],
+      [
+        "Narges",
+        "Isfahan",
+        "The sitter was very respectful and responsible. I left my pet with peace of mind."
+      ]
     ],
     "verified": "Verified Owner"
   },
@@ -115,11 +198,26 @@
   "faq": {
     "title": "Frequently asked questions",
     "items": [
-      ["Can I talk to the sitter before booking?", "Yes. You can message and coordinate before confirming."],
-      ["What if something goes wrong?", "Our support team follows up and helps resolve it quickly."],
-      ["How do payments work?", "Payments are handled securely through the platform."],
-      ["Is my information private?", "Yes. Your personal data stays private and protected."],
-      ["What if I am not satisfied?", "We review each case and provide clear support steps."]
+      [
+        "Can I talk to the sitter before booking?",
+        "Yes. You can message and coordinate before confirming."
+      ],
+      [
+        "What if something goes wrong?",
+        "Our support team follows up and helps resolve it quickly."
+      ],
+      [
+        "How do payments work?",
+        "Payments are handled securely through the platform."
+      ],
+      [
+        "Is my information private?",
+        "Yes. Your personal data stays private and protected."
+      ],
+      [
+        "What if I am not satisfied?",
+        "We review each case and provide clear support steps."
+      ]
     ]
   },
   "final": {
@@ -451,8 +549,37 @@
       "successUpdate": "User status updated successfully",
       "errorUpdate": "Failed to update status",
       "errorFetch": "Failed to fetch data"
+    },
+    "transactions": {
+      "title": "Transactions",
+      "subtitle": "View and manage all financial transactions.",
+      "listTitle": "Transactions List",
+      "listDesc": "Comprehensive list of all payments, wallet charges, and withdrawals.",
+      "source": "Source",
+      "allSources": "All Sources",
+      "payment": "Payment",
+      "walletTransaction": "Wallet Transaction",
+      "walletCharge": "Wallet Charge",
+      "withdrawal": "Withdrawal",
+      "userId": "User ID",
+      "bookingId": "Booking ID",
+      "dateRange": "Date Range",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "type": "Type",
+      "amount": "Amount",
+      "currency": "Currency",
+      "status": "Status",
+      "direction": "Direction",
+      "summary": "Summary",
+      "createdAt": "Created At",
+      "primaryUser": "Primary User",
+      "counterparty": "Counterparty",
+      "details": "Details",
+      "debit": "Debit",
+      "credit": "Credit",
+      "noTransactions": "No transactions found."
     }
   },
-  "provider": {
-}
+  "provider": {}
 }
