@@ -88,8 +88,8 @@ export async function getAddressFromCoordinates(lat: number, lng: number): Promi
   const data = await response.json();
 
   return {
-    country: data.country,
-    province: data.province,
+    country: data.country || "ایران",
+    province: data.province || "تهران",
     city: data.city,
     postal_code: data.postal_code,
     address_line1: data.address,
