@@ -72,6 +72,34 @@ export async function createAddressClient(data: CreateAddressDto) {
   return response.json();
 }
 
+export async function updateAddressClient(id: number, data: CreateAddressDto) {
+  const response = await fetch(`/api/addresses/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update address");
+  }
+
+  return response.json();
+}
+
+export async function deleteAddressClient(id: number) {
+  const response = await fetch(`/api/addresses/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete address");
+  }
+
+  return response.json();
+}
+
 // Mock function for reverse geocoding
 export async function getAddressFromCoordinates(lat: number, lng: number): Promise<Partial<CreateAddressDto>> {
   const response = await fetch(`/api/addresses/reverse-geocode?lat=${lat}&lon=${lng}`, {

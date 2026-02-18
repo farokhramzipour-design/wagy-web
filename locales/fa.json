@@ -226,11 +226,15 @@
       "empty": "هنوز آدرسی ثبت نکردی.",
       "form": {
         "title": "افزودن آدرس جدید",
+        "editTitle": "ویرایش آدرس",
         "mapStep": "انتخاب موقعیت",
         "detailsStep": "جزئیات آدرس",
         "searchMap": "جستجوی موقعیت...",
+        "loadingAddress": "در حال دریافت اطلاعات آدرس...",
         "confirmLocation": "تایید موقعیت",
+        "changeLocation": "تغییر موقعیت",
         "label": "عنوان (مثلاً خانه، محل کار)",
+        "labelPlaceholder": "مثلا خانه",
         "country": "کد کشور",
         "province": "شناسه استان",
         "city": "شناسه شهر",
@@ -241,14 +245,24 @@
       },
       "actions": {
         "save": "ذخیره آدرس",
+        "update": "بروزرسانی آدرس",
         "cancel": "لغو",
-        "saving": "در حال ذخیره..."
+        "saving": "در حال ذخیره...",
+        "delete": "حذف",
+        "deleting": "در حال حذف..."
+      },
+      "delete": {
+        "title": "حذف آدرس",
+        "confirm": "آیا از حذف این آدرس اطمینان دارید؟ این عملیات قابل بازگشت نیست."
       },
       "validation": {
         "labelRequired": "عنوان الزامی است",
         "addressRequired": "جزئیات آدرس الزامی است",
         "success": "آدرس با موفقیت اضافه شد",
-        "error": "خطا در افزودن آدرس"
+        "updateSuccess": "آدرس با موفقیت بروزرسانی شد",
+        "deleteSuccess": "آدرس با موفقیت حذف شد",
+        "error": "خطایی رخ داد",
+        "deleteError": "خطا در حذف آدرس"
       }
     },
     "transactions": {
