@@ -314,6 +314,9 @@
       "title": "My Pets",
       "add": "Add Pet",
       "empty": "No pets added yet.",
+      "edit": "Edit",
+      "view": "View",
+      "details": "{years} years, {months} months old, {weight} kg.",
       "list": {
         "breed": "Breed",
         "age": "Age",

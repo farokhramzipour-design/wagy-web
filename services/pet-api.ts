@@ -1,16 +1,23 @@
-import { apiFetch } from "@/lib/api-client";
+import { API_BASE_URL, apiFetch } from "@/lib/api-client";
 import { API_ENDPOINTS } from "@/lib/api-endpoints";
 
 export interface Pet {
   pet_id: number;
   user_id: number;
   name: string;
-  type: string;
-  size: string;
+  pet_type: string;
   gender: string;
+  breed_ids: number[];
+  breed_names: string[];
+  dog_size: string;
+  age_years: number;
+  age_months: number;
   age_display: string;
-  breed_name: string;
+  weight_kg: number;
+  weight_lbs: number;
   avatar_media_id: number;
+  avatar_url: string;
+  is_active: boolean;
   created_at: string;
 }
 
@@ -79,10 +86,19 @@ export interface Breed {
 }
 
 export async function getPets(accessToken: string) {
-  return apiFetch<Pet[]>(API_ENDPOINTS.pets.base, {
+  const pets = await apiFetch<Pet[]>(API_ENDPOINTS.pets.base, {
     method: "GET",
     token: accessToken,
   });
+
+  return pets.map(pet => ({
+    ...pet,
+    avatar_url: pet.avatar_url
+      ? (pet.avatar_url.startsWith("http")
+        ? pet.avatar_url
+        : `${API_BASE_URL}${pet.avatar_url.startsWith("/") ? "" : "/"}${pet.avatar_url}`)
+      : pet.avatar_url
+  }));
 }
 
 export async function createPet(accessToken: string, payload: PetCreationPayload) {
