@@ -176,6 +176,10 @@ export interface TransactionListResponse {
   items: TransactionItem[];
 }
 
+export interface ServiceStepFieldsResponse {
+  items: ServiceStepField[];
+}
+
 export interface ServiceStepField {
   field_id: number;
   step_id: number;
@@ -183,6 +187,7 @@ export interface ServiceStepField {
   label_en: string;
   label_fa: string;
   field_type: string;
+  is_active: boolean;
   is_required: boolean;
   min_value?: number;
   max_value?: number;
@@ -409,7 +414,7 @@ export const adminApi = {
 
   // Fields API
   getServiceStepFields: async (stepId: number, token?: string) => {
-    return apiFetch<ServiceStepField[]>(`/api/v1/admin/service-types/steps/${stepId}/fields`, {
+    return apiFetch<ServiceStepFieldsResponse>(`/api/v1/admin/service-types/steps/${stepId}/fields`, {
       method: "GET",
       token,
     });

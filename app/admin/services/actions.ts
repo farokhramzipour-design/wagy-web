@@ -79,7 +79,8 @@ export async function reorderServiceStepsAction(serviceId: number, orderedStepId
 
 export async function getServiceStepFieldsAction(stepId: number): Promise<ServiceStepField[]> {
   const token = getAccessToken();
-  return await adminApi.getServiceStepFields(stepId, token);
+  const response = await adminApi.getServiceStepFields(stepId, token);
+  return response.items;
 }
 
 export async function createServiceStepFieldAction(stepId: number, data: CreateServiceStepFieldRequest): Promise<ServiceStepField> {
