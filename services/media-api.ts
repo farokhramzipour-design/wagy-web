@@ -2,9 +2,14 @@ import { apiFetch } from "@/lib/api-client";
 import { API_ENDPOINTS } from "@/lib/api-endpoints";
 
 export interface Media {
-  id: number;
+  media_id: number;
   url: string;
-  type: string;
+  thumb_url: string;
+  mime_type: string;
+  size_bytes: number;
+  width: number;
+  height: number;
+  created_at: string;
 }
 
 export async function uploadMedia(accessToken: string, file: File): Promise<Media> {

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { API_BASE_URL } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
@@ -126,6 +127,12 @@ export function PetForm({ accessToken }: PetFormProps) {
   };
 
   // Media Logic
+  const getImageUrl = (url: string) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+  };
+
   const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0] || !accessToken) return;
 
@@ -137,10 +144,10 @@ export function PetForm({ accessToken }: PetFormProps) {
       setProfileImage(media);
       setFormData(prev => ({
         ...prev,
-        primary_photo_media_id: media.id,
+        primary_photo_media_id: media.media_id,
         // Add to gallery if not there? usually primary is separate or part of gallery.
         // Let's add it to photo_media_ids as well to be safe
-        photo_media_ids: Array.from(new Set([...prev.photo_media_ids, media.id]))
+        photo_media_ids: Array.from(new Set([...prev.photo_media_ids, media.media_id]))
       }));
       toast.success("Profile photo uploaded");
     } catch (error) {
@@ -162,7 +169,7 @@ export function PetForm({ accessToken }: PetFormProps) {
 
       for (const file of files) {
         const media = await uploadMedia(accessToken, file);
-        newMediaIds.push(media.id);
+        newMediaIds.push(media.media_id);
         newMediaObjects.push(media);
       }
 
@@ -181,13 +188,13 @@ export function PetForm({ accessToken }: PetFormProps) {
   };
 
   const removeGalleryImage = (mediaId: number) => {
-    setGalleryImages(prev => prev.filter(m => m.id !== mediaId));
+    setGalleryImages(prev => prev.filter(m => m.media_id !== mediaId));
     setFormData(prev => ({
       ...prev,
       photo_media_ids: prev.photo_media_ids.filter(id => id !== mediaId),
       primary_photo_media_id: prev.primary_photo_media_id === mediaId ? undefined : prev.primary_photo_media_id
     }));
-    if (profileImage?.id === mediaId) {
+    if (profileImage?.media_id === mediaId) {
       setProfileImage(null);
     }
   };
@@ -217,6 +224,18 @@ export function PetForm({ accessToken }: PetFormProps) {
     payload.age_years = Number(payload.age_years);
     payload.age_months = Number(payload.age_months);
     payload.weight_kg = Number(payload.weight_kg);
+
+    // Filter photo_media_ids to remove null/undefined values
+    payload.photo_media_ids = payload.photo_media_ids.filter((id) => id !== null && id !== undefined);
+
+    // Ensure primary_photo_media_id is set
+    if (!payload.primary_photo_media_id) {
+      if (payload.photo_media_ids.length > 0) {
+        payload.primary_photo_media_id = payload.photo_media_ids[0];
+      } else {
+        payload.primary_photo_media_id = 0;
+      }
+    }
 
     try {
       await createPet(accessToken, payload);
@@ -250,6 +269,15 @@ export function PetForm({ accessToken }: PetFormProps) {
     const selectedOption = options.find(o => o.value === value);
     const showDetails = selectedOption?.hasDetails;
 
+    const handleOptionClick = (val: any) => {
+      onChange(val);
+      // Clear details if switching to an option that doesn't have details
+      const newOption = options.find(o => o.value === val);
+      if (!newOption?.hasDetails && onDetailsChange) {
+        onDetailsChange("");
+      }
+    };
+
     return (
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
@@ -257,7 +285,7 @@ export function PetForm({ accessToken }: PetFormProps) {
             <button
               key={opt.label}
               type="button"
-              onClick={() => onChange(opt.value)}
+              onClick={() => handleOptionClick(opt.value)}
               className={cn(
                 "px-4 py-2 rounded-full border text-sm font-medium transition-colors",
                 value === opt.value
@@ -297,7 +325,7 @@ export function PetForm({ accessToken }: PetFormProps) {
           onClick={() => profileInputRef.current?.click()}
         >
           {profileImage ? (
-            <img src={profileImage.url} alt="Profile" className="w-full h-full object-cover" />
+            <img src={getImageUrl(profileImage.url)} alt="Profile" className="w-full h-full object-cover" />
           ) : (
             <div className="text-center text-neutral-400">
               {uploadingProfile ? <Loader2 className="w-8 h-8 animate-spin mx-auto" /> : <ImageIcon className="w-8 h-8 mx-auto mb-1" />}
@@ -387,6 +415,15 @@ export function PetForm({ accessToken }: PetFormProps) {
               placeholder="0"
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.birthday}</Label>
+          <Input
+            type="date"
+            value={formData.birthday}
+            onChange={(e) => handleChange("birthday", e.target.value)}
+          />
         </div>
 
         <div className="space-y-2">
@@ -768,16 +805,16 @@ export function PetForm({ accessToken }: PetFormProps) {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {galleryImages.map((media) => (
-            <div key={media.id} className="relative aspect-square rounded-lg overflow-hidden border">
-              <img src={media.url} alt="Gallery" className="w-full h-full object-cover" />
+            <div key={media.media_id} className="relative aspect-square rounded-lg overflow-hidden border">
+              <img src={getImageUrl(media.url)} alt="Gallery" className="w-full h-full object-cover" />
               <button
                 type="button"
-                onClick={() => removeGalleryImage(media.id)}
+                onClick={() => removeGalleryImage(media.media_id)}
                 className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1"
               >
                 <X className="w-4 h-4" />
               </button>
-              {formData.primary_photo_media_id === media.id && (
+              {formData.primary_photo_media_id === media.media_id && (
                 <div className="absolute bottom-0 left-0 right-0 bg-green-500/80 text-white text-xs text-center py-1">
                   Primary
                 </div>

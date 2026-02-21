@@ -47,10 +47,10 @@ export default async function PetsPage() {
             <div key={pet.pet_id} className="p-6 border border-neutral-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center text-neutral-500">
-                  {pet.type.toLowerCase() === 'cat' ? <Cat className="w-6 h-6" /> : <Dog className="w-6 h-6" />}
+                  {pet.type?.toLowerCase() === 'cat' ? <Cat className="w-6 h-6" /> : <Dog className="w-6 h-6" />}
                 </div>
                 <div className="px-2 py-1 bg-neutral-100 rounded text-xs font-medium text-neutral-600 uppercase">
-                  {pet.type}
+                  {pet.type || 'Unknown'}
                 </div>
               </div>
               
