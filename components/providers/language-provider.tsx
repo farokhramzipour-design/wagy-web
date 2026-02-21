@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export type Lang = "en" | "fa";
@@ -19,6 +20,7 @@ export function LanguageProvider({
   children: React.ReactNode;
   initialLang?: Lang;
 }) {
+  const router = useRouter();
   const [lang, setLangState] = useState<Lang>(initialLang);
 
   const setLang = (newLang: Lang) => {
@@ -26,6 +28,7 @@ export function LanguageProvider({
     document.cookie = `waggy_lang=${newLang}; path=/; max-age=31536000; SameSite=Lax`;
     document.documentElement.lang = newLang;
     document.documentElement.dir = newLang === "fa" ? "rtl" : "ltr";
+    router.refresh();
   };
 
   // Sync with effect to ensure document attributes are correct on client-side navigation
