@@ -80,6 +80,9 @@ export const API_ENDPOINTS = {
     review: "/api/v1/admin/documents/{document_id}/review",
     userDocuments: "/api/v1/admin/documents/user/{user_id}/documents"
   },
+  media: {
+    upload: "/api/v1/media/upload"
+  },
   system: {
     health: "/health",
     root: "/"

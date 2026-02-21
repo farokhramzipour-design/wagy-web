@@ -16,59 +16,58 @@ export interface Pet {
 
 export interface PetCreationPayload {
   name: string;
-  type: string; // "dog" | "cat"
-  size: string; // "small" | "medium" | "large" | "giant"
-  breed_id: number;
-  breed_other?: string;
-  gender: string; // "male" | "female" | "unknown"
-  date_of_birth?: string; // YYYY-MM-DD
-  age_years?: number;
-  weight_kg?: number;
-  color?: string;
-  distinctive_features?: string;
-  microchip_id?: string;
-  is_neutered?: boolean;
-  spay_neuter_date?: string; // YYYY-MM-DD
-  potty_training_status?: string; // "fully_trained" | "in_progress" | "not_trained"
-  is_crate_trained?: boolean;
-  knows_basic_commands?: boolean;
-  energy_level?: string; // "low" | "moderate" | "high" | "hyper"
-  exercise_requirements?: string;
-  is_friendly_with_dogs?: boolean;
-  is_friendly_with_cats?: boolean;
-  is_friendly_with_kids?: boolean;
-  is_friendly_with_strangers?: boolean;
-  has_separation_anxiety?: boolean;
-  is_reactive_on_leash?: boolean;
-  behavioral_notes?: string;
-  special_needs?: string;
-  feeding_instructions?: string;
-  food_brand?: string;
-  feeding_times?: string;
-  treats_allowed?: boolean;
-  food_allergies?: string;
-  medications?: string;
-  medication_instructions?: string;
-  walk_frequency?: string;
-  favorite_activities?: string;
-  favorite_toys?: string;
-  potty_schedule?: string;
-  sleep_location?: string;
-  sleep_schedule?: string;
-  special_instructions?: string;
-  vet_clinic_name?: string;
-  vet_name?: string;
-  vet_phone?: string;
-  vet_address?: string;
-  medical_conditions?: string;
-  emergency_contact_name?: string;
-  emergency_contact_phone?: string;
-  emergency_contact_relationship?: string;
-  emergency_contact_2_name?: string;
-  emergency_contact_2_phone?: string;
-  has_pet_insurance?: boolean;
-  insurance_provider?: string;
-  insurance_policy_number?: string;
+  pet_type: "dog" | "cat";
+  photo_media_ids: number[];
+  primary_photo_media_id?: number;
+  gender: "male" | "female";
+  breed_ids: number[];
+  is_mixed_breed: boolean;
+  birthday?: string; // YYYY-MM-DD
+  age_years: number;
+  age_months: number;
+  adoption_date?: string; // YYYY-MM-DD
+  dog_size: "small" | "medium" | "large" | "giant";
+  weight_kg: number;
+  
+  // Enums/Strings based on user JSON
+  microchipped: "microchipped" | "not_microchipped"; 
+  spayed_neutered: "spayed_neutered" | "not_spayed_neutered";
+  
+  house_trained: "house_trained" | "not_house_trained" | "depends"; 
+  house_trained_details?: string;
+  
+  friendly_with_children: "friendly" | "not_friendly" | "unsure" | "depends";
+  friendly_with_children_details?: string;
+  
+  friendly_with_dogs: "friendly" | "not_friendly" | "unsure" | "depends";
+  friendly_with_dogs_details?: string;
+  
+  friendly_with_cats: "friendly" | "not_friendly" | "unsure" | "depends";
+  friendly_with_cats_details?: string;
+  
+  feeding_schedule: "morning" | "twice_a_day" | "custom";
+  feeding_schedule_details?: string;
+  
+  can_be_left_alone: "one_hour_or_less" | "1_4_hours" | "4_8_hours" | "custom";
+  can_be_left_alone_details?: string;
+  
+  toilet_break_schedule: "every_hour" | "every_2_hours" | "every_4_hours" | "every_8_hours" | "custom";
+  toilet_break_schedule_details?: string;
+  
+  energy_level: "high" | "moderate" | "low";
+  
+  medication_pill: boolean;
+  medication_pill_name?: string;
+  medication_liquid: boolean;
+  medication_liquid_name?: string;
+  medication_injection: boolean;
+  medication_injection_name?: string;
+  medication_other_description?: string; // Assuming for "Other" generic desc if needed, user JSON has this field
+  
+  care_info?: string;
+  veterinary_info?: string;
+  pet_insurance_provider?: string;
+  about_your_pet?: string;
 }
 
 export interface Breed {
