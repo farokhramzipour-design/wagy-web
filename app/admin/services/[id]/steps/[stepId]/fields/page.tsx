@@ -26,7 +26,7 @@ import {
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { ServiceStepField } from "@/services/admin-api";
-import { ArrowDown, ArrowLeft, ArrowUp, Loader2, Pencil, Plus, Trash } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowUp, List, Loader2, Pencil, Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -219,6 +219,16 @@ export default function ServiceStepFieldsPage({ params }: { params: { id: string
                       </TableCell>
                       <TableCell className="text-end">
                         <div className="flex justify-end gap-2">
+                          {["select", "multiselect", "radio"].includes(field.field_type) && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => router.push(`/admin/services/${serviceId}/steps/${stepId}/fields/${field.field_id}/options`)}
+                              title="Manage Options"
+                            >
+                              <List className="h-4 w-4" />
+                            </Button>
+                          )}
                           <Button
                             variant="ghost"
                             size="icon"

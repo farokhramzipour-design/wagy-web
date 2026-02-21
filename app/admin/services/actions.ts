@@ -1,6 +1,12 @@
 "use server";
 
-import { adminApi, CreateServiceStepFieldRequest, CreateServiceStepRequest, CreateServiceTypeRequest, MediaUploadResponse, ServiceStep, ServiceStepField, ServiceType, ServiceTypeListResponse, ToggleServiceStepRequest, UpdateServiceStepRequest } from "@/services/admin-api";
+import {
+  adminApi,
+  CreateFieldOptionRequest,
+  CreateServiceStepFieldRequest, CreateServiceStepRequest, CreateServiceTypeRequest,
+  FieldOption,
+  MediaUploadResponse, ServiceStep, ServiceStepField, ServiceType, ServiceTypeListResponse, ToggleServiceStepRequest, UpdateServiceStepRequest,
+} from "@/services/admin-api";
 import { cookies } from "next/headers";
 
 const ACCESS_TOKEN_COOKIE = "waggy_access_token";
@@ -106,4 +112,26 @@ export async function deleteServiceStepFieldAction(stepId: number, fieldId: numb
 export async function reorderServiceStepFieldsAction(stepId: number, orderedFieldIds: number[]): Promise<void> {
   const token = getAccessToken();
   return await adminApi.reorderServiceStepFields(stepId, orderedFieldIds, token);
+}
+
+// Options Actions
+
+export async function createFieldOptionAction(fieldId: number, data: CreateFieldOptionRequest): Promise<FieldOption> {
+  const token = getAccessToken();
+  return await adminApi.createFieldOption(fieldId, data, token);
+}
+
+export async function updateFieldOptionAction(fieldId: number, optionId: number, data: CreateFieldOptionRequest): Promise<FieldOption> {
+  const token = getAccessToken();
+  return await adminApi.updateFieldOption(fieldId, optionId, data, token);
+}
+
+export async function deleteFieldOptionAction(fieldId: number, optionId: number): Promise<void> {
+  const token = getAccessToken();
+  return await adminApi.deleteFieldOption(fieldId, optionId, token);
+}
+
+export async function reorderFieldOptionsAction(fieldId: number, orderedOptionIds: number[]): Promise<void> {
+  const token = getAccessToken();
+  return await adminApi.reorderFieldOptions(fieldId, orderedOptionIds, token);
 }

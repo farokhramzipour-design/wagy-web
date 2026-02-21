@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { CreateServiceStepFieldRequest } from "@/services/admin-api";
@@ -167,7 +166,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                 id="pattern"
                 value={formData.pattern ?? ""}
                 onChange={(e) => setFormData({ ...formData, pattern: e.target.value })}
-                placeholder="Regex pattern"
+                placeholder={t.form.patternPlaceholder}
               />
             </div>
           </div>
@@ -177,16 +176,9 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
       case "radio":
         return (
           <div className="grid gap-2">
-            <Label htmlFor="options">Options (JSON)</Label>
-            <Textarea
-              id="options"
-              value={optionsJson}
-              onChange={(e) => setOptionsJson(e.target.value)}
-              placeholder='[{"label": "Option 1", "value": "1"}, ...]'
-              className="font-mono text-sm"
-              rows={5}
-            />
-            <p className="text-xs text-muted-foreground">Provide options as a JSON array of objects with label and value.</p>
+            <div className="p-4 bg-muted rounded-md text-sm text-muted-foreground">
+              {t.optionsConfig}
+            </div>
           </div>
         );
       default:
@@ -220,7 +212,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Basic Information</CardTitle>
+            <CardTitle>{t.basicInformation}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -231,7 +223,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                 onChange={(e) => setFormData({ ...formData, field_key: e.target.value })}
                 placeholder={t.form.keyPlaceholder}
               />
-              <p className="text-xs text-muted-foreground">Unique identifier for this field (e.g. pet_name)</p>
+              <p className="text-xs text-muted-foreground">{t.keyDescription}</p>
             </div>
 
             <div className="grid gap-2">
@@ -276,7 +268,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
 
         <Card>
           <CardHeader>
-            <CardTitle>Labels & Placeholders</CardTitle>
+            <CardTitle>{t.labelsPlaceholders}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -342,18 +334,20 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Type Configuration</CardTitle>
-            <CardDescription>Configuration specific to <strong>{formData.field_type}</strong></CardDescription>
+            <CardTitle>{t.typeConfiguration}</CardTitle>
+            <CardDescription>{t.typeConfigurationDescription} <strong>{formData.field_type}</strong></CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-2">
-              <Label htmlFor="default_value">{t.form.defaultValue}</Label>
-              <Input
-                id="default_value"
-                value={formData.default_value ?? ""}
-                onChange={(e) => setFormData({ ...formData, default_value: e.target.value })}
-              />
-            </div>
+            {!["select", "multiselect", "radio"].includes(formData.field_type) && (
+              <div className="grid gap-2">
+                <Label htmlFor="default_value">{t.defaultValue}</Label>
+                <Input
+                  id="default_value"
+                  value={formData.default_value ?? ""}
+                  onChange={(e) => setFormData({ ...formData, default_value: e.target.value })}
+                />
+              </div>
+            )}
 
             {renderTypeSpecificFields()}
           </CardContent>
@@ -361,7 +355,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Advanced Configuration</CardTitle>
+            <CardTitle>{t.advancedConfiguration}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -371,7 +365,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                   id="depends_on_field"
                   value={formData.depends_on_field ?? ""}
                   onChange={(e) => setFormData({ ...formData, depends_on_field: e.target.value })}
-                  placeholder="Key of parent field"
+                  placeholder={t.form.dependsOnFieldPlaceholder}
                 />
               </div>
               <div className="grid gap-2">
@@ -380,7 +374,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                   id="depends_on_value"
                   value={formData.depends_on_value ?? ""}
                   onChange={(e) => setFormData({ ...formData, depends_on_value: e.target.value })}
-                  placeholder="Value to trigger this field"
+                  placeholder={t.form.dependsOnValuePlaceholder}
                 />
               </div>
             </div>
@@ -403,7 +397,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                         id="filter_type"
                         value={formData.filter_type ?? ""}
                         onChange={(e) => setFormData({ ...formData, filter_type: e.target.value })}
-                        placeholder="exact, range, etc."
+                        placeholder={t.form.filterTypePlaceholder}
                       />
                     </div>
                     <div className="grid gap-2 pl-6">

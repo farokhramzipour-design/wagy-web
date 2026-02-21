@@ -176,6 +176,28 @@ export interface TransactionListResponse {
   items: TransactionItem[];
 }
 
+export interface FieldOption {
+  option_id: number;
+  field_id: number;
+  value: string;
+  label_en: string;
+  label_fa: string;
+  display_order: number;
+  is_default: boolean;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateFieldOptionRequest {
+  value: string;
+  label_en: string;
+  label_fa: string;
+  display_order: number;
+  is_default: boolean;
+  is_active: boolean;
+}
+
 export interface ServiceStepFieldsResponse {
   items: ServiceStepField[];
 }
@@ -200,7 +222,7 @@ export interface ServiceStepField {
   help_text_fa?: string;
   display_order: number;
   default_value?: string;
-  options?: any; // For select, radio, etc.
+  options?: FieldOption[]; // For select, radio, etc.
   depends_on_field?: string;
   depends_on_value?: string;
   is_filterable?: boolean;
@@ -455,6 +477,38 @@ export const adminApi = {
     return apiFetch<void>(`/api/v1/admin/service-types/steps/${stepId}/fields/reorder`, {
       method: "POST",
       body: JSON.stringify({ ordered_field_ids: orderedFieldIds }),
+      token,
+    });
+  },
+
+  // Options API
+  createFieldOption: async (fieldId: number, data: CreateFieldOptionRequest, token?: string) => {
+    return apiFetch<FieldOption>(`/api/v1/admin/service-types/fields/${fieldId}/options`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  updateFieldOption: async (fieldId: number, optionId: number, data: CreateFieldOptionRequest, token?: string) => {
+    return apiFetch<FieldOption>(`/api/v1/admin/service-types/fields/${fieldId}/options/${optionId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  deleteFieldOption: async (fieldId: number, optionId: number, token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/fields/${fieldId}/options/${optionId}`, {
+      method: "DELETE",
+      token,
+    });
+  },
+
+  reorderFieldOptions: async (fieldId: number, orderedOptionIds: number[], token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/fields/${fieldId}/options/reorder`, {
+      method: "POST",
+      body: JSON.stringify({ ordered_option_ids: orderedOptionIds }),
       token,
     });
   },
