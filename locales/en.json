@@ -317,6 +317,7 @@
       "edit": "Edit",
       "view": "View",
       "details": "{years} years, {months} months old, {weight} kg.",
+      "unknownBreed": "Unknown Breed",
       "list": {
         "breed": "Breed",
         "age": "Age",

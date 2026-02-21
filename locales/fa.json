@@ -317,6 +317,7 @@
       "edit": "ویرایش",
       "view": "مشاهده",
       "details": "{years} سال، {months} ماه، {weight} کیلوگرم.",
+      "unknownBreed": "نژاد نامشخص",
       "list": {
         "breed": "نژاد",
         "age": "سن",

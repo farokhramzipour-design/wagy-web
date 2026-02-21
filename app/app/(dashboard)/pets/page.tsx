@@ -13,6 +13,7 @@ export default async function PetsPage() {
   const lang = (cookies().get("waggy_lang")?.value as "en" | "fa") || "en";
   const t = content[lang].dashboard.pets;
   const accessToken = cookies().get("waggy_access_token")?.value;
+  const listFormatter = new Intl.ListFormat(lang, { style: 'long', type: 'conjunction' });
 
   let pets: Pet[] = [];
   if (accessToken) {
@@ -67,7 +68,9 @@ export default async function PetsPage() {
                 <div className="absolute bottom-0 left-0 p-4 text-white w-full">
                   <h3 className="text-2xl font-bold mb-1">{pet.name}</h3>
                   <p className="text-sm font-medium opacity-90 mb-1">
-                    {pet.breed_names?.join(" and ") || "Unknown Breed"}
+                    {pet.breed_names && pet.breed_names.length > 0
+                      ? listFormatter.format(pet.breed_names)
+                      : (t as any).unknownBreed}
                   </p>
                   <p className="text-xs opacity-80">
                     {t.details
