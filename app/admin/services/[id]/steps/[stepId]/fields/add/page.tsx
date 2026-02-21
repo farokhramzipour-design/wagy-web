@@ -60,6 +60,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
     help_text_fa: null,
     default_value: null,
     options: null, // We'll handle options as JSON string in UI for now or dynamic list
+    is_active: true,
   });
 
   const [optionsJson, setOptionsJson] = useState("");
@@ -74,7 +75,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
     setSubmitting(true);
     try {
       const payload = { ...formData };
-      
+
       // Parse options if applicable
       if (["select", "multiselect", "radio"].includes(payload.field_type) && optionsJson) {
         try {
@@ -317,7 +318,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                 dir="rtl"
               />
             </div>
-            
+
             <div className="grid gap-2">
               <Label htmlFor="help_text_en">{t.form.helpTextEn}</Label>
               <Input
@@ -353,7 +354,7 @@ export default function AddServiceStepFieldPage({ params }: { params: { id: stri
                 onChange={(e) => setFormData({ ...formData, default_value: e.target.value })}
               />
             </div>
-            
+
             {renderTypeSpecificFields()}
           </CardContent>
         </Card>

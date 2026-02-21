@@ -142,6 +142,7 @@ export interface ServiceFieldCreateRequest {
   filter_type?: string | null;
   is_searchable?: boolean;
   filter_priority?: number;
+  is_active?: boolean;
 }
 
 export interface ServiceFieldUpdateRequest {
