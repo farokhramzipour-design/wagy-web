@@ -28,34 +28,34 @@ export interface PetCreationPayload {
   adoption_date?: string; // YYYY-MM-DD
   dog_size: "small" | "medium" | "large" | "giant";
   weight_kg: number;
-  
+
   // Enums/Strings based on user JSON
-  microchipped: "microchipped" | "not_microchipped"; 
+  microchipped: "microchipped" | "not_microchipped";
   spayed_neutered: "spayed_neutered" | "not_spayed_neutered";
-  
-  house_trained: "house_trained" | "not_house_trained" | "depends"; 
+
+  house_trained: "house_trained" | "not_house_trained" | "depends";
   house_trained_details?: string;
-  
+
   friendly_with_children: "friendly" | "not_friendly" | "unsure" | "depends";
   friendly_with_children_details?: string;
-  
+
   friendly_with_dogs: "friendly" | "not_friendly" | "unsure" | "depends";
   friendly_with_dogs_details?: string;
-  
+
   friendly_with_cats: "friendly" | "not_friendly" | "unsure" | "depends";
   friendly_with_cats_details?: string;
-  
+
   feeding_schedule: "morning" | "twice_a_day" | "custom";
   feeding_schedule_details?: string;
-  
+
   can_be_left_alone: "one_hour_or_less" | "1_4_hours" | "4_8_hours" | "custom";
   can_be_left_alone_details?: string;
-  
+
   toilet_break_schedule: "every_hour" | "every_2_hours" | "every_4_hours" | "every_8_hours" | "custom";
   toilet_break_schedule_details?: string;
-  
+
   energy_level: "high" | "moderate" | "low";
-  
+
   medication_pill: boolean;
   medication_pill_name?: string;
   medication_liquid: boolean;
@@ -63,7 +63,7 @@ export interface PetCreationPayload {
   medication_injection: boolean;
   medication_injection_name?: string;
   medication_other_description?: string; // Assuming for "Other" generic desc if needed, user JSON has this field
-  
+
   care_info?: string;
   veterinary_info?: string;
   pet_insurance_provider?: string;
@@ -93,8 +93,14 @@ export async function createPet(accessToken: string, payload: PetCreationPayload
   });
 }
 
-export async function getBreeds(accessToken: string, petType: "dog" | "cat") {
-  return apiFetch<Breed[]>(`${API_ENDPOINTS.breeds.base}?pet_type=${petType}`, {
+export async function getBreeds(accessToken: string, petType: "dog" | "cat", query?: string) {
+  const searchParams = new URLSearchParams();
+  searchParams.append("pet_type", petType);
+  if (query) {
+    searchParams.append("q", query);
+  }
+
+  return apiFetch<Breed[]>(`${API_ENDPOINTS.breeds.base}?${searchParams.toString()}`, {
     method: "GET",
     token: accessToken,
   });

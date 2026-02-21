@@ -1,20 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { createPet, getBreeds, type Breed, type PetCreationPayload } from "@/services/pet-api";
-import { uploadMedia, type Media } from "@/services/media-api";
-import { Dog, Cat, Plus, Trash2, Upload, X, Image as ImageIcon, Loader2 } from "lucide-react";
-import { toast } from "sonner";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
+import { uploadMedia, type Media } from "@/services/media-api";
+import { createPet, type PetCreationPayload } from "@/services/pet-api";
+import { Cat, Dog, Image as ImageIcon, Loader2, Plus, Trash2, Upload, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { BreedSelector } from "./breed-selector";
 
 const content = { en, fa };
 
@@ -26,17 +27,16 @@ export function PetForm({ accessToken }: PetFormProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].petForm;
-  
+
   const [loading, setLoading] = useState(false);
-  const [breeds, setBreeds] = useState<Breed[]>([]);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
-  
+
   // Media states
   const [uploadingProfile, setUploadingProfile] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
   const [galleryImages, setGalleryImages] = useState<Media[]>([]);
   const [profileImage, setProfileImage] = useState<Media | null>(null);
-  
+
   const profileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
@@ -84,21 +84,17 @@ export function PetForm({ accessToken }: PetFormProps) {
     about_your_pet: ""
   });
 
-  // Fetch breeds when type changes
-  useEffect(() => {
-    if (accessToken && (formData.pet_type === "dog" || formData.pet_type === "cat")) {
-      getBreeds(accessToken, formData.pet_type)
-        .then(setBreeds)
-        .catch((err) => console.error("Failed to fetch breeds", err));
-    }
-  }, [accessToken, formData.pet_type]);
-
   const handleChange = (field: keyof PetCreationPayload, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   // Breed Logic
   const handleBreedChange = (index: number, breedId: number) => {
+    // Check for duplicates
+    if (formData.breed_ids.some((id, i) => id === breedId && i !== index)) {
+      toast.error(lang === 'fa' ? "این نژاد قبلا انتخاب شده است" : "This breed is already selected");
+      return;
+    }
     const newBreeds = [...formData.breed_ids];
     newBreeds[index] = breedId;
     handleChange("breed_ids", newBreeds);
@@ -122,22 +118,22 @@ export function PetForm({ accessToken }: PetFormProps) {
         handleChange("breed_ids", [formData.breed_ids[0]]);
       }
     } else {
-        // If turning on, ensure at least one slot exists
-         if (formData.breed_ids.length === 0) {
-            handleChange("breed_ids", [0]);
-         }
+      // If turning on, ensure at least one slot exists
+      if (formData.breed_ids.length === 0) {
+        handleChange("breed_ids", [0]);
+      }
     }
   };
 
   // Media Logic
   const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0] || !accessToken) return;
-    
+
     try {
       setUploadingProfile(true);
       const file = e.target.files[0];
       const media = await uploadMedia(accessToken, file);
-      
+
       setProfileImage(media);
       setFormData(prev => ({
         ...prev,
@@ -157,7 +153,7 @@ export function PetForm({ accessToken }: PetFormProps) {
 
   const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !accessToken) return;
-    
+
     try {
       setUploadingGallery(true);
       const files = Array.from(e.target.files);
@@ -192,7 +188,7 @@ export function PetForm({ accessToken }: PetFormProps) {
       primary_photo_media_id: prev.primary_photo_media_id === mediaId ? undefined : prev.primary_photo_media_id
     }));
     if (profileImage?.id === mediaId) {
-        setProfileImage(null);
+      setProfileImage(null);
     }
   };
 
@@ -213,10 +209,10 @@ export function PetForm({ accessToken }: PetFormProps) {
 
     setLoading(true);
     setErrors({});
-    
+
     // Clean up derived fields logic if needed
     const payload = { ...formData };
-    
+
     // Ensure numeric values
     payload.age_years = Number(payload.age_years);
     payload.age_months = Number(payload.age_months);
@@ -236,16 +232,16 @@ export function PetForm({ accessToken }: PetFormProps) {
   };
 
   // Helper for choice buttons
-  const ChoiceGroup = ({ 
-    options, 
-    value, 
+  const ChoiceGroup = ({
+    options,
+    value,
     onChange,
     detailsValue,
     onDetailsChange,
     detailsPlaceholder
-  }: { 
-    options: { label: string, value: any, hasDetails?: boolean }[], 
-    value: any, 
+  }: {
+    options: { label: string, value: any, hasDetails?: boolean }[],
+    value: any,
     onChange: (val: any) => void,
     detailsValue?: string,
     onDetailsChange?: (val: string) => void,
@@ -273,14 +269,14 @@ export function PetForm({ accessToken }: PetFormProps) {
             </button>
           ))}
         </div>
-        
+
         {showDetails && onDetailsChange && (
-           <Textarea 
-             value={detailsValue}
-             onChange={(e) => onDetailsChange(e.target.value)}
-             placeholder={detailsPlaceholder || t.placeholders.details}
-             className="w-full mt-2"
-           />
+          <Textarea
+            value={detailsValue}
+            onChange={(e) => onDetailsChange(e.target.value)}
+            placeholder={detailsPlaceholder || t.placeholders.details}
+            className="w-full mt-2"
+          />
         )}
       </div>
     );
@@ -296,25 +292,25 @@ export function PetForm({ accessToken }: PetFormProps) {
 
       {/* Top Profile Image */}
       <div className="flex justify-center">
-        <div 
-            className="relative w-32 h-32 rounded-full bg-neutral-100 border-2 border-dashed border-neutral-300 flex items-center justify-center cursor-pointer hover:bg-neutral-50 overflow-hidden"
-            onClick={() => profileInputRef.current?.click()}
+        <div
+          className="relative w-32 h-32 rounded-full bg-neutral-100 border-2 border-dashed border-neutral-300 flex items-center justify-center cursor-pointer hover:bg-neutral-50 overflow-hidden"
+          onClick={() => profileInputRef.current?.click()}
         >
-            {profileImage ? (
-                <img src={profileImage.url} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-                <div className="text-center text-neutral-400">
-                    {uploadingProfile ? <Loader2 className="w-8 h-8 animate-spin mx-auto" /> : <ImageIcon className="w-8 h-8 mx-auto mb-1" />}
-                    <span className="text-xs">{uploadingProfile ? t.fields.uploading : t.fields.addPhoto}</span>
-                </div>
-            )}
-            <input 
-                type="file" 
-                ref={profileInputRef} 
-                className="hidden" 
-                accept="image/*"
-                onChange={handleProfileUpload}
-            />
+          {profileImage ? (
+            <img src={profileImage.url} alt="Profile" className="w-full h-full object-cover" />
+          ) : (
+            <div className="text-center text-neutral-400">
+              {uploadingProfile ? <Loader2 className="w-8 h-8 animate-spin mx-auto" /> : <ImageIcon className="w-8 h-8 mx-auto mb-1" />}
+              <span className="text-xs">{uploadingProfile ? t.fields.uploading : t.fields.addPhoto}</span>
+            </div>
+          )}
+          <input
+            type="file"
+            ref={profileInputRef}
+            className="hidden"
+            accept="image/*"
+            onChange={handleProfileUpload}
+          />
         </div>
       </div>
 
@@ -350,481 +346,477 @@ export function PetForm({ accessToken }: PetFormProps) {
       {/* Pet Details */}
       <section className="space-y-6">
         <h3 className="text-lg font-semibold border-b pb-2">{t.sections.details}</h3>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-                <Label className={cn(errors.name && "text-red-500")}>{t.fields.name}</Label>
-                <Input 
-                    value={formData.name} 
-                    onChange={(e) => handleChange("name", e.target.value)} 
-                    placeholder={t.placeholders.name}
-                    className={cn(errors.name && "border-red-500 focus-visible:ring-red-500")}
-                />
-            </div>
-            <div className="space-y-2">
-                <Label>{t.fields.weight}</Label>
-                <Input 
-                    type="number"
-                    value={formData.weight_kg || ""} 
-                    onChange={(e) => handleChange("weight_kg", e.target.value)} 
-                    placeholder="0"
-                />
-            </div>
+          <div className="space-y-2">
+            <Label className={cn(errors.name && "text-red-500")}>{t.fields.name}</Label>
+            <Input
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              placeholder={t.placeholders.name}
+              className={cn(errors.name && "border-red-500 focus-visible:ring-red-500")}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>{t.fields.weight}</Label>
+            <Input
+              type="number"
+              value={formData.weight_kg || ""}
+              onChange={(e) => handleChange("weight_kg", e.target.value)}
+              placeholder="0"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-2">
-                <Label>{t.fields.age} ({t.fields.years})</Label>
-                <Input 
-                    type="number"
-                    value={formData.age_years} 
-                    onChange={(e) => handleChange("age_years", e.target.value)} 
-                    placeholder="0"
-                />
-            </div>
-            <div className="space-y-2">
-                <Label>{t.fields.age} ({t.fields.months})</Label>
-                <Input 
-                    type="number"
-                    value={formData.age_months} 
-                    onChange={(e) => handleChange("age_months", e.target.value)} 
-                    placeholder="0"
-                />
-            </div>
+          <div className="space-y-2">
+            <Label>{t.fields.age} ({t.fields.years})</Label>
+            <Input
+              type="number"
+              value={formData.age_years}
+              onChange={(e) => handleChange("age_years", e.target.value)}
+              placeholder="0"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>{t.fields.age} ({t.fields.months})</Label>
+            <Input
+              type="number"
+              value={formData.age_months}
+              onChange={(e) => handleChange("age_months", e.target.value)}
+              placeholder="0"
+            />
+          </div>
         </div>
 
         <div className="space-y-2">
-             <Label>{t.fields.gender}</Label>
-             <ChoiceGroup 
-                value={formData.gender}
-                onChange={(v) => handleChange("gender", v)}
-                options={[
-                    { label: t.options.male, value: "male" },
-                    { label: t.options.female, value: "female" }
-                ]}
-             />
+          <Label>{t.fields.gender}</Label>
+          <ChoiceGroup
+            value={formData.gender}
+            onChange={(v) => handleChange("gender", v)}
+            options={[
+              { label: t.options.male, value: "male" },
+              { label: t.options.female, value: "female" }
+            ]}
+          />
         </div>
 
         <div className="space-y-4">
-            <div className="flex items-center justify-between">
-                <Label className={cn(errors.breed_ids && "text-red-500")}>{t.fields.breed}</Label>
-                <div className="flex items-center gap-2">
-                    <Label htmlFor="mixed-breed" className="font-normal text-sm text-muted-foreground">{t.fields.mixedBreed}</Label>
-                    <Switch 
-                        checked={formData.is_mixed_breed}
-                        onCheckedChange={handleMixedBreedToggle}
-                        id="mixed-breed"
-                    />
+          <div className="flex items-center justify-between">
+            <Label className={cn(errors.breed_ids && "text-red-500")}>{t.fields.breed}</Label>
+            <div className="flex items-center gap-2">
+              <Label htmlFor="mixed-breed" className="font-normal text-sm text-muted-foreground">{t.fields.mixedBreed}</Label>
+              <Switch
+                checked={formData.is_mixed_breed}
+                onCheckedChange={handleMixedBreedToggle}
+                id="mixed-breed"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {formData.breed_ids.length === 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={() => handleChange("breed_ids", [0])} className="w-full">
+                {t.placeholders.selectBreed}
+              </Button>
+            )}
+
+            {formData.breed_ids.map((breedId, index) => (
+              <div key={index} className="flex gap-2">
+                <div className="flex-1">
+                  <BreedSelector
+                    value={breedId}
+                    onChange={(id) => handleBreedChange(index, id)}
+                    petType={formData.pet_type}
+                    accessToken={accessToken}
+                    excludeIds={formData.breed_ids.filter((_, i) => i !== index)}
+                    placeholder={t.placeholders.selectBreed}
+                    error={!!errors.breed_ids}
+                  />
                 </div>
-            </div>
-
-            <div className="space-y-3">
-                {formData.breed_ids.length === 0 && (
-                     <Button type="button" variant="outline" size="sm" onClick={() => handleChange("breed_ids", [0])} className="w-full">
-                        {t.placeholders.selectBreed}
-                     </Button>
-                )}
-                
-                {formData.breed_ids.map((breedId, index) => (
-                    <div key={index} className="flex gap-2">
-                        <select 
-                            className={cn(
-                                "flex-1 h-10 px-3 rounded-md border bg-white text-sm",
-                                errors.breed_ids ? "border-red-500 focus:ring-red-500" : "border-neutral-200"
-                            )}
-                            value={breedId || 0}
-                            onChange={(e) => handleBreedChange(index, Number(e.target.value))}
-                        >
-                            <option value={0} disabled>{t.placeholders.selectBreed}</option>
-                            {breeds.map(b => (
-                                <option key={b.breed_id} value={b.breed_id}>
-                                    {lang === 'fa' ? b.name_fa : b.name_en}
-                                </option>
-                            ))}
-                        </select>
-                        {formData.is_mixed_breed && (
-                            <Button 
-                                type="button" 
-                                variant="ghost" 
-                                size="icon" 
-                                onClick={() => removeBreed(index)}
-                                disabled={formData.breed_ids.length <= 1}
-                                className="text-red-500 hover:text-red-600"
-                            >
-                                <Trash2 className="w-4 h-4" />
-                            </Button>
-                        )}
-                    </div>
-                ))}
-
                 {formData.is_mixed_breed && (
-                    <Button type="button" variant="outline" size="sm" onClick={addBreed} className="w-full">
-                        <Plus className="w-4 h-4 mr-2" />
-                        {t.fields.addBreed}
-                    </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeBreed(index)}
+                    disabled={formData.breed_ids.length <= 1}
+                    className="text-red-500 hover:text-red-600"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                 )}
-            </div>
+              </div>
+            ))}
+
+            {formData.is_mixed_breed && (
+              <Button type="button" variant="outline" size="sm" onClick={addBreed} className="w-full">
+                <Plus className="w-4 h-4 mr-2" />
+                {t.fields.addBreed}
+              </Button>
+            )}
+          </div>
         </div>
 
         {formData.pet_type === "dog" && (
-             <div className="space-y-2">
-                <Label>{t.fields.size}</Label>
-                <ChoiceGroup 
-                   value={formData.dog_size}
-                   onChange={(v) => handleChange("dog_size", v)}
-                   options={[
-                       { label: t.options.small, value: "small" },
-                       { label: t.options.medium, value: "medium" },
-                       { label: t.options.large, value: "large" },
-                       { label: t.options.giant, value: "giant" }
-                   ]}
-                />
-           </div>
+          <div className="space-y-2">
+            <Label>{t.fields.size}</Label>
+            <ChoiceGroup
+              value={formData.dog_size}
+              onChange={(v) => handleChange("dog_size", v)}
+              options={[
+                { label: t.options.small, value: "small" },
+                { label: t.options.medium, value: "medium" },
+                { label: t.options.large, value: "large" },
+                { label: t.options.giant, value: "giant" }
+              ]}
+            />
+          </div>
         )}
       </section>
 
       {/* Additional Details */}
       <section className="space-y-6">
-         <h3 className="text-lg font-semibold border-b pb-2">{t.sections.additional}</h3>
-         
-         <div className="space-y-2">
-             <Label>{t.fields.microchipped}</Label>
-             <ChoiceGroup 
-                value={formData.microchipped}
-                onChange={(v) => handleChange("microchipped", v)}
-                options={[
-                    { label: t.options.microchipped, value: "microchipped" },
-                    { label: t.options.notMicrochipped, value: "not_microchipped" }
-                ]}
-             />
-         </div>
+        <h3 className="text-lg font-semibold border-b pb-2">{t.sections.additional}</h3>
 
-         <div className="space-y-2">
-             <Label>{t.fields.spayedNeutered}</Label>
-             <ChoiceGroup 
-                value={formData.spayed_neutered}
-                onChange={(v) => handleChange("spayed_neutered", v)}
-                options={[
-                    { label: t.options.spayed, value: "spayed_neutered" },
-                    { label: t.options.notSpayed, value: "not_spayed_neutered" }
-                ]}
-             />
-         </div>
-
-         <div className="space-y-2">
-             <Label>{t.fields.houseTrained}</Label>
-             <ChoiceGroup 
-                value={formData.house_trained}
-                onChange={(v) => handleChange("house_trained", v)}
-                detailsValue={formData.house_trained_details}
-                onDetailsChange={(v) => handleChange("house_trained_details", v)}
-                options={[
-                    { label: t.options.houseTrained, value: "house_trained" },
-                    { label: t.options.notHouseTrained, value: "not_house_trained" },
-                    { label: t.options.dependsHouseTrained, value: "depends", hasDetails: true }
-                ]}
-             />
-         </div>
-
-         <div className="space-y-2">
-             <Label>{t.fields.friendlyChildren}</Label>
-             <ChoiceGroup 
-                value={formData.friendly_with_children}
-                onChange={(v) => handleChange("friendly_with_children", v)}
-                detailsValue={formData.friendly_with_children_details}
-                onDetailsChange={(v) => handleChange("friendly_with_children_details", v)}
-                options={[
-                    { label: t.options.friendly, value: "friendly" },
-                    { label: t.options.notFriendly, value: "not_friendly" },
-                    { label: t.options.unsure, value: "unsure" },
-                    { label: t.options.depends, value: "depends", hasDetails: true }
-                ]}
-             />
-         </div>
-         
-         <div className="space-y-2">
-             <Label>{t.fields.friendlyDogs}</Label>
-             <ChoiceGroup 
-                value={formData.friendly_with_dogs}
-                onChange={(v) => handleChange("friendly_with_dogs", v)}
-                detailsValue={formData.friendly_with_dogs_details}
-                onDetailsChange={(v) => handleChange("friendly_with_dogs_details", v)}
-                options={[
-                    { label: t.options.friendly, value: "friendly" },
-                    { label: t.options.notFriendly, value: "not_friendly" },
-                    { label: t.options.unsure, value: "unsure" },
-                    { label: t.options.depends, value: "depends", hasDetails: true }
-                ]}
-             />
-         </div>
-
-         <div className="space-y-2">
-             <Label>{t.fields.friendlyCats}</Label>
-             <ChoiceGroup 
-                value={formData.friendly_with_cats}
-                onChange={(v) => handleChange("friendly_with_cats", v)}
-                detailsValue={formData.friendly_with_cats_details}
-                onDetailsChange={(v) => handleChange("friendly_with_cats_details", v)}
-                options={[
-                    { label: t.options.friendly, value: "friendly" },
-                    { label: t.options.notFriendly, value: "not_friendly" },
-                    { label: t.options.unsure, value: "unsure" },
-                    { label: t.options.depends, value: "depends", hasDetails: true }
-                ]}
-             />
-         </div>
-
-         <div className="space-y-2">
-            <Label>{t.fields.adoptionDate}</Label>
-            <Input 
-                type="date"
-                value={formData.adoption_date} 
-                onChange={(e) => handleChange("adoption_date", e.target.value)} 
-            />
-        </div>
-        
         <div className="space-y-2">
-            <Label>{t.fields.about}</Label>
-            <Textarea 
-                value={formData.about_your_pet} 
-                onChange={(e) => handleChange("about_your_pet", e.target.value)} 
-                placeholder={t.fields.aboutPlaceholder}
-            />
+          <Label>{t.fields.microchipped}</Label>
+          <ChoiceGroup
+            value={formData.microchipped}
+            onChange={(v) => handleChange("microchipped", v)}
+            options={[
+              { label: t.options.microchipped, value: "microchipped" },
+              { label: t.options.notMicrochipped, value: "not_microchipped" }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.spayedNeutered}</Label>
+          <ChoiceGroup
+            value={formData.spayed_neutered}
+            onChange={(v) => handleChange("spayed_neutered", v)}
+            options={[
+              { label: t.options.spayed, value: "spayed_neutered" },
+              { label: t.options.notSpayed, value: "not_spayed_neutered" }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.houseTrained}</Label>
+          <ChoiceGroup
+            value={formData.house_trained}
+            onChange={(v) => handleChange("house_trained", v)}
+            detailsValue={formData.house_trained_details}
+            onDetailsChange={(v) => handleChange("house_trained_details", v)}
+            options={[
+              { label: t.options.houseTrained, value: "house_trained" },
+              { label: t.options.notHouseTrained, value: "not_house_trained" },
+              { label: t.options.dependsHouseTrained, value: "depends", hasDetails: true }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.friendlyChildren}</Label>
+          <ChoiceGroup
+            value={formData.friendly_with_children}
+            onChange={(v) => handleChange("friendly_with_children", v)}
+            detailsValue={formData.friendly_with_children_details}
+            onDetailsChange={(v) => handleChange("friendly_with_children_details", v)}
+            options={[
+              { label: t.options.friendly, value: "friendly" },
+              { label: t.options.notFriendly, value: "not_friendly" },
+              { label: t.options.unsure, value: "unsure" },
+              { label: t.options.depends, value: "depends", hasDetails: true }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.friendlyDogs}</Label>
+          <ChoiceGroup
+            value={formData.friendly_with_dogs}
+            onChange={(v) => handleChange("friendly_with_dogs", v)}
+            detailsValue={formData.friendly_with_dogs_details}
+            onDetailsChange={(v) => handleChange("friendly_with_dogs_details", v)}
+            options={[
+              { label: t.options.friendly, value: "friendly" },
+              { label: t.options.notFriendly, value: "not_friendly" },
+              { label: t.options.unsure, value: "unsure" },
+              { label: t.options.depends, value: "depends", hasDetails: true }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.friendlyCats}</Label>
+          <ChoiceGroup
+            value={formData.friendly_with_cats}
+            onChange={(v) => handleChange("friendly_with_cats", v)}
+            detailsValue={formData.friendly_with_cats_details}
+            onDetailsChange={(v) => handleChange("friendly_with_cats_details", v)}
+            options={[
+              { label: t.options.friendly, value: "friendly" },
+              { label: t.options.notFriendly, value: "not_friendly" },
+              { label: t.options.unsure, value: "unsure" },
+              { label: t.options.depends, value: "depends", hasDetails: true }
+            ]}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.adoptionDate}</Label>
+          <Input
+            type="date"
+            value={formData.adoption_date}
+            onChange={(e) => handleChange("adoption_date", e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>{t.fields.about}</Label>
+          <Textarea
+            value={formData.about_your_pet}
+            onChange={(e) => handleChange("about_your_pet", e.target.value)}
+            placeholder={t.fields.aboutPlaceholder}
+          />
         </div>
       </section>
 
       {/* Care Info */}
       <section className="space-y-6">
         <h3 className="text-lg font-semibold border-b pb-2">{t.sections.care}</h3>
-        
+
         <div className="space-y-2">
-             <Label>{t.fields.toiletBreak}</Label>
-             <ChoiceGroup 
-                value={formData.toilet_break_schedule}
-                onChange={(v) => handleChange("toilet_break_schedule", v)}
-                detailsValue={formData.toilet_break_schedule_details}
-                onDetailsChange={(v) => handleChange("toilet_break_schedule_details", v)}
-                options={[
-                    { label: t.options.everyHour, value: "every_hour" },
-                    { label: t.options.every2Hours, value: "every_2_hours" },
-                    { label: t.options.every4Hours, value: "every_4_hours" },
-                    { label: t.options.every8Hours, value: "every_8_hours" },
-                    { label: t.options.customToilet, value: "custom", hasDetails: true }
-                ]}
-             />
+          <Label>{t.fields.toiletBreak}</Label>
+          <ChoiceGroup
+            value={formData.toilet_break_schedule}
+            onChange={(v) => handleChange("toilet_break_schedule", v)}
+            detailsValue={formData.toilet_break_schedule_details}
+            onDetailsChange={(v) => handleChange("toilet_break_schedule_details", v)}
+            options={[
+              { label: t.options.everyHour, value: "every_hour" },
+              { label: t.options.every2Hours, value: "every_2_hours" },
+              { label: t.options.every4Hours, value: "every_4_hours" },
+              { label: t.options.every8Hours, value: "every_8_hours" },
+              { label: t.options.customToilet, value: "custom", hasDetails: true }
+            ]}
+          />
         </div>
 
         <div className="space-y-2">
-             <Label>{t.fields.energyLevel}</Label>
-             <ChoiceGroup 
-                value={formData.energy_level}
-                onChange={(v) => handleChange("energy_level", v)}
-                options={[
-                    { label: t.options.highEnergy, value: "high" },
-                    { label: t.options.moderateEnergy, value: "moderate" },
-                    { label: t.options.lowEnergy, value: "low" }
-                ]}
-             />
+          <Label>{t.fields.energyLevel}</Label>
+          <ChoiceGroup
+            value={formData.energy_level}
+            onChange={(v) => handleChange("energy_level", v)}
+            options={[
+              { label: t.options.highEnergy, value: "high" },
+              { label: t.options.moderateEnergy, value: "moderate" },
+              { label: t.options.lowEnergy, value: "low" }
+            ]}
+          />
         </div>
-        
+
         <div className="space-y-2">
-             <Label>{t.fields.feedingSchedule}</Label>
-             <ChoiceGroup 
-                value={formData.feeding_schedule}
-                onChange={(v) => handleChange("feeding_schedule", v)}
-                detailsValue={formData.feeding_schedule_details}
-                onDetailsChange={(v) => handleChange("feeding_schedule_details", v)}
-                options={[
-                    { label: t.options.morning, value: "morning" },
-                    { label: t.options.twice, value: "twice_a_day" },
-                    { label: t.options.customFeeding, value: "custom", hasDetails: true }
-                ]}
-             />
+          <Label>{t.fields.feedingSchedule}</Label>
+          <ChoiceGroup
+            value={formData.feeding_schedule}
+            onChange={(v) => handleChange("feeding_schedule", v)}
+            detailsValue={formData.feeding_schedule_details}
+            onDetailsChange={(v) => handleChange("feeding_schedule_details", v)}
+            options={[
+              { label: t.options.morning, value: "morning" },
+              { label: t.options.twice, value: "twice_a_day" },
+              { label: t.options.customFeeding, value: "custom", hasDetails: true }
+            ]}
+          />
         </div>
-        
+
         <div className="space-y-2">
-             <Label>{t.fields.alone}</Label>
-             <ChoiceGroup 
-                value={formData.can_be_left_alone}
-                onChange={(v) => handleChange("can_be_left_alone", v)}
-                detailsValue={formData.can_be_left_alone_details}
-                onDetailsChange={(v) => handleChange("can_be_left_alone_details", v)}
-                options={[
-                    { label: t.options.oneHour, value: "one_hour_or_less" },
-                    { label: t.options.oneToFourHours, value: "1_4_hours" },
-                    { label: t.options.fourToEightHours, value: "4_8_hours" },
-                    { label: t.options.customAlone, value: "custom", hasDetails: true }
-                ]}
-             />
+          <Label>{t.fields.alone}</Label>
+          <ChoiceGroup
+            value={formData.can_be_left_alone}
+            onChange={(v) => handleChange("can_be_left_alone", v)}
+            detailsValue={formData.can_be_left_alone_details}
+            onDetailsChange={(v) => handleChange("can_be_left_alone_details", v)}
+            options={[
+              { label: t.options.oneHour, value: "one_hour_or_less" },
+              { label: t.options.oneToFourHours, value: "1_4_hours" },
+              { label: t.options.fourToEightHours, value: "4_8_hours" },
+              { label: t.options.customAlone, value: "custom", hasDetails: true }
+            ]}
+          />
         </div>
 
         <div className="space-y-4">
-             <Label>{t.fields.medication}</Label>
-             <div className="flex flex-col gap-4">
-                 {/* Pill */}
-                 <div className="space-y-2">
-                     <div className="flex items-center gap-2">
-                         <Switch 
-                            checked={formData.medication_pill}
-                            onCheckedChange={(c) => handleChange("medication_pill", c)}
-                         />
-                         <span>{t.options.pill}</span>
-                     </div>
-                     {formData.medication_pill && (
-                         <Input 
-                            placeholder={t.fields.medicationName}
-                            value={formData.medication_pill_name}
-                            onChange={(e) => handleChange("medication_pill_name", e.target.value)}
-                         />
-                     )}
-                 </div>
+          <Label>{t.fields.medication}</Label>
+          <div className="flex flex-col gap-4">
+            {/* Pill */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={formData.medication_pill}
+                  onCheckedChange={(c) => handleChange("medication_pill", c)}
+                />
+                <span>{t.options.pill}</span>
+              </div>
+              {formData.medication_pill && (
+                <Input
+                  placeholder={t.fields.medicationName}
+                  value={formData.medication_pill_name}
+                  onChange={(e) => handleChange("medication_pill_name", e.target.value)}
+                />
+              )}
+            </div>
 
-                 {/* Liquid */}
-                 <div className="space-y-2">
-                     <div className="flex items-center gap-2">
-                         <Switch 
-                            checked={formData.medication_liquid}
-                            onCheckedChange={(c) => handleChange("medication_liquid", c)}
-                         />
-                         <span>{t.options.topical}</span>
-                     </div>
-                     {formData.medication_liquid && (
-                         <Input 
-                            placeholder={t.fields.medicationName}
-                            value={formData.medication_liquid_name}
-                            onChange={(e) => handleChange("medication_liquid_name", e.target.value)}
-                         />
-                     )}
-                 </div>
+            {/* Liquid */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={formData.medication_liquid}
+                  onCheckedChange={(c) => handleChange("medication_liquid", c)}
+                />
+                <span>{t.options.topical}</span>
+              </div>
+              {formData.medication_liquid && (
+                <Input
+                  placeholder={t.fields.medicationName}
+                  value={formData.medication_liquid_name}
+                  onChange={(e) => handleChange("medication_liquid_name", e.target.value)}
+                />
+              )}
+            </div>
 
-                 {/* Injection */}
-                 <div className="space-y-2">
-                     <div className="flex items-center gap-2">
-                         <Switch 
-                            checked={formData.medication_injection}
-                            onCheckedChange={(c) => handleChange("medication_injection", c)}
-                         />
-                         <span>{t.options.injection}</span>
-                     </div>
-                     {formData.medication_injection && (
-                         <Input 
-                            placeholder={t.fields.medicationName}
-                            value={formData.medication_injection_name}
-                            onChange={(e) => handleChange("medication_injection_name", e.target.value)}
-                         />
-                     )}
-                 </div>
-                 
-                 {/* Other */}
-                 <div className="space-y-2">
-                    <Label className="font-normal text-sm text-muted-foreground">{t.options.otherMedication}</Label>
-                     <Input 
-                        placeholder={t.fields.medicationDesc}
-                        value={formData.medication_other_description}
-                        onChange={(e) => handleChange("medication_other_description", e.target.value)}
-                     />
-                 </div>
-             </div>
+            {/* Injection */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Switch
+                  checked={formData.medication_injection}
+                  onCheckedChange={(c) => handleChange("medication_injection", c)}
+                />
+                <span>{t.options.injection}</span>
+              </div>
+              {formData.medication_injection && (
+                <Input
+                  placeholder={t.fields.medicationName}
+                  value={formData.medication_injection_name}
+                  onChange={(e) => handleChange("medication_injection_name", e.target.value)}
+                />
+              )}
+            </div>
+
+            {/* Other */}
+            <div className="space-y-2">
+              <Label className="font-normal text-sm text-muted-foreground">{t.options.otherMedication}</Label>
+              <Input
+                placeholder={t.fields.medicationDesc}
+                value={formData.medication_other_description}
+                onChange={(e) => handleChange("medication_other_description", e.target.value)}
+              />
+            </div>
+          </div>
         </div>
-        
+
         <div className="space-y-2">
-            <Label>{t.fields.additionalInfo}</Label>
-            <Textarea 
-                value={formData.care_info} 
-                onChange={(e) => handleChange("care_info", e.target.value)} 
-                placeholder={t.fields.additionalInfoPlaceholder}
-            />
+          <Label>{t.fields.additionalInfo}</Label>
+          <Textarea
+            value={formData.care_info}
+            onChange={(e) => handleChange("care_info", e.target.value)}
+            placeholder={t.fields.additionalInfoPlaceholder}
+          />
         </div>
       </section>
 
       {/* Health Info */}
       <section className="space-y-6">
         <h3 className="text-lg font-semibold border-b pb-2">{t.sections.health}</h3>
-        
+
         <div className="space-y-2">
-            <Label>{t.fields.vetInfo}</Label>
-            <Textarea 
-                placeholder={t.fields.vetInfoPlaceholder}
-                value={formData.veterinary_info} 
-                onChange={(e) => handleChange("veterinary_info", e.target.value)}
-            />
+          <Label>{t.fields.vetInfo}</Label>
+          <Textarea
+            placeholder={t.fields.vetInfoPlaceholder}
+            value={formData.veterinary_info}
+            onChange={(e) => handleChange("veterinary_info", e.target.value)}
+          />
         </div>
-        
+
         <div className="space-y-2">
-            <Label>{t.fields.insurance}</Label>
-             <ChoiceGroup 
-                value={formData.pet_insurance_provider === "" ? "None" : "Provider"}
-                onChange={(v) => {
-                    if (v === "None") handleChange("pet_insurance_provider", "");
-                    else handleChange("pet_insurance_provider", "Pending Input");
-                }}
-                detailsValue={formData.pet_insurance_provider === "Pending Input" ? "" : formData.pet_insurance_provider}
-                onDetailsChange={(v) => handleChange("pet_insurance_provider", v)}
-                options={[
-                    { label: t.options.noInsurance, value: "None" },
-                    { label: t.options.addProvider, value: "Provider", hasDetails: true }
-                ]}
-                detailsPlaceholder={t.fields.insurancePlaceholder}
-             />
+          <Label>{t.fields.insurance}</Label>
+          <ChoiceGroup
+            value={formData.pet_insurance_provider === "" ? "None" : "Provider"}
+            onChange={(v) => {
+              if (v === "None") handleChange("pet_insurance_provider", "");
+              else handleChange("pet_insurance_provider", "Pending Input");
+            }}
+            detailsValue={formData.pet_insurance_provider === "Pending Input" ? "" : formData.pet_insurance_provider}
+            onDetailsChange={(v) => handleChange("pet_insurance_provider", v)}
+            options={[
+              { label: t.options.noInsurance, value: "None" },
+              { label: t.options.addProvider, value: "Provider", hasDetails: true }
+            ]}
+            detailsPlaceholder={t.fields.insurancePlaceholder}
+          />
         </div>
       </section>
-      
+
       {/* Photo Gallery */}
       <section className="space-y-6">
         <h3 className="text-lg font-semibold border-b pb-2">{t.sections.gallery}</h3>
         <p className="text-sm text-muted-foreground">{t.fields.photoGallery}</p>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            {galleryImages.map((media) => (
-                <div key={media.id} className="relative aspect-square rounded-lg overflow-hidden border">
-                    <img src={media.url} alt="Gallery" className="w-full h-full object-cover" />
-                    <button 
-                        type="button"
-                        onClick={() => removeGalleryImage(media.id)}
-                        className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1"
-                    >
-                        <X className="w-4 h-4" />
-                    </button>
-                    {formData.primary_photo_media_id === media.id && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-green-500/80 text-white text-xs text-center py-1">
-                            Primary
-                        </div>
-                    )}
+          {galleryImages.map((media) => (
+            <div key={media.id} className="relative aspect-square rounded-lg overflow-hidden border">
+              <img src={media.url} alt="Gallery" className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => removeGalleryImage(media.id)}
+                className="absolute top-1 right-1 bg-black/50 hover:bg-black/70 text-white rounded-full p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              {formData.primary_photo_media_id === media.id && (
+                <div className="absolute bottom-0 left-0 right-0 bg-green-500/80 text-white text-xs text-center py-1">
+                  Primary
                 </div>
-            ))}
-            
-            <div 
-                className="aspect-square border-2 border-dashed rounded-xl flex flex-col items-center justify-center text-neutral-400 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer"
-                onClick={() => galleryInputRef.current?.click()}
-            >
-                {uploadingGallery ? (
-                    <Loader2 className="w-8 h-8 animate-spin" />
-                ) : (
-                    <>
-                        <Upload className="w-8 h-8 mb-2" />
-                        <span className="text-xs">{t.fields.addPhoto}</span>
-                    </>
-                )}
-                <input 
-                    type="file" 
-                    ref={galleryInputRef} 
-                    className="hidden" 
-                    accept="image/*"
-                    multiple
-                    onChange={handleGalleryUpload}
-                />
+              )}
             </div>
+          ))}
+
+          <div
+            className="aspect-square border-2 border-dashed rounded-xl flex flex-col items-center justify-center text-neutral-400 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer"
+            onClick={() => galleryInputRef.current?.click()}
+          >
+            {uploadingGallery ? (
+              <Loader2 className="w-8 h-8 animate-spin" />
+            ) : (
+              <>
+                <Upload className="w-8 h-8 mb-2" />
+                <span className="text-xs">{t.fields.addPhoto}</span>
+              </>
+            )}
+            <input
+              type="file"
+              ref={galleryInputRef}
+              className="hidden"
+              accept="image/*"
+              multiple
+              onChange={handleGalleryUpload}
+            />
+          </div>
         </div>
       </section>
 
       {/* Submit */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t flex justify-center z-10">
-        <Button 
-            onClick={handleSubmit} 
-            disabled={loading || uploadingProfile || uploadingGallery}
-            className="w-full max-w-md bg-[#0ea5a4] hover:bg-[#0b7c7b] h-12 text-lg rounded-xl"
+        <Button
+          onClick={handleSubmit}
+          disabled={loading || uploadingProfile || uploadingGallery}
+          className="w-full max-w-md bg-[#0ea5a4] hover:bg-[#0b7c7b] h-12 text-lg rounded-xl"
         >
-            {loading ? t.actions.saving : t.actions.save}
+          {loading ? t.actions.saving : t.actions.save}
         </Button>
       </div>
     </div>
