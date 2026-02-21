@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -12,6 +13,7 @@ import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { uploadMedia, type Media } from "@/services/media-api";
 import { createPet, deletePet, updatePet, type Pet, type PetCreationPayload } from "@/services/pet-api";
+import { format, parseISO } from "date-fns";
 import { Cat, Dog, Image as ImageIcon, Loader2, Plus, Trash2, Upload, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -497,10 +499,11 @@ export function PetForm({ accessToken, initialData, petId }: PetFormProps) {
 
         <div className="space-y-2">
           <Label>{t.fields.birthday}</Label>
-          <Input
-            type="date"
-            value={formData.birthday}
-            onChange={(e) => handleChange("birthday", e.target.value)}
+          <DatePicker
+            date={formData.birthday ? parseISO(formData.birthday) : undefined}
+            setDate={(date) => handleChange("birthday", date ? format(date, "yyyy-MM-dd") : "")}
+            locale={lang as "en" | "fa"}
+            placeholder={t.fields.birthday}
           />
         </div>
 
@@ -684,10 +687,11 @@ export function PetForm({ accessToken, initialData, petId }: PetFormProps) {
 
         <div className="space-y-2">
           <Label>{t.fields.adoptionDate}</Label>
-          <Input
-            type="date"
-            value={formData.adoption_date}
-            onChange={(e) => handleChange("adoption_date", e.target.value)}
+          <DatePicker
+            date={formData.adoption_date ? parseISO(formData.adoption_date) : undefined}
+            setDate={(date) => handleChange("adoption_date", date ? format(date, "yyyy-MM-dd") : "")}
+            locale={lang as "en" | "fa"}
+            placeholder={t.fields.adoptionDate}
           />
         </div>
 

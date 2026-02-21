@@ -1,0 +1,81 @@
+"use client"
+
+import * as React from "react"
+import { format as formatEn } from "date-fns"
+import { format as formatFa } from "date-fns-jalali"
+import { faIR } from "date-fns-jalali/locale"
+import { Calendar as CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { CalendarJalali } from "@/components/ui/calendar-jalali"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+interface DatePickerProps {
+  date?: Date
+  setDate: (date?: Date) => void
+  locale?: "en" | "fa"
+  placeholder?: string
+  className?: string
+}
+
+export function DatePicker({
+  date,
+  setDate,
+  locale = "en",
+  placeholder = "Pick a date",
+  className,
+}: DatePickerProps) {
+  const [open, setOpen] = React.useState(false)
+
+  const handleSelect = (selectedDate: Date | undefined) => {
+    setDate(selectedDate)
+    setOpen(false)
+  }
+
+  const formatDate = (d: Date) => {
+    if (locale === "fa") {
+      return formatFa(d, "PPP", { locale: faIR })
+    }
+    return formatEn(d, "PPP")
+  }
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-full justify-start text-left font-normal",
+            !date && "text-muted-foreground",
+            className
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? formatDate(date) : <span>{placeholder}</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        {locale === "fa" ? (
+          <CalendarJalali
+            mode="single"
+            selected={date}
+            onSelect={handleSelect}
+          />
+        ) : (
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={handleSelect}
+            initialFocus
+          />
+        )}
+      </PopoverContent>
+    </Popover>
+  )
+}
