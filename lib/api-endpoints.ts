@@ -80,6 +80,13 @@ export const API_ENDPOINTS = {
     review: "/api/v1/admin/documents/{document_id}/review",
     userDocuments: "/api/v1/admin/documents/user/{user_id}/documents"
   },
+  adminBlog: {
+    base: "/api/v1/admin/blog",
+    posts: "/api/v1/admin/blog/posts",
+    postById: "/api/v1/admin/blog/posts/{post_id}",
+    categories: "/api/v1/admin/blog/categories",
+    categoryById: "/api/v1/admin/blog/categories/{category_id}"
+  },
   media: {
     upload: "/api/v1/media/upload"
   },

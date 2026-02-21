@@ -17,7 +17,8 @@ import {
   LayoutDashboard,
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from "lucide-react";
 
 const content = { en, fa };
@@ -53,6 +54,13 @@ const ADMIN_OPTIONS: AdminOption[] = [
     href: "/admin/services",
     icon: Briefcase,
     roles: ["super_admin"]
+  },
+  {
+    id: "blog",
+    titleKey: "blog",
+    href: "/admin/blog",
+    icon: BookOpen,
+    roles: ["super_admin", "admin"]
   },
   {
     id: "users",
@@ -134,7 +142,7 @@ export function AdminSidebarNav({ session, className, onLinkClick }: AdminSideba
               )}
             >
               <Icon className={cn("w-4 h-4", isActive ? "text-red-600" : "text-neutral-500")} />
-              {tAdmin[link.titleKey] || link.titleKey}
+              {link.id === "blog" ? tAdmin.blog?.title || "Blog" : (tAdmin[link.titleKey] || link.titleKey)}
               {isActive && (
                 <span className={cn(
                   "absolute w-1 h-6 bg-red-600 rounded-full",
