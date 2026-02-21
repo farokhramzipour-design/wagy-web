@@ -9,16 +9,51 @@ export interface Pet {
   gender: string;
   breed_ids: number[];
   breed_names: string[];
-  dog_size: string;
+  is_mixed_breed: boolean;
+  birthday: string;
   age_years: number;
   age_months: number;
   age_display: string;
+  adoption_date: string;
+  dog_size: string;
   weight_kg: number;
   weight_lbs: number;
+  microchipped: string;
+  spayed_neutered: string;
+  house_trained: string;
+  house_trained_details: string;
+  friendly_with_children: string;
+  friendly_with_children_details: string;
+  friendly_with_dogs: string;
+  friendly_with_dogs_details: string;
+  friendly_with_cats: string;
+  friendly_with_cats_details: string;
+  feeding_schedule: string;
+  feeding_schedule_details: string;
+  can_be_left_alone: string;
+  can_be_left_alone_details: string;
+  toilet_break_schedule: string;
+  toilet_break_schedule_details: string;
+  energy_level: string;
+  medication_pill: boolean;
+  medication_pill_name: string;
+  medication_liquid: boolean;
+  medication_liquid_name: string;
+  medication_injection: boolean;
+  medication_injection_name: string;
+  medication_other_description: string;
+  care_info: string;
+  veterinary_info: string;
+  pet_insurance_provider: string;
+  about_your_pet: string;
   avatar_media_id: number;
   avatar_url: string;
+  photos: any[]; // Or specific type if known
   is_active: boolean;
+  is_puppy: boolean;
   created_at: string;
+  updated_at: string;
+  vaccinations: any[];
 }
 
 export interface PetCreationPayload {
@@ -99,6 +134,37 @@ export async function getPets(accessToken: string) {
         : `${API_BASE_URL}${pet.avatar_url.startsWith("/") ? "" : "/"}${pet.avatar_url}`)
       : pet.avatar_url
   }));
+}
+
+export async function getPet(petId: number | string, accessToken: string) {
+  const pet = await apiFetch<Pet>(`${API_ENDPOINTS.pets.base}/${petId}`, {
+    method: "GET",
+    token: accessToken,
+  });
+
+  return {
+    ...pet,
+    avatar_url: pet.avatar_url
+      ? (pet.avatar_url.startsWith("http")
+        ? pet.avatar_url
+        : `${API_BASE_URL}${pet.avatar_url.startsWith("/") ? "" : "/"}${pet.avatar_url}`)
+      : pet.avatar_url
+  };
+}
+
+export async function updatePet(petId: number | string, data: PetCreationPayload, accessToken: string) {
+  return apiFetch<Pet>(`${API_ENDPOINTS.pets.base}/${petId}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    token: accessToken,
+  });
+}
+
+export async function deletePet(petId: number | string, accessToken: string) {
+  return apiFetch<void>(`${API_ENDPOINTS.pets.base}/${petId}`, {
+    method: "DELETE",
+    token: accessToken,
+  });
 }
 
 export async function createPet(accessToken: string, payload: PetCreationPayload) {

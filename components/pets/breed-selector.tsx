@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useLanguage } from "@/components/providers/language-provider";
 import { Input } from "@/components/ui/input";
-import { Loader2, Search, Check, ChevronDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getBreeds, type Breed } from "@/services/pet-api";
-import { useLanguage } from "@/components/providers/language-provider";
+import { Check, ChevronDown, Loader2, Search } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface BreedSelectorProps {
   value: number;
@@ -16,6 +16,7 @@ interface BreedSelectorProps {
   disabled?: boolean;
   placeholder?: string;
   error?: boolean;
+  initialName?: string;
 }
 
 export function BreedSelector({
@@ -26,7 +27,8 @@ export function BreedSelector({
   excludeIds = [],
   disabled,
   placeholder = "Select breed",
-  error
+  error,
+  initialName
 }: BreedSelectorProps) {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,29 +62,31 @@ export function BreedSelector({
     return () => clearTimeout(timer);
   }, [searchTerm, accessToken, petType, open]);
 
-  // Initial fetch to find selected breed name if we have a value but no breed object
+  // Initial setup for selected breed
   useEffect(() => {
     if (value && accessToken && !selectedBreed) {
-        // We fetch all or search for this specific one if API supported by ID, but currently only by query
-        // Since we don't have getBreedById, we'll fetch default list and hope it's there, 
-        // or rely on parent passing the initial list?
-        // Actually, let's just fetch default list on mount if we have a value.
-        // Or better, when opening, we fetch.
-        // For displaying the name when closed, we need the breed object.
-        // If the parent component already fetches breeds, maybe we should accept `initialBreeds` or `breedName`?
-        // But the requirement is to add search capability.
-        // Let's just fetch once on mount to try to resolve the name.
-        fetchBreeds("");
+      // If we have an initial name, use it to create a temporary breed object for display
+      if (initialName) {
+        setSelectedBreed({
+          breed_id: value,
+          pet_type: petType,
+          name_en: initialName,
+          name_fa: initialName,
+          typical_size: "medium" // Default/Placeholder
+        });
+      }
+      // Also fetch breeds to try to find the real object
+      fetchBreeds("");
     }
-  }, [accessToken, petType]); // Only run once or when dependencies change
+  }, [accessToken, petType, value, initialName]);
 
   // Update selectedBreed when breeds list updates or value changes
   useEffect(() => {
     if (value && breeds.length > 0) {
-       const found = breeds.find(b => b.breed_id === value);
-       if (found) setSelectedBreed(found);
+      const found = breeds.find(b => b.breed_id === value);
+      if (found) setSelectedBreed(found);
     } else if (!value) {
-       setSelectedBreed(null);
+      setSelectedBreed(null);
     }
   }, [value, breeds]);
 
@@ -106,7 +110,7 @@ export function BreedSelector({
 
   return (
     <div className="relative" ref={containerRef}>
-      <div 
+      <div
         className={cn(
           "flex items-center justify-between w-full h-10 px-3 py-2 text-sm border rounded-md bg-white cursor-pointer hover:bg-neutral-50 transition-colors",
           error ? "border-red-500" : "border-neutral-200",
@@ -134,7 +138,7 @@ export function BreedSelector({
               />
             </div>
           </div>
-          
+
           <div className="overflow-y-auto flex-1 p-1 custom-scrollbar">
             {loading ? (
               <div className="flex items-center justify-center p-4 text-neutral-500 text-sm">
@@ -149,18 +153,18 @@ export function BreedSelector({
               breeds
                 .filter(b => !excludeIds.includes(b.breed_id))
                 .map((breed) => (
-                <div
-                  key={breed.breed_id}
-                  className={cn(
-                    "flex items-center justify-between px-3 py-2 text-sm rounded-sm cursor-pointer hover:bg-neutral-100 transition-colors",
-                    value === breed.breed_id && "bg-neutral-50 text-neutral-900 font-medium"
-                  )}
-                  onClick={() => handleSelect(breed)}
-                >
-                  <span>{lang === 'fa' ? breed.name_fa : breed.name_en}</span>
-                  {value === breed.breed_id && <Check className="w-4 h-4 text-[#0ea5a4]" />}
-                </div>
-              ))
+                  <div
+                    key={breed.breed_id}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2 text-sm rounded-sm cursor-pointer hover:bg-neutral-100 transition-colors",
+                      value === breed.breed_id && "bg-neutral-50 text-neutral-900 font-medium"
+                    )}
+                    onClick={() => handleSelect(breed)}
+                  >
+                    <span>{lang === 'fa' ? breed.name_fa : breed.name_en}</span>
+                    {value === breed.breed_id && <Check className="w-4 h-4 text-[#0ea5a4]" />}
+                  </div>
+                ))
             )}
           </div>
         </div>

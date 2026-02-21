@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { uploadMedia, type Media } from "@/services/media-api";
-import { createPet, type PetCreationPayload } from "@/services/pet-api";
+import { createPet, deletePet, updatePet, type Pet, type PetCreationPayload } from "@/services/pet-api";
 import { Cat, Dog, Image as ImageIcon, Loader2, Plus, Trash2, Upload, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -22,9 +22,11 @@ const content = { en, fa };
 
 interface PetFormProps {
   accessToken?: string;
+  initialData?: Pet;
+  petId?: string | number;
 }
 
-export function PetForm({ accessToken }: PetFormProps) {
+export function PetForm({ accessToken, initialData, petId }: PetFormProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].petForm;
@@ -35,54 +37,107 @@ export function PetForm({ accessToken }: PetFormProps) {
   // Media states
   const [uploadingProfile, setUploadingProfile] = useState(false);
   const [uploadingGallery, setUploadingGallery] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<Media[]>([]);
-  const [profileImage, setProfileImage] = useState<Media | null>(null);
+  const [galleryImages, setGalleryImages] = useState<Media[]>(initialData?.photos || []);
+  const [profileImage, setProfileImage] = useState<Media | null>(
+    initialData?.avatar_url
+      ? { media_id: initialData.avatar_media_id, url: initialData.avatar_url } as unknown as Media
+      : null
+  );
+
+  const initialBreedNames = initialData?.breed_names || [];
 
   const profileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  const [formData, setFormData] = useState<PetCreationPayload>({
-    name: "",
-    pet_type: "dog",
-    photo_media_ids: [],
-    primary_photo_media_id: undefined,
-    gender: "male",
-    breed_ids: [],
-    is_mixed_breed: false,
-    birthday: "",
-    age_years: 0,
-    age_months: 0,
-    adoption_date: "",
-    dog_size: "medium",
-    weight_kg: 0,
-    microchipped: "not_microchipped",
-    spayed_neutered: "not_spayed_neutered",
-    house_trained: "house_trained",
-    house_trained_details: "",
-    friendly_with_children: "friendly",
-    friendly_with_children_details: "",
-    friendly_with_dogs: "friendly",
-    friendly_with_dogs_details: "",
-    friendly_with_cats: "friendly",
-    friendly_with_cats_details: "",
-    feeding_schedule: "morning",
-    feeding_schedule_details: "",
-    can_be_left_alone: "one_hour_or_less",
-    can_be_left_alone_details: "",
-    toilet_break_schedule: "every_hour",
-    toilet_break_schedule_details: "",
-    energy_level: "moderate",
-    medication_pill: false,
-    medication_pill_name: "",
-    medication_liquid: false,
-    medication_liquid_name: "",
-    medication_injection: false,
-    medication_injection_name: "",
-    medication_other_description: "",
-    care_info: "",
-    veterinary_info: "",
-    pet_insurance_provider: "",
-    about_your_pet: ""
+  const [formData, setFormData] = useState<PetCreationPayload>(() => {
+    if (initialData) {
+      return {
+        name: initialData.name || "",
+        pet_type: (initialData.pet_type as "dog" | "cat") || "dog",
+        photo_media_ids: initialData.photos?.map((p: any) => p.media_id) || [],
+        primary_photo_media_id: initialData.avatar_media_id,
+        gender: (initialData.gender as "male" | "female") || "male",
+        breed_ids: initialData.breed_ids || [],
+        is_mixed_breed: initialData.is_mixed_breed || false,
+        birthday: initialData.birthday || "",
+        age_years: initialData.age_years || 0,
+        age_months: initialData.age_months || 0,
+        adoption_date: initialData.adoption_date || "",
+        dog_size: (initialData.dog_size as any) || "medium",
+        weight_kg: initialData.weight_kg || 0,
+        microchipped: (initialData.microchipped as any) || "not_microchipped",
+        spayed_neutered: (initialData.spayed_neutered as any) || "not_spayed_neutered",
+        house_trained: (initialData.house_trained as any) || "house_trained",
+        house_trained_details: initialData.house_trained_details || "",
+        friendly_with_children: (initialData.friendly_with_children as any) || "friendly",
+        friendly_with_children_details: initialData.friendly_with_children_details || "",
+        friendly_with_dogs: (initialData.friendly_with_dogs as any) || "friendly",
+        friendly_with_dogs_details: initialData.friendly_with_dogs_details || "",
+        friendly_with_cats: (initialData.friendly_with_cats as any) || "friendly",
+        friendly_with_cats_details: initialData.friendly_with_cats_details || "",
+        feeding_schedule: (initialData.feeding_schedule as any) || "morning",
+        feeding_schedule_details: initialData.feeding_schedule_details || "",
+        can_be_left_alone: (initialData.can_be_left_alone as any) || "one_hour_or_less",
+        can_be_left_alone_details: initialData.can_be_left_alone_details || "",
+        toilet_break_schedule: (initialData.toilet_break_schedule as any) || "every_hour",
+        toilet_break_schedule_details: initialData.toilet_break_schedule_details || "",
+        energy_level: (initialData.energy_level as any) || "moderate",
+        medication_pill: initialData.medication_pill || false,
+        medication_pill_name: initialData.medication_pill_name || "",
+        medication_liquid: initialData.medication_liquid || false,
+        medication_liquid_name: initialData.medication_liquid_name || "",
+        medication_injection: initialData.medication_injection || false,
+        medication_injection_name: initialData.medication_injection_name || "",
+        medication_other_description: initialData.medication_other_description || "",
+        care_info: initialData.care_info || "",
+        veterinary_info: initialData.veterinary_info || "",
+        pet_insurance_provider: initialData.pet_insurance_provider || "",
+        about_your_pet: initialData.about_your_pet || ""
+      };
+    }
+    return {
+      name: "",
+      pet_type: "dog",
+      photo_media_ids: [],
+      primary_photo_media_id: undefined,
+      gender: "male",
+      breed_ids: [],
+      is_mixed_breed: false,
+      birthday: "",
+      age_years: 0,
+      age_months: 0,
+      adoption_date: "",
+      dog_size: "medium",
+      weight_kg: 0,
+      microchipped: "not_microchipped",
+      spayed_neutered: "not_spayed_neutered",
+      house_trained: "house_trained",
+      house_trained_details: "",
+      friendly_with_children: "friendly",
+      friendly_with_children_details: "",
+      friendly_with_dogs: "friendly",
+      friendly_with_dogs_details: "",
+      friendly_with_cats: "friendly",
+      friendly_with_cats_details: "",
+      feeding_schedule: "morning",
+      feeding_schedule_details: "",
+      can_be_left_alone: "one_hour_or_less",
+      can_be_left_alone_details: "",
+      toilet_break_schedule: "every_hour",
+      toilet_break_schedule_details: "",
+      energy_level: "moderate",
+      medication_pill: false,
+      medication_pill_name: "",
+      medication_liquid: false,
+      medication_liquid_name: "",
+      medication_injection: false,
+      medication_injection_name: "",
+      medication_other_description: "",
+      care_info: "",
+      veterinary_info: "",
+      pet_insurance_provider: "",
+      about_your_pet: ""
+    };
   });
 
   const handleChange = (field: keyof PetCreationPayload, value: any) => {
@@ -199,6 +254,24 @@ export function PetForm({ accessToken }: PetFormProps) {
     }
   };
 
+  const handleDelete = async () => {
+    if (!accessToken || !petId) return;
+    if (!confirm(t.delete.confirm)) return;
+
+    setLoading(true);
+    try {
+      await deletePet(petId, accessToken);
+      toast.success(t.validation.deleteSuccess);
+      router.push("/app/pets");
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to delete pet", error);
+      toast.error(t.validation.deleteError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!accessToken) return;
 
@@ -238,12 +311,17 @@ export function PetForm({ accessToken }: PetFormProps) {
     }
 
     try {
-      await createPet(accessToken, payload);
-      toast.success(t.validation.success);
+      if (petId) {
+        await updatePet(petId, payload, accessToken);
+        toast.success(lang === 'fa' ? "اطلاعات با موفقیت بروزرسانی شد" : "Pet updated successfully");
+      } else {
+        await createPet(accessToken, payload);
+        toast.success(t.validation.success);
+      }
       router.push("/app/pets");
       router.refresh();
     } catch (error) {
-      console.error("Failed to create pet", error);
+      console.error("Failed to save pet", error);
       toast.error(t.validation.error);
     } finally {
       setLoading(false);
@@ -469,6 +547,7 @@ export function PetForm({ accessToken }: PetFormProps) {
                     excludeIds={formData.breed_ids.filter((_, i) => i !== index)}
                     placeholder={t.placeholders.selectBreed}
                     error={!!errors.breed_ids}
+                    initialName={initialBreedNames[index]}
                   />
                 </div>
                 {formData.is_mixed_breed && (
@@ -847,13 +926,23 @@ export function PetForm({ accessToken }: PetFormProps) {
       </section>
 
       {/* Submit */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t flex justify-center z-10">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t flex justify-center items-center gap-4 z-10">
+        {petId && (
+          <Button
+            onClick={handleDelete}
+            variant="destructive"
+            disabled={loading || uploadingProfile || uploadingGallery}
+            className="w-full max-w-[200px] h-12 text-lg rounded-xl"
+          >
+            {t.actions.delete}
+          </Button>
+        )}
         <Button
           onClick={handleSubmit}
           disabled={loading || uploadingProfile || uploadingGallery}
           className="w-full max-w-md bg-[#0ea5a4] hover:bg-[#0b7c7b] h-12 text-lg rounded-xl"
         >
-          {loading ? t.actions.saving : t.actions.save}
+          {loading ? t.actions.saving : (petId ? t.actions.update : t.actions.save)}
         </Button>
       </div>
     </div>

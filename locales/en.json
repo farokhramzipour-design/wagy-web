@@ -483,13 +483,23 @@
     "actions": {
       "save": "Save pet",
       "cancel": "I don't have any pets",
-      "saving": "Saving..."
+      "saving": "Saving...",
+      "delete": "Delete Pet",
+      "deleting": "Deleting...",
+      "update": "Update Pet"
+    },
+    "delete": {
+      "confirm": "Are you sure you want to delete this pet? This action cannot be undone."
     },
     "validation": {
       "nameRequired": "Please enter your pet's name",
       "breedRequired": "Please select a breed",
+      "breedDuplicate": "This breed is already selected",
       "success": "Pet added successfully!",
-      "error": "Something went wrong. Please try again."
+      "updateSuccess": "Pet updated successfully!",
+      "deleteSuccess": "Pet deleted successfully!",
+      "error": "Something went wrong. Please try again.",
+      "deleteError": "Failed to delete pet."
     }
   },
   "admin": {
