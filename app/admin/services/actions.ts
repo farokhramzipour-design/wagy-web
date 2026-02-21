@@ -102,3 +102,8 @@ export async function deleteServiceStepFieldAction(stepId: number, fieldId: numb
   const token = getAccessToken();
   return await adminApi.deleteServiceStepField(stepId, fieldId, token);
 }
+
+export async function reorderServiceStepFieldsAction(stepId: number, orderedFieldIds: number[]): Promise<void> {
+  const token = getAccessToken();
+  return await adminApi.reorderServiceStepFields(stepId, orderedFieldIds, token);
+}

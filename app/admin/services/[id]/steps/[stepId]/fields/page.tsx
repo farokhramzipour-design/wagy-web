@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteServiceStepFieldAction, getServiceStepFieldsAction } from "@/app/admin/services/actions";
+import { deleteServiceStepFieldAction, getServiceStepFieldsAction, reorderServiceStepFieldsAction } from "@/app/admin/services/actions";
 import { useLanguage } from "@/components/providers/language-provider";
 import {
   AlertDialog,
@@ -26,7 +26,7 @@ import {
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { ServiceStepField } from "@/services/admin-api";
-import { ArrowLeft, Loader2, Pencil, Plus, Trash } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowUp, Loader2, Pencil, Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -57,6 +57,51 @@ export default function ServiceStepFieldsPage({ params }: { params: { id: string
       toast.error(t.errorFetch || "Failed to fetch fields");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleMove = async (index: number, direction: "up" | "down") => {
+    const newFields = [...fields];
+    if (direction === "up" && index > 0) {
+      // Create copies
+      const current = { ...newFields[index] };
+      const prev = { ...newFields[index - 1] };
+
+      // Swap display_order
+      const tempOrder = current.display_order;
+      current.display_order = prev.display_order;
+      prev.display_order = tempOrder;
+
+      // Swap positions
+      newFields[index] = prev;
+      newFields[index - 1] = current;
+    } else if (direction === "down" && index < newFields.length - 1) {
+      // Create copies
+      const current = { ...newFields[index] };
+      const next = { ...newFields[index + 1] };
+
+      // Swap display_order
+      const tempOrder = current.display_order;
+      current.display_order = next.display_order;
+      next.display_order = tempOrder;
+
+      // Swap positions
+      newFields[index] = next;
+      newFields[index + 1] = current;
+    } else {
+      return;
+    }
+
+    setFields(newFields); // Optimistic update
+
+    try {
+      const orderedIds = newFields.map(f => f.field_id);
+      await reorderServiceStepFieldsAction(stepId, orderedIds);
+      toast.success(t.reorderSuccess || "Fields reordered successfully");
+    } catch (error) {
+      console.error("Failed to reorder fields:", error);
+      toast.error(t.reorderError || "Failed to reorder fields");
+      fetchFields(); // Revert on error
     }
   };
 
@@ -134,9 +179,33 @@ export default function ServiceStepFieldsPage({ params }: { params: { id: string
                     </TableCell>
                   </TableRow>
                 ) : (
-                  fields.map((field) => (
+                  fields.map((field, index) => (
                     <TableRow key={field.field_id}>
-                      <TableCell className="text-center font-medium">{field.display_order}</TableCell>
+                      <TableCell className="text-center font-medium">
+                        <div className="flex items-center justify-center gap-1">
+                          {field.display_order}
+                          <div className="flex flex-col">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-4 w-4"
+                              disabled={index === 0}
+                              onClick={() => handleMove(index, "up")}
+                            >
+                              <ArrowUp className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-4 w-4"
+                              disabled={index === fields.length - 1}
+                              onClick={() => handleMove(index, "down")}
+                            >
+                              <ArrowDown className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </TableCell>
                       <TableCell className="text-start font-mono text-sm">{field.field_key}</TableCell>
                       <TableCell className="text-start">{field.label_en}</TableCell>
                       <TableCell className="text-start">{field.label_fa}</TableCell>

@@ -451,6 +451,16 @@ export const adminApi = {
     });
   },
 
+  reorderServiceStepFields: async (stepId: number, orderedFieldIds: number[], token?: string) => {
+    return apiFetch<void>(`/api/v1/admin/service-types/steps/${stepId}/fields/reorder`, {
+      method: "POST",
+      body: JSON.stringify({ ordered_field_ids: orderedFieldIds }),
+      token,
+    });
+  },
+
+  // Options
+
   getUsers: async (params: {
     user_type?: string;
     status_filter?: string;
