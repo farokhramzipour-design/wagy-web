@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,17 +10,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, LogOut, LayoutDashboard, Menu } from "lucide-react";
-import type { SessionData } from "@/lib/session";
-import en from "../../locales/en.json";
-import fa from "../../locales/fa.json";
-import { useLanguage } from "@/components/providers/language-provider";
+import { Logo } from "@/components/ui/logo";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
-  SheetTitle
+  SheetTitle,
+  SheetTrigger
 } from "@/components/ui/sheet";
+import type { SessionData } from "@/lib/session";
+import { LayoutDashboard, LogOut, Menu, User } from "lucide-react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import en from "../../locales/en.json";
+import fa from "../../locales/fa.json";
 
 type Lang = "en" | "fa";
 
@@ -59,18 +60,20 @@ export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side={isRtl ? "right" : "left"} className="w-64 p-0 pt-10">
-                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                   {/* Pass a callback to close the sheet when a link is clicked */}
-                   <div onClick={() => setOpen(false)} className="h-full">
-                     {mobileNav}
-                   </div>
+                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                  {/* Pass a callback to close the sheet when a link is clicked */}
+                  <div onClick={() => setOpen(false)} className="h-full">
+                    {mobileNav}
+                  </div>
                 </SheetContent>
               </Sheet>
             </div>
           )}
-          <Link href="/landing" className="text-2xl font-bold tracking-tight text-[#0ea5a4]">Waggy</Link>
+          <Link href="/landing" className="text-[#0ea5a4]">
+            <Logo className="h-6 w-auto" />
+          </Link>
         </div>
-        
+
         {showNavLinks && (
           <nav className="hidden md:flex gap-6 text-sm font-medium text-neutral-600">
             <Link href="/landing#services" className="hover:text-[#0ea5a4] transition-colors">{t.nav.services}</Link>
@@ -82,13 +85,13 @@ export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center bg-neutral-100 rounded-full p-1">
-            <button 
+            <button
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${lang === "en" ? "bg-white shadow-sm text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}
               onClick={() => setLang("en")}
             >
               EN
             </button>
-            <button 
+            <button
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${lang === "fa" ? "bg-white shadow-sm text-neutral-900" : "text-neutral-500 hover:text-neutral-900"}`}
               onClick={() => setLang("fa")}
             >
