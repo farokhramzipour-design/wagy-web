@@ -22,7 +22,11 @@ export interface TokenResponse {
   refresh_token: string;
   token_type: string;
   expires_in: number;
-  user_id?: number | null;
+  is_new_user: boolean;
+  user_id: number;
+  auth_method: string;
+  verification_complete: boolean;
+  missing_verifications: string[];
 }
 
 export interface RefreshAccessTokenResponse {

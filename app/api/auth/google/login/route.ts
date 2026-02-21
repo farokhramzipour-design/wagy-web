@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "../../../../../lib/api-client";
 import { API_ENDPOINTS } from "../../../../../lib/api-endpoints";
-
-const NEXT_COOKIE = "waggy_auth_next";
+import { AUTH_COOKIES } from "../../../../../lib/auth-config";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -14,7 +13,7 @@ export async function GET(request: Request) {
   loginUrl.searchParams.set("redirect_uri", callbackUrl);
 
   const response = NextResponse.redirect(loginUrl);
-  response.cookies.set(NEXT_COOKIE, safeNext, {
+  response.cookies.set(AUTH_COOKIES.NEXT_URL, safeNext, {
     httpOnly: true,
     sameSite: "lax",
     path: "/",

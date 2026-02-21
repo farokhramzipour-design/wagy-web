@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_BASE_URL } from "../../../../../lib/api-client";
 import { API_ENDPOINTS } from "../../../../../lib/api-endpoints";
-
-const NEXT_COOKIE = "waggy_auth_next";
+import { AUTH_COOKIES } from "../../../../../lib/auth-config";
 
 type TokenResponse = {
   access_token: string;
@@ -56,7 +55,7 @@ export async function GET(request: Request) {
   redirectUrl.searchParams.set("expires_in", String(Math.max(tokens.expires_in || 3600, 60)));
 
   const response = NextResponse.redirect(redirectUrl);
-  response.cookies.set(NEXT_COOKIE, "", {
+  response.cookies.set(AUTH_COOKIES.NEXT_URL, "", {
     httpOnly: true,
     sameSite: "lax",
     path: "/",

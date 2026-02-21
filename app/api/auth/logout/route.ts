@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_ENDPOINTS } from "../../../../lib/api-endpoints";
+import { AUTH_COOKIES } from "../../../../lib/auth-config";
 
-const SESSION_COOKIE = "waggy_session";
-const ACCESS_COOKIE = "waggy_access_token";
-const REFRESH_COOKIE = "waggy_refresh_token";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.waggy.ir";
 
@@ -12,7 +10,7 @@ export async function POST(request: Request) {
   const refreshTokenMatch = cookieHeader
     .split(";")
     .map((v) => v.trim())
-    .find((entry) => entry.startsWith(`${REFRESH_COOKIE}=`));
+    .find((entry) => entry.startsWith(`${AUTH_COOKIES.REFRESH_TOKEN}=`));
   const refreshToken = refreshTokenMatch
     ? decodeURIComponent(refreshTokenMatch.split("=")[1] || "")
     : "";
@@ -36,19 +34,19 @@ export async function POST(request: Request) {
     status: 303,
     headers: { Location: "/" }
   });
-  response.cookies.set(SESSION_COOKIE, "", {
+  response.cookies.set(AUTH_COOKIES.SESSION, "", {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
     maxAge: 0
   });
-  response.cookies.set(ACCESS_COOKIE, "", {
+  response.cookies.set(AUTH_COOKIES.ACCESS_TOKEN, "", {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
     maxAge: 0
   });
-  response.cookies.set(REFRESH_COOKIE, "", {
+  response.cookies.set(AUTH_COOKIES.REFRESH_TOKEN, "", {
     httpOnly: true,
     sameSite: "lax",
     path: "/",

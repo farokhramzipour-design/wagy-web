@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
+import { AUTH_CONFIG, AUTH_COOKIES } from "../../../../lib/auth-config";
 import { normalizeName, normalizeRole, serializeSession } from "../../../../lib/session";
-
-const SESSION_COOKIE = "waggy_session";
-const ACCESS_COOKIE = "waggy_access_token";
-const REFRESH_COOKIE = "waggy_refresh_token";
 
 type SessionPayload = {
   role?: string;
@@ -28,31 +25,36 @@ export async function POST(request: Request) {
   const accessExpiresIn =
     typeof body.access_expires_in === "number" && body.access_expires_in > 0
       ? body.access_expires_in
-      : 60 * 60;
+      : AUTH_CONFIG.ACCESS_TOKEN_EXPIRY;
+
+  const isProduction = process.env.NODE_ENV === "production";
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(SESSION_COOKIE, serializeSession({ role, name, isAdmin, adminRole, isProvider }), {
+  response.cookies.set(AUTH_COOKIES.SESSION, serializeSession({ role, name, isAdmin, adminRole, isProvider }), {
     httpOnly: true,
     sameSite: "lax",
+    secure: isProduction,
     path: "/",
-    maxAge: 60 * 60 * 24 * 7
+    maxAge: AUTH_CONFIG.SESSION_EXPIRY
   });
 
   if (accessToken) {
-    response.cookies.set(ACCESS_COOKIE, accessToken, {
+    response.cookies.set(AUTH_COOKIES.ACCESS_TOKEN, accessToken, {
       httpOnly: true,
       sameSite: "lax",
+      secure: isProduction,
       path: "/",
       maxAge: accessExpiresIn
     });
   }
 
   if (refreshToken) {
-    response.cookies.set(REFRESH_COOKIE, refreshToken, {
+    response.cookies.set(AUTH_COOKIES.REFRESH_TOKEN, refreshToken, {
       httpOnly: true,
       sameSite: "lax",
+      secure: isProduction,
       path: "/",
-      maxAge: 60 * 60 * 24 * 30
+      maxAge: AUTH_CONFIG.REFRESH_TOKEN_EXPIRY
     });
   }
 
