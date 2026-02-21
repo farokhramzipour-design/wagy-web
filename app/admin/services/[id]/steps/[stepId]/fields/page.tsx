@@ -26,7 +26,7 @@ import {
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { ServiceStepField } from "@/services/admin-api";
-import { ArrowLeft, Loader2, Plus, Trash } from "lucide-react";
+import { ArrowLeft, Loader2, Pencil, Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -150,6 +150,13 @@ export default function ServiceStepFieldsPage({ params }: { params: { id: string
                       </TableCell>
                       <TableCell className="text-end">
                         <div className="flex justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => router.push(`/admin/services/${serviceId}/steps/${stepId}/fields/${field.field_id}/edit`)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
                           <Button
                             variant="ghost"
                             size="icon"

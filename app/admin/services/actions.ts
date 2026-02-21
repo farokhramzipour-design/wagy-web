@@ -83,9 +83,19 @@ export async function getServiceStepFieldsAction(stepId: number): Promise<Servic
   return response.items;
 }
 
+export async function getServiceStepFieldAction(fieldId: number): Promise<ServiceStepField> {
+  const token = getAccessToken();
+  return await adminApi.getServiceStepField(fieldId, token);
+}
+
 export async function createServiceStepFieldAction(stepId: number, data: CreateServiceStepFieldRequest): Promise<ServiceStepField> {
   const token = getAccessToken();
   return await adminApi.createServiceStepField(stepId, data, token);
+}
+
+export async function updateServiceStepFieldAction(stepId: number, fieldId: number, data: CreateServiceStepFieldRequest): Promise<ServiceStepField> {
+  const token = getAccessToken();
+  return await adminApi.updateServiceStepField(stepId, fieldId, data, token);
 }
 
 export async function deleteServiceStepFieldAction(stepId: number, fieldId: number): Promise<void> {

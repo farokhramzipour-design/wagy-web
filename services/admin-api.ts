@@ -421,9 +421,24 @@ export const adminApi = {
     });
   },
 
+  getServiceStepField: async (fieldId: number, token?: string) => {
+    return apiFetch<ServiceStepField>(`/api/v1/admin/service-types/fields/${fieldId}`, {
+      method: "GET",
+      token,
+    });
+  },
+
   createServiceStepField: async (stepId: number, data: CreateServiceStepFieldRequest, token?: string) => {
     return apiFetch<ServiceStepField>(`/api/v1/admin/service-types/steps/${stepId}/fields`, {
       method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
+  },
+
+  updateServiceStepField: async (stepId: number, fieldId: number, data: CreateServiceStepFieldRequest, token?: string) => {
+    return apiFetch<ServiceStepField>(`/api/v1/admin/service-types/steps/${stepId}/fields/${fieldId}`, {
+      method: "PUT",
       body: JSON.stringify(data),
       token,
     });
