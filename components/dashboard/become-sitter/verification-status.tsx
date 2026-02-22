@@ -55,21 +55,17 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
       title: t.steps.documents.title,
       description: t.steps.documents.description,
       completed:
-        status.documents.national_card_front.status === "approved" &&
-        status.documents.national_card_back.status === "approved" &&
-        status.documents.birth_certificate.status === "approved",
+        (status.documents.national_card_front.status === "approved" || status.documents.national_card_front.status === "verified") &&
+        (status.documents.national_card_back.status === "approved" || status.documents.national_card_back.status === "verified"),
       pending:
-        status.documents.national_card_front.status === "pending" ||
-        status.documents.national_card_back.status === "pending" ||
-        status.documents.birth_certificate.status === "pending",
+        status.documents.national_card_front.status === "pending" &&
+        status.documents.national_card_back.status === "pending",
       rejected:
         status.documents.national_card_front.status === "rejected" ||
-        status.documents.national_card_back.status === "rejected" ||
-        status.documents.birth_certificate.status === "rejected",
+        status.documents.national_card_back.status === "rejected",
       expired:
         status.documents.national_card_front.status === "expired" ||
-        status.documents.national_card_back.status === "expired" ||
-        status.documents.birth_certificate.status === "expired",
+        status.documents.national_card_back.status === "expired",
     },
     {
       id: 5,

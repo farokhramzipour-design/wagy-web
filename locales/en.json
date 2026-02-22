@@ -224,6 +224,30 @@
       "error": "Verification failed",
       "validationLength": "National code must be 10 digits",
       "validationNumeric": "Only numbers are allowed"
+    },
+    "documentsPage": {
+      "title": "Document Verification",
+      "description": "Please upload the required documents to verify your identity.",
+      "nationalCardFront": {
+        "title": "National Card (Front)",
+        "description": "Upload a clear image of the front of your national card",
+        "placeholder": "Click to upload or drag and drop"
+      },
+      "nationalCardBack": {
+        "title": "National Card (Back)",
+        "description": "Upload a clear image of the back of your national card",
+        "placeholder": "Click to upload or drag and drop"
+      },
+      "uploading": "Uploading...",
+      "success": "Document uploaded successfully",
+      "error": "Failed to upload document",
+      "reupload": "Re-upload",
+      "status": {
+        "pending": "Under Review",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      }
     }
   },
   "servicesPage": {

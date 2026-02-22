@@ -23,17 +23,12 @@ export interface VerificationStatusResponse {
   };
   documents: {
     national_card_front: {
-      status: "pending" | "approved" | "rejected" | "expired" | null;
+      status: "pending" | "approved" | "rejected" | "expired" | "verified" | null;
       uploaded_at: string | null;
       rejection_reason?: string;
     };
     national_card_back: {
-      status: "pending" | "approved" | "rejected" | "expired" | null;
-      uploaded_at: string | null;
-      rejection_reason?: string;
-    };
-    birth_certificate: {
-      status: "pending" | "approved" | "rejected" | "expired" | null;
+      status: "pending" | "approved" | "rejected" | "expired" | "verified" | null;
       uploaded_at: string | null;
       rejection_reason?: string;
     };
@@ -104,4 +99,26 @@ export async function verifyNationalCode(payload: VerifyNationalCodePayload) {
   }
 
   return response.json() as Promise<VerifyNationalCodeResponse>;
+}
+
+export interface DocumentUploadResponse {
+  document_id: number;
+  document_type: string;
+  media_id: number;
+  status: "pending" | "approved" | "rejected" | "expired";
+  uploaded_at: string;
+}
+
+export async function uploadDocument(formData: FormData) {
+  const response = await fetch("/api/verification/documents/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to upload document");
+  }
+
+  return response.json() as Promise<DocumentUploadResponse>;
 }
