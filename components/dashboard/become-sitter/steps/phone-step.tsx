@@ -77,6 +77,7 @@ export function PhoneStep({ token }: PhoneStepProps) {
       await verifyPhoneOtp({ phone, otp }, token);
       toast.success(t.success);
       router.push("/app/become-sitter");
+      router.refresh();
     } catch (error) {
       console.error("Failed to verify OTP:", error);
       toast.error(t.errorVerify);

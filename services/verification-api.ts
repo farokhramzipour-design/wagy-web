@@ -78,3 +78,30 @@ export async function getVerificationStatus() {
 
   return response.json() as Promise<VerificationStatusResponse>;
 }
+
+export interface VerifyNationalCodePayload {
+  national_code: string;
+}
+
+export interface VerifyNationalCodeResponse {
+  verified: boolean;
+  national_code: string;
+  phone: string;
+  message: string;
+  verified_at: string;
+}
+
+export async function verifyNationalCode(payload: VerifyNationalCodePayload) {
+  const response = await fetch("/api/verification/national-code", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to verify national code");
+  }
+
+  return response.json() as Promise<VerifyNationalCodeResponse>;
+}

@@ -212,6 +212,18 @@
       "errorRequest": "خطا در ارسال کد",
       "errorVerify": "کد نامعتبر است",
       "countdown": "ارسال مجدد در {seconds}"
+    },
+    "identityPage": {
+      "title": "احراز هویت",
+      "description": "لطفا کد ملی خود را برای احراز هویت وارد کنید.",
+      "inputLabel": "کد ملی",
+      "inputPlaceholder": "کد ملی ۱۰ رقمی",
+      "submitButton": "تایید هویت",
+      "verifying": "در حال بررسی...",
+      "success": "هویت با موفقیت تایید شد",
+      "error": "تایید هویت ناموفق بود",
+      "validationLength": "کد ملی باید ۱۰ رقم باشد",
+      "validationNumeric": "فقط اعداد مجاز هستند"
     }
   },
   "servicesPage": {

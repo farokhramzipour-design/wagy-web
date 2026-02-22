@@ -212,6 +212,18 @@
       "errorRequest": "Failed to send code",
       "errorVerify": "Invalid code",
       "countdown": "Resend in {seconds}"
+    },
+    "identityPage": {
+      "title": "Identity Verification",
+      "description": "Please enter your national code for identity verification.",
+      "inputLabel": "National Code",
+      "inputPlaceholder": "10-digit National Code",
+      "submitButton": "Verify Identity",
+      "verifying": "Verifying...",
+      "success": "Identity verified successfully",
+      "error": "Verification failed",
+      "validationLength": "National code must be 10 digits",
+      "validationNumeric": "Only numbers are allowed"
     }
   },
   "servicesPage": {
