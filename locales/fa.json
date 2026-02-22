@@ -196,6 +196,22 @@
           "placeholder": "مثال: پلاک ۱، واحد ۲"
         }
       }
+    },
+    "phonePage": {
+      "title": "تأیید شماره موبایل",
+      "description": "لطفاً شماره موبایل خود را تأیید کنید تا ادامه دهید.",
+      "inputLabel": "شماره موبایل",
+      "inputPlaceholder": "۰۹۱۲۳۴۵۶۷۸۹",
+      "otpLabel": "کد تایید",
+      "otpPlaceholder": "کد ۵ رقمی را وارد کنید",
+      "requestButton": "ارسال کد",
+      "verifyButton": "تأیید کد",
+      "resendButton": "ارسال مجدد کد",
+      "changeNumber": "تغییر شماره",
+      "success": "شماره موبایل با موفقیت تأیید شد",
+      "errorRequest": "خطا در ارسال کد",
+      "errorVerify": "کد نامعتبر است",
+      "countdown": "ارسال مجدد در {seconds} ثانیه"
     }
   },
   "servicesPage": {

@@ -212,7 +212,8 @@
       "errorRequest": "Failed to send code",
       "errorVerify": "Invalid code",
       "countdown": "Resend in {seconds}s"
-    },
+    }
+  },
   "servicesPage": {
     "title": "All Pet Care Services",
     "subtitle": "Pick the service that fits your pet's routine, comfort, and personality.",

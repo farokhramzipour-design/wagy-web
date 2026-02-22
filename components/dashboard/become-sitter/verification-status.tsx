@@ -101,8 +101,7 @@ export function VerificationStatus({ status, phone }: VerificationStatusProps) {
         router.push("/app/become-sitter/address");
         break;
       case 2:
-        // Phone verification is usually done in profile or auth
-        router.push("/app/profile");
+        router.push("/app/become-sitter/phone");
         break;
       case 3:
         router.push("/app/become-sitter/identity");
