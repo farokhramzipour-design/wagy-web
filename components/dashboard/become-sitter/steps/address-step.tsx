@@ -1,34 +1,44 @@
 "use client";
 
 import MapPicker from "@/components/map/map-picker";
+import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import en from "@/locales/en.json";
+import fa from "@/locales/fa.json";
 import { getAddressFromCoordinates } from "@/services/address-api";
 import { submitProviderAddress } from "@/services/verification-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const addressSchema = z.object({
-  postalCode: z.string().length(10, "کد پستی باید ۱۰ رقم باشد").regex(/^\d+$/, "فقط اعداد مجاز است"),
-  addressLine1: z.string().min(5, "آدرس باید حداقل ۵ کاراکتر باشد"),
-  addressLine2: z.string().optional(),
-});
-
-type AddressFormValues = z.infer<typeof addressSchema>;
+const content = { en, fa };
 
 export function AddressStep() {
   const router = useRouter();
+  const { lang } = useLanguage();
+  const t = content[lang].becomeSitter.addressPage;
+
   const [step, setStep] = useState<"map" | "form">("map");
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const addressSchema = useMemo(() => z.object({
+    postalCode: z.string()
+      .length(10, t.fields.postalCode.errorLength)
+      .regex(/^\d+$/, t.fields.postalCode.errorNumeric),
+    addressLine1: z.string().min(5, t.fields.addressLine1.errorMin),
+    addressLine2: z.string().optional(),
+  }), [t]);
+
+  type AddressFormValues = z.infer<typeof addressSchema>;
 
   const {
     register,
@@ -85,7 +95,7 @@ export function AddressStep() {
       router.refresh();
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "خطا در ثبت آدرس");
+      setError(err.message || t.error);
     } finally {
       setSubmitting(false);
     }
@@ -94,23 +104,19 @@ export function AddressStep() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">ثبت موقعیت مکانی</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
         <p className="text-muted-foreground">
-          {step === "map"
-            ? "لطفا موقعیت مکانی دقیق خود را روی نقشه انتخاب کنید."
-            : "لطفا جزئیات آدرس خود را تکمیل کنید."}
+          {step === "map" ? t.mapDesc : t.formDesc}
         </p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>
-            {step === "map" ? "انتخاب موقعیت روی نقشه" : "جزئیات آدرس"}
+            {step === "map" ? t.mapTitle : t.formTitle}
           </CardTitle>
           <CardDescription>
-            {step === "map"
-              ? "نقشه را جابجا کنید تا نشانگر روی محل دقیق شما قرار گیرد."
-              : "آدرس پستی دقیق جهت نمایش به کاربران"}
+            {step === "map" ? t.mapInstruction : t.formInstruction}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,7 +125,7 @@ export function AddressStep() {
               <div className="h-[400px] w-full relative rounded-md overflow-hidden border">
                 <MapPicker
                   onLocationChange={handleLocationChange}
-                  placeholder="جستجوی آدرس..."
+                  placeholder={t.searchPlaceholder}
                   initialLat={location?.lat}
                   initialLng={location?.lng}
                 />
@@ -127,7 +133,7 @@ export function AddressStep() {
                   <div className="absolute inset-0 bg-white/50 z-[1000] flex items-center justify-center backdrop-blur-sm">
                     <div className="flex flex-col items-center gap-2">
                       <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                      <span className="text-sm font-medium text-slate-700">در حال دریافت آدرس...</span>
+                      <span className="text-sm font-medium text-slate-700">{t.loadingAddress}</span>
                     </div>
                   </div>
                 )}
@@ -138,16 +144,16 @@ export function AddressStep() {
                 disabled={!location || loading}
                 onClick={handleConfirmLocation}
               >
-                {loading ? "لطفا صبر کنید..." : "تایید موقعیت و ادامه"}
+                {loading ? t.loading : t.confirmLocation}
               </Button>
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="postalCode">کد پستی (۱۰ رقم)</Label>
+                <Label htmlFor="postalCode">{t.fields.postalCode.label}</Label>
                 <Input
                   id="postalCode"
-                  placeholder="۱۲۳۴۵۶۷۸۹۰"
+                  placeholder={t.fields.postalCode.placeholder}
                   className="text-left dir-ltr tracking-widest"
                   maxLength={10}
                   inputMode="numeric"
@@ -159,10 +165,10 @@ export function AddressStep() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="addressLine1">آدرس دقیق</Label>
+                <Label htmlFor="addressLine1">{t.fields.addressLine1.label}</Label>
                 <Input
                   id="addressLine1"
-                  placeholder="مثال: تهران، خیابان آزادی..."
+                  placeholder={t.fields.addressLine1.placeholder}
                   {...register("addressLine1")}
                 />
                 {errors.addressLine1 && (
@@ -171,10 +177,10 @@ export function AddressStep() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="addressLine2">جزئیات بیشتر (اختیاری)</Label>
+                <Label htmlFor="addressLine2">{t.fields.addressLine2.label}</Label>
                 <Input
                   id="addressLine2"
-                  placeholder="مثال: پلاک ۱، واحد ۲"
+                  placeholder={t.fields.addressLine2.placeholder}
                   {...register("addressLine2")}
                 />
               </div>
@@ -194,15 +200,15 @@ export function AddressStep() {
                   onClick={() => setStep("map")}
                   disabled={submitting}
                 >
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                  بازگشت به نقشه
+                  <ArrowRight className="w-4 h-4 ml-2 rtl:rotate-180" />
+                  {t.backToMap}
                 </Button>
                 <Button
                   type="submit"
                   className="flex-1"
                   disabled={submitting}
                 >
-                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "تأیید و ثبت نهایی"}
+                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : t.submit}
                 </Button>
               </div>
             </form>

@@ -114,6 +114,105 @@
       ]
     ]
   },
+  "becomeSitter": {
+    "title": "Path to Become a Sitter",
+    "description": "To start operating as a sitter, please complete the following steps.",
+    "status": {
+      "title": "Account Status",
+      "currentStep": "Current Step:",
+      "checking": "Checking status...",
+      "continue": "Continue Completing",
+      "retry": "Review and Resend",
+      "pendingMessage": "Your information is being reviewed by experts. Please be patient.",
+      "rejectionReason": "Rejection Reason:",
+      "expirationReason": "Expiration Reason:",
+      "badges": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      },
+      "actions": {
+        "retry": "Retry",
+        "resubmit": "Correct and Resend",
+        "start": "Start this step"
+      }
+    },
+    "steps": {
+      "address": {
+        "title": "Address and Location",
+        "description": "Register exact address and location to show to users"
+      },
+      "phone": {
+        "title": "Phone Verification",
+        "description": "Mobile number for communication and notifications"
+      },
+      "identity": {
+        "title": "Identity Verification",
+        "description": "Identity verification via Shahkar system"
+      },
+      "documents": {
+        "title": "Upload Documents",
+        "description": "National ID card and Birth Certificate images"
+      },
+      "services": {
+        "title": "Select Services",
+        "description": "Select services you are willing to provide"
+      },
+      "details": {
+        "title": "Service Details",
+        "description": "Set price and conditions for each service"
+      }
+    },
+    "addressPage": {
+      "title": "Register Location",
+      "mapTitle": "Select Location on Map",
+      "mapDesc": "Please select your exact location on the map.",
+      "mapInstruction": "Move the map to place the marker on your exact location.",
+      "formTitle": "Address Details",
+      "formDesc": "Please complete your address details.",
+      "formInstruction": "Exact postal address to show to users",
+      "searchPlaceholder": "Search address...",
+      "loadingAddress": "Getting address...",
+      "loading": "Please wait...",
+      "confirmLocation": "Confirm Location",
+      "backToMap": "Back to Map",
+      "submit": "Confirm and Submit",
+      "error": "Error in submitting address",
+      "fields": {
+        "postalCode": {
+          "label": "Postal Code (10 digits)",
+          "placeholder": "1234567890",
+          "errorLength": "Postal code must be 10 digits",
+          "errorNumeric": "Only numbers are allowed"
+        },
+        "addressLine1": {
+          "label": "Exact Address",
+          "placeholder": "Example: Tehran, Azadi St...",
+          "errorMin": "Address must be at least 5 characters"
+        },
+        "addressLine2": {
+          "label": "More Details (Optional)",
+          "placeholder": "Example: No. 1, Unit 2"
+        }
+      }
+    },
+    "phonePage": {
+      "title": "Phone Verification",
+      "description": "Please verify your phone number to continue.",
+      "inputLabel": "Phone Number",
+      "inputPlaceholder": "09123456789",
+      "otpLabel": "Verification Code",
+      "otpPlaceholder": "Enter 5-digit code",
+      "requestButton": "Send Code",
+      "verifyButton": "Verify Code",
+      "resendButton": "Resend Code",
+      "changeNumber": "Change Number",
+      "success": "Phone number verified successfully",
+      "errorRequest": "Failed to send code",
+      "errorVerify": "Invalid code",
+      "countdown": "Resend in {seconds}s"
+    },
   "servicesPage": {
     "title": "All Pet Care Services",
     "subtitle": "Pick the service that fits your pet's routine, comfort, and personality.",
