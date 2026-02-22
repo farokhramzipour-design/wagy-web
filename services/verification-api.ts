@@ -33,6 +33,13 @@ export interface VerificationStatusResponse {
       rejection_reason?: string;
     };
   };
+  service_types?: {
+    service_type_id: number;
+    name_en: string;
+    name_fa: string;
+    is_selected: boolean;
+    is_wizard_completed: boolean;
+  }[];
 }
 
 export interface SubmitAddressPayload {

@@ -248,6 +248,16 @@
         "rejected": "Rejected",
         "expired": "Expired"
       }
+    },
+    "servicesStep": {
+      "title": "Select Services",
+      "description": "Choose the services you want to provide.",
+      "submitButton": "Save and Continue",
+      "loading": "Loading services...",
+      "saving": "Saving...",
+      "error": "Failed to load services",
+      "success": "Services updated successfully",
+      "noServices": "No services available at the moment."
     }
   },
   "servicesPage": {

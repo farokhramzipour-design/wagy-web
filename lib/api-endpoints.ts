@@ -56,7 +56,9 @@ export const API_ENDPOINTS = {
   provider: {
     apply: "/api/v1/provider/apply",
     application: "/api/v1/provider/application",
-    dashboard: "/api/v1/provider/dashboard"
+    dashboard: "/api/v1/provider/dashboard",
+    serviceTypes: "/api/v1/provider/service-types/available",
+    selectedServices: "/api/v1/provider/services/selected"
   },
   adminProviders: {
     applications: "/api/v1/admin/providers/applications",

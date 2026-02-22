@@ -71,7 +71,7 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
       id: 5,
       title: t.steps.services.title,
       description: t.steps.services.description,
-      completed: false,
+      completed: (status.service_types?.length ?? 0) > 0,
       pending: false,
     },
     {
