@@ -90,10 +90,7 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
   // Find the first step that is not completed and not pending (i.e., the next actionable step)
   const currentStep = steps.find((s) => !s.completed && !s.pending);
 
-  const isManualReviewPending = (steps.find(s => s.id === 1)?.pending || steps.find(s => s.id === 4)?.pending);
-  const isAutomatedStepsCompleted = (steps.find(s => s.id === 2)?.completed && steps.find(s => s.id === 3)?.completed);
-
-  const showGlobalPending = isManualReviewPending && isAutomatedStepsCompleted;
+  const showGlobalPending = steps.find(s => s.id === 1)?.pending && steps.find(s => s.id === 4)?.pending;
 
   const handleStartStep = (stepId: number) => {
     switch (stepId) {
@@ -156,9 +153,32 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
 
           const isActionable = !step.pending && !step.completed;
 
-          // Also check if previous steps are completed? 
-          // The user asked to "enable other buttons when the request is pending... user can fill other states".
-          // So we should just disable if pending.
+          // Check prerequisites based on user requirements
+          let isDisabled = false;
+
+          // Requirement: don't let users go throgh step 3 when they haven't completed step 2
+          if (step.id === 3) {
+            const step2 = steps.find(s => s.id === 2);
+            if (!step2?.completed) isDisabled = true;
+          }
+
+          // Requirement: step 5 and 6 should remain disabled until steps 1 to 4 are completed and verified
+          if (step.id === 5 || step.id === 6) {
+            const step1 = steps.find(s => s.id === 1);
+            const step2 = steps.find(s => s.id === 2);
+            const step3 = steps.find(s => s.id === 3);
+            const step4 = steps.find(s => s.id === 4);
+
+            if (!step1?.completed || !step2?.completed || !step3?.completed || !step4?.completed) {
+              isDisabled = true;
+            }
+          }
+
+          // Requirement: step 6 couldn't be selectable if step 5 isn't completed
+          if (step.id === 6) {
+            const step5 = steps.find(s => s.id === 5);
+            if (!step5?.completed) isDisabled = true;
+          }
 
           return (
             <Card
@@ -167,7 +187,8 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
                 "transition-colors",
                 status === "completed" && "bg-muted/50",
                 status === "rejected" && "border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-800",
-                status === "expired" && "border-orange-200 bg-orange-50 dark:bg-orange-900/10 dark:border-orange-800"
+                status === "expired" && "border-orange-200 bg-orange-50 dark:bg-orange-900/10 dark:border-orange-800",
+                isDisabled && "opacity-60 cursor-not-allowed"
               )}
             >
               <CardContent className="p-6 flex items-center justify-between gap-4">
@@ -209,6 +230,7 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
                 {status !== "completed" && status !== "pending" && (
                   <Button
                     onClick={() => handleStartStep(step.id)}
+                    disabled={isDisabled}
                   >
                     {status === "rejected" || status === "expired" ? "Fix Issue" : "Start"}
                     <ArrowRight className="ml-2 h-4 w-4 rtl:mr-2 rtl:ml-0 rtl:rotate-180" />
