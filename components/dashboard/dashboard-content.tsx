@@ -249,6 +249,9 @@ export function DashboardContent({ userName = "Pet Parent", isProvider = false, 
         <Dog className="absolute -right-6 -bottom-6 h-64 w-64 text-primary/10 rotate-12 hidden md:block" />
       </section>
 
+      {/* Become a Sitter Section */}
+      {/* Moved to separate page */}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Column */}
         <div className="lg:col-span-2 space-y-8">

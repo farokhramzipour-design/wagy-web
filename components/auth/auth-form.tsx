@@ -130,6 +130,7 @@ export function AuthForm({ nextPath }: Props) {
       let isAdmin = false;
       let adminRole: string | null = null;
       let isProvider = false;
+      let phone: string | null = null;
       try {
         const me = await getMe(token.access_token);
         console.log("Me Response:", me); // Debugging
@@ -137,6 +138,7 @@ export function AuthForm({ nextPath }: Props) {
         isAdmin = me.is_admin;
         adminRole = me.admin_role?.toLowerCase() || null;
         isProvider = me.is_provider;
+        phone = me.phone_e164 || submittedPhone;
       } catch (e) {
         console.error("Failed to fetch me:", e);
       }
@@ -150,6 +152,7 @@ export function AuthForm({ nextPath }: Props) {
           isAdmin,
           adminRole,
           isProvider,
+          phone,
           access_token: token.access_token,
           refresh_token: token.refresh_token,
           access_expires_in: token.expires_in

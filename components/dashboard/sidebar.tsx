@@ -100,7 +100,7 @@ export function DashboardSidebarNav({ session, className, onLinkClick }: Sidebar
         )}
         
         <Link
-            href="/become-sitter"
+            href="/app/become-sitter"
             onClick={onLinkClick}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors"
         >

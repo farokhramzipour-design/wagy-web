@@ -70,6 +70,7 @@ export const API_ENDPOINTS = {
   iranianVerification: {
     nationalCode: "/api/v1/verification/iranian/national-code",
     postalCode: "/api/v1/verification/iranian/postal-code",
+    providerAddress: "/api/v1/verification/iranian/provider-address",
     documentUpload: "/api/v1/verification/iranian/documents/upload",
     documents: "/api/v1/verification/iranian/documents",
     status: "/api/v1/verification/iranian/status"

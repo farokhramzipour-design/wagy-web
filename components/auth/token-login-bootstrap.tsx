@@ -32,6 +32,7 @@ export function TokenLoginBootstrap() {
       let isAdmin = false;
       let adminRole: string | null = null;
       let isProvider = false;
+      let phone: string | null = null;
       try {
         const me = await getMe(token);
         console.log("Me Response (Bootstrap):", me); // Debugging
@@ -39,6 +40,7 @@ export function TokenLoginBootstrap() {
         isAdmin = me.is_admin;
         adminRole = me.admin_role?.toLowerCase() || null;
         isProvider = me.is_provider;
+        phone = me.phone_e164 || null;
       } catch (e) {
         console.error("Failed to fetch me (Bootstrap):", e);
       }
@@ -52,6 +54,7 @@ export function TokenLoginBootstrap() {
           isAdmin,
           adminRole,
           isProvider,
+          phone,
           access_token: token,
           refresh_token: refreshToken,
           access_expires_in: expiresIn

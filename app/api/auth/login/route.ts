@@ -17,7 +17,8 @@ export async function POST(request: Request) {
     name, 
     isAdmin: role === "admin", 
     adminRole: role === "admin" ? "super_admin" : null, 
-    isProvider: false 
+    isProvider: false,
+    phone: null
   }), {
     httpOnly: true,
     sameSite: "lax",

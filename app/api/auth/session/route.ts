@@ -11,6 +11,7 @@ type SessionPayload = {
   isAdmin?: boolean;
   adminRole?: string | null;
   isProvider?: boolean;
+  phone?: string | null;
 };
 
 export async function POST(request: Request) {
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
   const isAdmin = Boolean(body.isAdmin);
   const adminRole = typeof body.adminRole === "string" ? body.adminRole : null;
   const isProvider = Boolean(body.isProvider);
+  const phone = typeof body.phone === "string" ? body.phone : null;
   const accessToken = typeof body.access_token === "string" ? body.access_token : "";
   const refreshToken = typeof body.refresh_token === "string" ? body.refresh_token : "";
   const accessExpiresIn =
@@ -30,7 +32,7 @@ export async function POST(request: Request) {
   const isProduction = process.env.NODE_ENV === "production";
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(AUTH_COOKIES.SESSION, serializeSession({ role, name, isAdmin, adminRole, isProvider }), {
+  response.cookies.set(AUTH_COOKIES.SESSION, serializeSession({ role, name, isAdmin, adminRole, isProvider, phone }), {
     httpOnly: true,
     sameSite: "lax",
     secure: isProduction,
