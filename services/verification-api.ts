@@ -23,12 +23,12 @@ export interface VerificationStatusResponse {
   };
   documents: {
     national_card_front: {
-      status: "pending" | "approved" | "rejected" | "expired" | "verified" | null;
+      status: "pending" | "approved" | "rejected" | "expired" | null;
       uploaded_at: string | null;
       rejection_reason?: string;
     };
     national_card_back: {
-      status: "pending" | "approved" | "rejected" | "expired" | "verified" | null;
+      status: "pending" | "approved" | "rejected" | "expired" | null;
       uploaded_at: string | null;
       rejection_reason?: string;
     };

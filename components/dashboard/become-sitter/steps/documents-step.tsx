@@ -19,7 +19,7 @@ interface DocumentUploadProps {
   type: "national_card_front" | "national_card_back";
   title: string;
   description: string;
-  status: "pending" | "approved" | "rejected" | "expired" | "verified" | null;
+  status: "pending" | "approved" | "rejected" | "expired" | null;
   rejectionReason?: string;
   onUploadSuccess: () => void;
 }
@@ -59,11 +59,11 @@ function DocumentUpload({ type, title, description, status, rejectionReason, onU
       'image/jpg': [],
     },
     maxFiles: 1,
-    disabled: isUploading || status === "approved" || status === "verified" || status === "pending",
+    disabled: isUploading || status === "approved" || status === "pending",
   });
 
   const getStatusIcon = () => {
-    if (status === "approved" || status === "verified") return <CheckCircle2 className="h-6 w-6 text-green-500" />;
+    if (status === "approved") return <CheckCircle2 className="h-6 w-6 text-green-500" />;
     if (status === "pending") return <Clock className="h-6 w-6 text-yellow-500" />;
     if (status === "rejected") return <XCircle className="h-6 w-6 text-red-500" />;
     return <FileUp className="h-6 w-6 text-muted-foreground" />;
@@ -113,7 +113,7 @@ function DocumentUpload({ type, title, description, status, rejectionReason, onU
          </div>
       )}
       
-      {(status === "approved" || status === "verified") && (
+      {status === "approved" && (
          <div className="bg-green-50 border border-green-100 rounded-lg p-3 text-xs text-green-800 flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4" />
             {t.status.approved}

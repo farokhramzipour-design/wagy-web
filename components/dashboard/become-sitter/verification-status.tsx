@@ -29,7 +29,7 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
       id: 1,
       title: t.steps.address.title,
       description: t.steps.address.description,
-      completed: status.postal_code?.added && status.provider_address?.status === "approved",
+      completed: status.provider_address?.status === "approved",
       pending: status.provider_address?.status === "pending",
       rejected: status.provider_address?.status === "rejected",
       expired: status.provider_address?.status === "expired",
@@ -55,8 +55,8 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
       title: t.steps.documents.title,
       description: t.steps.documents.description,
       completed:
-        (status.documents.national_card_front.status === "approved" || status.documents.national_card_front.status === "verified") &&
-        (status.documents.national_card_back.status === "approved" || status.documents.national_card_back.status === "verified"),
+        status.documents.national_card_front.status === "approved" &&
+        status.documents.national_card_back.status === "approved",
       pending:
         status.documents.national_card_front.status === "pending" &&
         status.documents.national_card_back.status === "pending",
