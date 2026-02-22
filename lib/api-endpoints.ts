@@ -58,7 +58,13 @@ export const API_ENDPOINTS = {
     application: "/api/v1/provider/application",
     dashboard: "/api/v1/provider/dashboard",
     serviceTypes: "/api/v1/provider/service-types/available",
-    selectedServices: "/api/v1/provider/services/selected"
+    selectedServices: "/api/v1/provider/services/selected",
+    startService: "/api/v1/provider/services/start",
+    wizard: "/api/v1/provider/services/{provider_service_id}/wizard",
+    step: "/api/v1/provider/services/{provider_service_id}/step/{step_id}",
+    next: "/api/v1/provider/services/{provider_service_id}/next",
+    back: "/api/v1/provider/services/{provider_service_id}/back",
+    complete: "/api/v1/provider/services/{provider_service_id}/complete"
   },
   adminProviders: {
     applications: "/api/v1/admin/providers/applications",

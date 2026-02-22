@@ -801,7 +801,6 @@
         "defaultValue": "Default Value",
         "keyDescription": "Unique identifier for this field (e.g. pet_name)",
         "required": "Required",
-        "required": "Required",
         "order": "Order",
         "actions": "Actions",
         "reorderSuccess": "Fields reordered successfully",
