@@ -15,7 +15,7 @@ export interface VerificationStatusResponse {
   };
   provider_address: {
     submitted: boolean;
-    status: "pending" | "approved" | "rejected";
+    status: "pending" | "approved" | "rejected" | "expired" | null;
     postal_code?: string;
     full_address?: string;
     reviewed_at?: string;
@@ -23,16 +23,19 @@ export interface VerificationStatusResponse {
   };
   documents: {
     national_card_front: {
-      status: string | null;
+      status: "pending" | "approved" | "rejected" | "expired" | null;
       uploaded_at: string | null;
+      rejection_reason?: string;
     };
     national_card_back: {
-      status: string | null;
+      status: "pending" | "approved" | "rejected" | "expired" | null;
       uploaded_at: string | null;
+      rejection_reason?: string;
     };
     birth_certificate: {
-      status: string | null;
+      status: "pending" | "approved" | "rejected" | "expired" | null;
       uploaded_at: string | null;
+      rejection_reason?: string;
     };
   };
 }
