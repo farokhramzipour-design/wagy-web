@@ -203,7 +203,7 @@
       "inputLabel": "شماره موبایل",
       "inputPlaceholder": "۰۹۱۲۳۴۵۶۷۸۹",
       "otpLabel": "کد تایید",
-      "otpPlaceholder": "کد ۵ رقمی را وارد کنید",
+      "otpPlaceholder": "کد ۶ رقمی را وارد کنید",
       "requestButton": "ارسال کد",
       "verifyButton": "تأیید کد",
       "resendButton": "ارسال مجدد کد",
@@ -211,7 +211,7 @@
       "success": "شماره موبایل با موفقیت تأیید شد",
       "errorRequest": "خطا در ارسال کد",
       "errorVerify": "کد نامعتبر است",
-      "countdown": "ارسال مجدد در {seconds} ثانیه"
+      "countdown": "ارسال مجدد در {seconds}"
     }
   },
   "servicesPage": {

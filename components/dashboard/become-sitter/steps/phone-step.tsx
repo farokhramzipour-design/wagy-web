@@ -10,12 +10,16 @@ import fa from "@/locales/fa.json";
 import { requestPhoneOtp, verifyPhoneOtp } from "@/services/profile-api";
 import { ArrowRight, Loader2, Phone, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const content = { en, fa };
 
-export function PhoneStep() {
+interface PhoneStepProps {
+  token: string;
+}
+
+export function PhoneStep({ token }: PhoneStepProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter.phonePage;
@@ -34,6 +38,12 @@ export function PhoneStep() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
   const handleRequestOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone || phone.length < 10) {
@@ -43,7 +53,7 @@ export function PhoneStep() {
 
     setIsLoading(true);
     try {
-      const response = await requestPhoneOtp({ phone });
+      const response = await requestPhoneOtp({ phone }, token);
       setStep("otp");
       setCountdown(response.expires_in || 120); // Default to 120s if not provided
       toast.success(response.message || t.success);
@@ -57,14 +67,14 @@ export function PhoneStep() {
 
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otp || otp.length < 4) {
+    if (!otp || otp.length < 6) {
       toast.error(t.errorVerify);
       return;
     }
 
     setIsLoading(true);
     try {
-      await verifyPhoneOtp({ phone, otp });
+      await verifyPhoneOtp({ phone, otp }, token);
       toast.success(t.success);
       router.push("/app/become-sitter");
     } catch (error) {
@@ -138,15 +148,20 @@ export function PhoneStep() {
                 </div>
                 <Input
                   id="otp"
+                  type="text"
+                  dir="ltr"
                   placeholder={t.otpPlaceholder}
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  className="text-center tracking-widest text-lg"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    if (value.length <= 6) setOtp(value);
+                  }}
+                  className="text-center text-2xl tracking-[0.5em]"
                   maxLength={6}
                   disabled={isLoading}
                 />
               </div>
-              
+
               <div className="flex flex-col gap-2">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? (
@@ -158,10 +173,10 @@ export function PhoneStep() {
                     t.verifyButton
                   )}
                 </Button>
-                
+
                 {countdown > 0 ? (
-                  <p className="text-xs text-center text-muted-foreground">
-                    {t.countdown.replace("{seconds}", countdown.toString())}
+                  <p className="text-xs text-center text-muted-foreground" dir="ltr">
+                    {t.countdown.replace("{seconds}", formatTime(countdown))}
                   </p>
                 ) : (
                   <Button

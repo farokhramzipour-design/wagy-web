@@ -3,7 +3,7 @@
 import { useLanguage } from "@/components/providers/language-provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
@@ -16,10 +16,10 @@ const content = { en, fa };
 
 interface VerificationStatusProps {
   status: VerificationStatusResponse;
-  phone: string | null;
+  phoneVerified: boolean;
 }
 
-export function VerificationStatus({ status, phone }: VerificationStatusProps) {
+export function VerificationStatus({ status, phoneVerified }: VerificationStatusProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter;
@@ -40,7 +40,7 @@ export function VerificationStatus({ status, phone }: VerificationStatusProps) {
       id: 2,
       title: t.steps.phone.title,
       description: t.steps.phone.description,
-      completed: !!phone,
+      completed: phoneVerified,
       pending: false,
     },
     {
@@ -85,7 +85,7 @@ export function VerificationStatus({ status, phone }: VerificationStatusProps) {
       completed: false,
       pending: false,
     },
-  ], [status, t, phone]);
+  ], [status, t, phoneVerified]);
 
   // Find the first step that is not completed and not pending (i.e., the next actionable step)
   const currentStep = steps.find((s) => !s.completed && !s.pending);
@@ -118,132 +118,107 @@ export function VerificationStatus({ status, phone }: VerificationStatusProps) {
     }
   };
 
-  const getStatusBadge = (step: typeof steps[0]) => {
-    if (step.completed) {
-      return <Badge variant="default" className="bg-green-500 hover:bg-green-600">{t.status.badges.completed}</Badge>;
-    }
-    if (step.rejected) {
-      return <Badge variant="destructive">{t.status.badges.rejected}</Badge>;
-    }
-    if (step.expired) {
-      return <Badge variant="destructive" className="bg-orange-500 hover:bg-orange-600">{t.status.badges.expired}</Badge>;
-    }
-    if (step.pending) {
-      return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">{t.status.badges.pending}</Badge>;
-    }
-    return null;
+  const getStepStatus = (step: typeof steps[0]) => {
+    if (step.completed) return "completed";
+    if (step.pending) return "pending";
+    if (step.rejected) return "rejected";
+    if (step.expired) return "expired";
+    return "default";
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight">{t.title}</h2>
-        <p className="text-muted-foreground">
-          {t.description}
-        </p>
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-bold">{t.title}</h1>
+        <p className="text-muted-foreground">{t.description}</p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>{t.status.title}</CardTitle>
-              <CardDescription className="mt-2">
-                {currentStep ? `${t.status.currentStep} ${currentStep.title}` : t.status.checking}
-              </CardDescription>
+      {showGlobalPending && (
+        <Card className="border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20 dark:border-yellow-800">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+              <p className="text-yellow-800 dark:text-yellow-200">
+                {t.status.pendingMessage}
+              </p>
             </div>
-            {currentStep && (
-              <Button onClick={() => handleStartStep(currentStep.id)}>
-                {currentStep.rejected || currentStep.expired ? t.status.actions.retry : t.status.continue}
-                <ArrowRight className="mr-2 w-4 h-4 rtl:rotate-180" />
-              </Button>
-            )}
-          </div>
-        </CardHeader>
-        <CardContent>
-          {showGlobalPending && (
-            <div className="mb-6 p-4 bg-yellow-50 text-yellow-800 rounded-lg border border-yellow-200 flex items-center gap-3">
-              <Clock className="w-5 h-5" />
-              <p>{t.status.pendingMessage}</p>
-            </div>
-          )}
+          </CardContent>
+        </Card>
+      )}
 
-          <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:-translate-x-px before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent rtl:before:mr-5 rtl:before:ml-0">
-            {steps.map((step, index) => {
-              // A step is considered "current" if it's the first incomplete step, just for visual highlighting
-              const isCurrent = currentStep?.id === step.id;
+      <div className="grid gap-4">
+        {steps.map((step, index) => {
+          const status = getStepStatus(step);
+          // A step is actionable if it's not completed AND not pending
+          // BUT we also want to allow users to click into steps if they are rejected/expired to fix them.
+          // And previously we allowed users to click any step if they are not pending.
+          // The previous logic was: disabled={step.pending}
 
-              return (
-                <div key={step.id} className="relative flex gap-6 pb-8 last:pb-0 items-start">
-                  <div className={cn(
-                    "absolute left-0 mt-1 flex h-10 w-10 items-center justify-center rounded-full border bg-background rtl:right-0",
-                    step.completed ? "border-primary text-primary" :
-                      step.rejected || step.expired ? "border-destructive text-destructive" :
-                        isCurrent ? "border-primary text-foreground" : "border-muted-foreground text-muted-foreground"
-                  )}>
-                    {step.completed ? (
-                      <CheckCircle2 className="h-6 w-6" />
-                    ) : step.rejected || step.expired ? (
-                      <XCircle className="h-6 w-6" />
-                    ) : (
-                      <span className="text-sm font-medium">{step.id}</span>
-                    )}
+          const isActionable = !step.pending && !step.completed;
+
+          // Also check if previous steps are completed? 
+          // The user asked to "enable other buttons when the request is pending... user can fill other states".
+          // So we should just disable if pending.
+
+          return (
+            <Card
+              key={step.id}
+              className={cn(
+                "transition-colors",
+                status === "completed" && "bg-muted/50",
+                status === "rejected" && "border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-800",
+                status === "expired" && "border-orange-200 bg-orange-50 dark:bg-orange-900/10 dark:border-orange-800"
+              )}
+            >
+              <CardContent className="p-6 flex items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-lg flex items-center gap-2">
+                      {step.id}. {step.title}
+                      {status === "completed" && (
+                        <CheckCircle2 className="h-5 w-5 text-green-500" />
+                      )}
+                      {status === "pending" && (
+                        <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:text-yellow-400">
+                          Pending Review
+                        </Badge>
+                      )}
+                      {status === "rejected" && (
+                        <Badge variant="destructive" className="flex items-center gap-1">
+                          <XCircle className="h-3 w-3" />
+                          Rejected
+                        </Badge>
+                      )}
+                      {status === "expired" && (
+                        <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-400">
+                          Expired
+                        </Badge>
+                      )}
+                    </h3>
                   </div>
-
-                  <div className="flex flex-1 flex-col gap-2 ltr:pl-16 rtl:pr-16">
-                    <div className="flex items-center justify-between">
-                      <h3 className={cn(
-                        "font-semibold leading-none tracking-tight",
-                        step.completed ? "text-primary" : "text-foreground"
-                      )}>
-                        {step.title}
-                      </h3>
-                      {getStatusBadge(step)}
-                    </div>
-
-                    <p className="text-sm text-muted-foreground">
-                      {step.description}
+                  <p className="text-sm text-muted-foreground">
+                    {step.description}
+                  </p>
+                  {status === "rejected" && step.rejectionReason && (
+                    <p className="text-sm text-red-600 mt-2 font-medium">
+                      Reason: {step.rejectionReason}
                     </p>
-
-                    {(step.rejected || step.expired) && step.rejectionReason && (
-                      <div className="mt-2 p-3 bg-red-50 text-red-800 rounded-md text-sm border border-red-100">
-                        <span className="font-semibold">
-                          {step.expired ? t.status.expirationReason : t.status.rejectionReason}
-                        </span> {step.rejectionReason}
-                      </div>
-                    )}
-
-                    {(step.rejected || step.expired) && (
-                      <div className="mt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
-                          onClick={() => handleStartStep(step.id)}
-                        >
-                          {step.expired ? t.status.actions.retry : t.status.actions.resubmit}
-                        </Button>
-                      </div>
-                    )}
-
-                    {!step.completed && !step.pending && !step.rejected && !step.expired && (
-                      <div className="mt-2">
-                        <Button
-                          variant={isCurrent ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handleStartStep(step.id)}
-                        >
-                          {t.status.actions.start}
-                        </Button>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+
+                {status !== "completed" && status !== "pending" && (
+                  <Button
+                    onClick={() => handleStartStep(step.id)}
+                  >
+                    {status === "rejected" || status === "expired" ? "Fix Issue" : "Start"}
+                    <ArrowRight className="ml-2 h-4 w-4 rtl:mr-2 rtl:ml-0 rtl:rotate-180" />
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }

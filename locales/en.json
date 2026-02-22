@@ -203,7 +203,7 @@
       "inputLabel": "Phone Number",
       "inputPlaceholder": "09123456789",
       "otpLabel": "Verification Code",
-      "otpPlaceholder": "Enter 5-digit code",
+      "otpPlaceholder": "Enter 6-digit code",
       "requestButton": "Send Code",
       "verifyButton": "Verify Code",
       "resendButton": "Resend Code",
@@ -211,7 +211,7 @@
       "success": "Phone number verified successfully",
       "errorRequest": "Failed to send code",
       "errorVerify": "Invalid code",
-      "countdown": "Resend in {seconds}s"
+      "countdown": "Resend in {seconds}"
     }
   },
   "servicesPage": {

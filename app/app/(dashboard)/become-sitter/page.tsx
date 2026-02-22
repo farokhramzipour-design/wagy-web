@@ -2,7 +2,7 @@ import { VerificationStatus } from "@/components/dashboard/become-sitter/verific
 import { apiFetch } from "@/lib/api-client";
 import { API_ENDPOINTS } from "@/lib/api-endpoints";
 import { AUTH_COOKIES } from "@/lib/auth-config";
-import { MeResponse } from "@/services/auth-api";
+import { ProfileMeResponse } from "@/services/profile-api";
 import { VerificationStatusResponse } from "@/services/verification-api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -16,7 +16,7 @@ export default async function BecomeSitterPage() {
   }
 
   let status: VerificationStatusResponse | null = null;
-  let user: MeResponse | null = null;
+  let user: ProfileMeResponse | null = null;
 
   try {
     const [statusData, userData] = await Promise.all([
@@ -27,8 +27,8 @@ export default async function BecomeSitterPage() {
           cache: "no-store", // Ensure fresh data
         }
       ),
-      apiFetch<MeResponse>(
-        API_ENDPOINTS.auth.me,
+      apiFetch<ProfileMeResponse>(
+        API_ENDPOINTS.profile.me,
         {
           token,
           cache: "no-store",
@@ -52,7 +52,7 @@ export default async function BecomeSitterPage() {
 
   return (
     <div className="container mx-auto py-8">
-      <VerificationStatus status={status} phone={user.phone_e164} />
+      <VerificationStatus status={status} phoneVerified={user.phone_verified} />
     </div>
   );
 }
