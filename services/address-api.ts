@@ -37,6 +37,44 @@ export interface SearchAddressResult {
   type: string;
 }
 
+export interface Country {
+  country_code: string;
+  name: string;
+}
+
+export interface Province {
+  province_id: number;
+  country_code: string;
+  name_fa: string;
+  name_en: string;
+  code: string;
+}
+
+export interface City {
+  city_id: number;
+  province_id: number;
+  name_fa: string;
+  name_en: string;
+}
+
+export async function getCountries() {
+  return apiFetch<Country[]>("/api/v1/addresses/countries", {
+    method: "GET",
+  });
+}
+
+export async function getProvinces(countryCode: string) {
+  return apiFetch<Province[]>(`/api/v1/addresses/provinces?country_code=${countryCode}`, {
+    method: "GET",
+  });
+}
+
+export async function getCities(provinceId: number) {
+  return apiFetch<City[]>(`/api/v1/addresses/cities?province_id=${provinceId}`, {
+    method: "GET",
+  });
+}
+
 export async function getAddresses(token?: string) {
   // Server-side fetch uses direct API call
   return apiFetch<Address[]>("/api/v1/addresses", {

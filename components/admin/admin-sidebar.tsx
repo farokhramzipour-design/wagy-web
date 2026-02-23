@@ -18,7 +18,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  BookOpen
+  BookOpen,
+  Heart
 } from "lucide-react";
 
 const content = { en, fa };
@@ -142,7 +143,8 @@ export function AdminSidebarNav({ session, className, onLinkClick }: AdminSideba
               )}
             >
               <Icon className={cn("w-4 h-4", isActive ? "text-red-600" : "text-neutral-500")} />
-              {link.id === "blog" ? tAdmin.blog?.title || "Blog" : (tAdmin[link.titleKey] || link.titleKey)}
+              {link.id === "blog" ? tAdmin.blog?.title || "Blog" : 
+               (tAdmin[link.titleKey] || link.titleKey)}
               {isActive && (
                 <span className={cn(
                   "absolute w-1 h-6 bg-red-600 rounded-full",

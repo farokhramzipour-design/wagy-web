@@ -74,7 +74,19 @@ export const adminBlogApi = {
 
   // Categories
   getCategories: async () => {
-    return localFetch<BlogCategory[]>(`/categories`);
+    const res = await fetch(`/api/v1/blog/categories`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      const message = errorData.detail || errorData.message || `Request failed: ${res.status}`;
+      throw new Error(message);
+    }
+
+    return res.json() as Promise<BlogCategory[]>;
   },
 
   createCategory: async (data: CreateCategoryRequest) => {

@@ -15,7 +15,9 @@ import {
   CreditCard,
   LogOut,
   HeartHandshake,
-  ShieldAlert
+  ShieldAlert,
+  Heart,
+  MessageSquare
 } from "lucide-react";
 
 const content = { en, fa };
@@ -59,6 +61,16 @@ export function DashboardSidebarNav({ session, className, onLinkClick }: Sidebar
       href: "/app/transactions",
       label: t.transactions,
       icon: CreditCard
+    },
+    {
+      href: "/app/chat",
+      label: t.chat || "Messages",
+      icon: MessageSquare
+    },
+    {
+      href: "/app/charity",
+      label: (content[lang] as any).dashboard.charity?.title || "Charity",
+      icon: Heart
     },
   ];
 
