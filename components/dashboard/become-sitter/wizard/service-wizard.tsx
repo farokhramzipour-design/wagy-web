@@ -43,13 +43,25 @@ export function ServiceWizard({ providerServiceId }: ServiceWizardProps) {
     try {
       setLoading(true);
       const data = await getWizard(providerServiceId);
+
+      // Normalize data: ensure steps are available at top level
+      if (!data.steps && data.service_type?.steps) {
+        // @ts-ignore
+        data.steps = data.service_type.steps;
+      }
+
       setWizard(data);
 
       // Determine which step to load
       // If we have a current_step from provider_service, use that
       // But we need to find the step_id for it
-      const currentStepNum = data.provider_service.current_step;
-      const stepToLoad = data.steps.find(s => s.step_number === currentStepNum) || data.steps[0];
+      const steps = data.steps || [];
+      if (steps.length === 0) {
+        throw new Error("No steps found for this wizard configuration");
+      }
+
+      const currentStepNum = data.provider_service?.current_step || 1;
+      const stepToLoad = steps.find(s => s.step_number === currentStepNum) || steps[0];
 
       if (stepToLoad) {
         await loadStep(stepToLoad.step_id);

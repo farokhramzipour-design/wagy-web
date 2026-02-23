@@ -14,7 +14,7 @@ export interface ServiceType {
   color: string;
   is_active: boolean;
   total_providers: number;
-  steps: any[]; // We don't care about steps for now
+  steps: any[];
   created_at: string;
   updated_at: string;
 }

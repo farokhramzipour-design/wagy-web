@@ -38,11 +38,16 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     }
   };
 
+  const handleAction = (item: SelectedServiceItem) => {
+    // Navigate to wizard page
+    router.push(`/app/sitter-settings/${item.service_type_id}/wizard`);
+  };
+
   const getActionButton = (item: SelectedServiceItem) => {
     // If not started, show "Start"
     if (!item.has_wizard_started) {
       return (
-        <Button className="min-w-[100px]" size="sm">
+        <Button className="min-w-[100px]" size="sm" onClick={() => handleAction(item)}>
           {t.start}
           {lang === 'fa' ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
         </Button>
@@ -52,7 +57,7 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     // If started but not complete, show "Complete"
     if (!item.is_wizard_complete) {
       return (
-        <Button className="min-w-[100px]" variant="default" size="sm">
+        <Button className="min-w-[100px]" variant="default" size="sm" onClick={() => handleAction(item)}>
           {t.complete}
           {lang === 'fa' ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
         </Button>
@@ -71,7 +76,7 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     // If rejected, maybe allow edit/resubmit? Using "Start" or "Complete" logic might be better but for now let's just show status or "Edit"
     if (item.wizard_approval_status === 'rejected') {
       return (
-        <Button className="min-w-[100px]" variant="outline" size="sm">
+        <Button className="min-w-[100px]" variant="outline" size="sm" onClick={() => handleAction(item)}>
           {t.complete} {/* Assuming they need to fix things */}
         </Button>
       );
@@ -80,7 +85,7 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     // If approved
     if (item.is_wizard_approved) {
       return (
-        <Button className="min-w-[100px]" variant="outline" size="sm">
+        <Button className="min-w-[100px]" variant="outline" size="sm" onClick={() => handleAction(item)}>
           {t.edit}
         </Button>
       );
