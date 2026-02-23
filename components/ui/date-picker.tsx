@@ -22,6 +22,8 @@ interface DatePickerProps {
   locale?: "en" | "fa"
   placeholder?: string
   className?: string
+  fromYear?: number
+  toYear?: number
 }
 
 export function DatePicker({
@@ -30,6 +32,8 @@ export function DatePicker({
   locale = "en",
   placeholder = "Pick a date",
   className,
+  fromYear,
+  toYear,
 }: DatePickerProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -66,13 +70,16 @@ export function DatePicker({
             mode="single"
             selected={date}
             onSelect={handleSelect}
+            fromYear={fromYear}
+            toYear={toYear}
           />
         ) : (
           <Calendar
             mode="single"
             selected={date}
             onSelect={handleSelect}
-            initialFocus
+            fromYear={fromYear}
+            toYear={toYear}
           />
         )}
       </PopoverContent>

@@ -1,5 +1,6 @@
 "use client";
 
+import { NotificationList } from "@/components/dashboard/notification-list";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "@/components/ui/logo";
+import { Progress } from "@/components/ui/progress";
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger
 } from "@/components/ui/sheet";
-import { NotificationList } from "@/components/dashboard/notification-list";
 import type { SessionData } from "@/lib/session";
-import { LayoutDashboard, LogOut, Menu, User } from "lucide-react";
+import { ProfileCompletionResponse } from "@/services/profile-api";
+import { LayoutDashboard, LogOut, Menu, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import en from "../../locales/en.json";
@@ -33,9 +35,10 @@ interface HeaderProps {
   user: SessionData | null;
   showNavLinks?: boolean;
   mobileNav?: React.ReactNode;
+  profileCompletion?: ProfileCompletionResponse | null;
 }
 
-export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
+export function Header({ user, showNavLinks = true, mobileNav, profileCompletion }: HeaderProps) {
   const { lang, setLang } = useLanguage();
   const t = useMemo(() => content[lang], [lang]);
   const [open, setOpen] = useState(false);
@@ -103,7 +106,7 @@ export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
           {user && (
             <div className="flex items-center gap-2">
               <NotificationList />
-              
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -120,10 +123,38 @@ export function Header({ user, showNavLinks = true, mobileNav }: HeaderProps) {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  {profileCompletion && (
+                    <>
+                      <div className="px-2 py-2">
+                        <div className="flex justify-between items-center mb-1.5">
+                          <span className="text-xs font-medium text-neutral-500">
+                            {t.profile.completion}
+                          </span>
+                          <span className="text-xs font-bold text-[#0ea5a4]">
+                            {profileCompletion.completion_percentage}%
+                          </span>
+                        </div>
+                        <Progress value={profileCompletion.completion_percentage} className="h-1.5" />
+                        <Link
+                          href="/app/profile"
+                          className="text-[10px] text-[#0ea5a4] hover:underline mt-1.5 block text-right"
+                        >
+                          {t.profile.completeProfile}
+                        </Link>
+                      </div>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link href="/app/dashboard">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       <span>{t.nav.dashboard}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/app/profile">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>{t.profile.settings}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

@@ -53,6 +53,13 @@ export interface PhoneVerifyResponse {
   [key: string]: any;
 }
 
+export interface ProfileCompletionResponse {
+  completion_percentage: number;
+  is_complete: boolean;
+  completed_fields: string[];
+  missing_fields: string[];
+}
+
 export async function getProfile(token?: string) {
   return apiFetch<ProfileMeResponse>(API_ENDPOINTS.profile.me, {
     method: "GET",
@@ -71,6 +78,28 @@ export async function requestPhoneOtp(payload: PhoneRequestPayload, token?: stri
 export async function verifyPhoneOtp(payload: PhoneVerifyPayload, token?: string) {
   return apiFetch<PhoneVerifyResponse>(API_ENDPOINTS.profile.phoneVerify, {
     method: "POST",
+    body: JSON.stringify(payload),
+    token,
+  });
+}
+
+export interface ProfileBasicPayload {
+  first_name: string;
+  last_name: string;
+  date_of_birth: string;
+  bio: string;
+}
+
+export async function getProfileCompletion(token?: string) {
+  return apiFetch<ProfileCompletionResponse>(API_ENDPOINTS.profile.completion, {
+    method: "GET",
+    token,
+  });
+}
+
+export async function updateProfileBasic(payload: ProfileBasicPayload, token?: string) {
+  return apiFetch<ProfileMeResponse>(API_ENDPOINTS.profile.basic, {
+    method: "PUT",
     body: JSON.stringify(payload),
     token,
   });

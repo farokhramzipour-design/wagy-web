@@ -18,6 +18,43 @@
     "dashboard": "Dashboard",
     "logout": "Logout"
   },
+  "profile": {
+    "completion": "Profile Completion",
+    "completeProfile": "Complete your profile",
+    "settings": "Settings",
+    "pageTitle": "Profile Settings",
+    "missingFields": "Missing Fields",
+    "completedFields": "Completed Fields",
+    "status": "Status",
+    "complete": "Complete",
+    "incomplete": "Incomplete",
+    "basicInfo": {
+      "title": "General Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "dateOfBirth": "Date of Birth",
+      "bio": "Bio",
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "success": "Profile updated successfully",
+      "error": "Failed to update profile"
+    },
+    "contactInfo": {
+      "title": "Contact Information",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "address": "Address",
+      "addPhone": "Add Phone Number",
+      "editPhone": "Edit Phone",
+      "addEmail": "Add Email",
+      "editEmail": "Edit Email",
+      "addAddress": "Add Address",
+      "addressMissing": "You haven't added an address yet. Please go to the addresses page to add one.",
+      "goToAddresses": "Go to Addresses",
+      "verified": "Verified",
+      "unverified": "Unverified"
+    }
+  },
   "hero": {
     "title": "Peace of Mind for You. Pure Joy for Them.",
     "subtitle": "Join 15,000+ happy pet parents. Trusted local care when you can't be there.",
@@ -534,18 +571,18 @@
       }
     },
     "transactions": {
-        "title": "Transactions",
-        "empty": "No transactions found."
-      },
-      "chat": {
-        "title": "Messages",
-        "empty": "No conversations yet.",
-        "loading": "Loading messages...",
-        "send": "Send",
-        "placeholder": "Type a message...",
-        "error": "Failed to load messages",
-        "delete": "Delete",
-        "confirmDelete": "Are you sure you want to delete this message?",
+      "title": "Transactions",
+      "empty": "No transactions found."
+    },
+    "chat": {
+      "title": "Messages",
+      "empty": "No conversations yet.",
+      "loading": "Loading messages...",
+      "send": "Send",
+      "placeholder": "Type a message...",
+      "error": "Failed to load messages",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete this message?",
       "noMessages": "No messages yet.",
       "you": "You"
     },
