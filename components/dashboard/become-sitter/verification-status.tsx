@@ -135,7 +135,7 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-secondary/30 rounded-full h-3 overflow-hidden mb-8 sticky top-0 z-10 backdrop-blur-md">
+      <div className="w-full bg-neutral-200 rounded-full h-3 overflow-hidden mb-8 sticky top-0 z-10 backdrop-blur-md">
         <div
           className="bg-primary h-full rounded-full transition-all duration-1000 ease-out"
           style={{ width: `${progress}%` }}

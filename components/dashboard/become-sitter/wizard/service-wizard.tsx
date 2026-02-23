@@ -236,8 +236,20 @@ export function ServiceWizard({ providerServiceId }: ServiceWizardProps) {
 
   return (
     <div className="space-y-6">
+      {/* Service Info */}
+      {wizard && (
+        <div className="text-center space-y-2 mb-6">
+          <h1 className="text-2xl font-bold">
+            {isRtl ? wizard.service_type.name_fa : wizard.service_type.name_en}
+          </h1>
+          <p className="text-muted-foreground">
+            {wizard.service_type.description}
+          </p>
+        </div>
+      )}
+
       {/* Progress */}
-      <div className="w-full bg-secondary/30 rounded-full h-2">
+      <div className="w-full bg-neutral-200 rounded-full h-2">
         <div
           className="bg-primary h-2 rounded-full transition-all duration-300"
           style={{ width: `${(currentStep.step_number / (wizard?.provider_service.total_steps || 1)) * 100}%` }}
