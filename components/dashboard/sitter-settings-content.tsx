@@ -9,6 +9,7 @@ import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { SelectedServiceItem, SelectedServicesResponse } from "@/services/provider-api";
 import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const content = { en, fa };
 
@@ -17,6 +18,7 @@ interface SitterSettingsContentProps {
 }
 
 export function SitterSettingsContent({ selectedServices }: SitterSettingsContentProps) {
+  const router = useRouter();
   const { lang } = useLanguage();
   const t = (content[lang] as any).sitterSettings || {};
 
@@ -91,7 +93,9 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     <div className="container py-8 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">{t.title}</h1>
-        <Button variant="outline">{t.selectServices}</Button>
+        <Button variant="outline" onClick={() => router.push('/app/sitter-settings/services')}>
+          {t.selectServicesBtn}
+        </Button>
       </div>
 
       {items.length === 0 ? (

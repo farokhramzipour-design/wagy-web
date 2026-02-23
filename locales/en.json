@@ -7,6 +7,9 @@
       "description": "Sign in to Waggy to book pet care services."
     }
   },
+  "common": {
+    "back": "Back"
+  },
   "nav": {
     "services": "Services",
     "how": "How It Works",
@@ -1192,7 +1195,7 @@
   "provider": {},
   "sitterSettings": {
     "title": "Sitter Settings",
-    "selectServices": "Select Services",
+    "selectServicesBtn": "Select Services",
     "status": "Status",
     "approvalStatus": "Approval Status",
     "wizardStarted": "Wizard Started",
@@ -1204,6 +1207,16 @@
     "rejectionReason": "Rejection Reason",
     "start": "Start",
     "complete": "Complete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "selectServices": {
+      "title": "Select Services",
+      "description": "Choose the services you want to provide.",
+      "submitButton": "Save Changes",
+      "loading": "Loading services...",
+      "saving": "Saving...",
+      "error": "Failed to load services",
+      "success": "Services updated successfully",
+      "noServices": "No services available at the moment."
+    }
   }
 }
