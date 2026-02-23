@@ -145,7 +145,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
         }
       } catch (error) {
         console.error("Failed to fetch field:", error);
-        toast.error("Failed to fetch field details");
+        toast.error(t.form.fetchError || "Failed to fetch field details");
         router.push(`/admin/services/${serviceId}/steps/${stepId}/fields`);
       } finally {
         setLoading(false);
@@ -160,7 +160,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
   const handleUpdate = async () => {
     // Validate key
     if (!formData.field_key || !formData.label_en || !formData.label_fa) {
-      toast.error(tCommon.required || "Please fill in all required fields");
+      toast.error(t.form.fillRequired || "Please fill in all required fields");
       return;
     }
 
@@ -173,7 +173,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
         try {
           payload.options = JSON.parse(optionsJson);
         } catch (e) {
-          toast.error("Invalid JSON for options");
+          toast.error(t.pricing.invalidJson || "Invalid JSON for options");
           setSubmitting(false);
           return;
         }
@@ -207,32 +207,32 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
 
       // Pricing Validation
       if (payload.pricing_component && !payload.pricing_unit) {
-        toast.error("Pricing Unit is required when Pricing Component is set");
+        toast.error(t.pricing.validation.unitRequired || "Pricing Unit is required when Pricing Component is set");
         setSubmitting(false);
         return;
       }
       if (payload.pricing_unit && !payload.pricing_component) {
-        toast.error("Pricing Component is required when Pricing Unit is set");
+        toast.error(t.pricing.validation.componentRequired || "Pricing Component is required when Pricing Unit is set");
         setSubmitting(false);
         return;
       }
       if (payload.reference_percentage && !payload.reference_field_key) {
-        toast.error("Reference Field Key is required when Reference Percentage is set");
+        toast.error(t.pricing.validation.refKeyRequired || "Reference Field Key is required when Reference Percentage is set");
         setSubmitting(false);
         return;
       }
       if (payload.reference_field_key && !payload.reference_percentage) {
-        toast.error("Reference Percentage is required when Reference Field Key is set");
+        toast.error(t.pricing.validation.refPercentRequired || "Reference Percentage is required when Reference Field Key is set");
         setSubmitting(false);
         return;
       }
       if (payload.condition_type && !payload.pricing_component) {
-        toast.error("Pricing Component is required when Condition Type is set");
+        toast.error(t.pricing.validation.componentRequiredForCondition || "Pricing Component is required when Condition Type is set");
         setSubmitting(false);
         return;
       }
       if (payload.reference_field_key && payload.reference_field_key === payload.field_key) {
-        toast.error("Reference Field Key cannot reference itself");
+        toast.error(t.pricing.validation.selfReference || "Reference Field Key cannot reference itself");
         setSubmitting(false);
         return;
       }
@@ -256,95 +256,95 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
     return (
       <Card className="md:col-span-2 border-orange-200 bg-orange-50/30">
         <CardHeader>
-          <CardTitle className="text-orange-700">Pricing Configuration</CardTitle>
-          <CardDescription>Configure how this field affects service pricing calculations</CardDescription>
+          <CardTitle className="text-orange-700">{t.pricing.title}</CardTitle>
+          <CardDescription>{t.pricing.description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="pricing_role">Pricing Role</Label>
+              <Label htmlFor="pricing_role">{t.pricing.role}</Label>
               <Select
                 value={formData.pricing_role || "none"}
                 onValueChange={(value) => setFormData({ ...formData, pricing_role: value === "none" ? null : value })}
               >
                 <SelectTrigger id="pricing_role">
-                  <SelectValue placeholder="Select role" />
+                  <SelectValue placeholder={t.pricing.rolePlaceholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="none">{t.enums.none}</SelectItem>
                   {PRICING_ROLES.map((role) => (
-                    <SelectItem key={role} value={role}>{role}</SelectItem>
+                    <SelectItem key={role} value={role}>{t.enums.pricingRoles[role] || role}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="pricing_component">Pricing Component</Label>
+              <Label htmlFor="pricing_component">{t.pricing.component}</Label>
               <Select
                 value={formData.pricing_component || "none"}
                 onValueChange={(value) => setFormData({ ...formData, pricing_component: value === "none" ? null : value })}
               >
                 <SelectTrigger id="pricing_component">
-                  <SelectValue placeholder="Select component" />
+                  <SelectValue placeholder={t.pricing.componentPlaceholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="none">{t.enums.none}</SelectItem>
                   {PRICING_COMPONENTS.map((comp) => (
-                    <SelectItem key={comp} value={comp}>{comp}</SelectItem>
+                    <SelectItem key={comp} value={comp}>{t.enums.pricingComponents[comp] || comp}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="pricing_unit">Pricing Unit</Label>
+              <Label htmlFor="pricing_unit">{t.pricing.unit}</Label>
               <Select
                 value={formData.pricing_unit || "none"}
                 onValueChange={(value) => setFormData({ ...formData, pricing_unit: value === "none" ? null : value })}
               >
                 <SelectTrigger id="pricing_unit">
-                  <SelectValue placeholder="Select unit" />
+                  <SelectValue placeholder={t.pricing.unitPlaceholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="none">{t.enums.none}</SelectItem>
                   {PRICING_UNITS.map((unit) => (
-                    <SelectItem key={unit} value={unit}>{unit}</SelectItem>
+                    <SelectItem key={unit} value={unit}>{t.enums.pricingUnits[unit] || unit}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="condition_type">Condition Type</Label>
+              <Label htmlFor="condition_type">{t.pricing.conditionType}</Label>
               <Select
                 value={formData.condition_type || "none"}
                 onValueChange={(value) => setFormData({ ...formData, condition_type: value === "none" ? null : value })}
               >
                 <SelectTrigger id="condition_type">
-                  <SelectValue placeholder="Select condition" />
+                  <SelectValue placeholder={t.pricing.conditionPlaceholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="none">{t.enums.none}</SelectItem>
                   {CONDITION_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                    <SelectItem key={type} value={type}>{t.enums.conditionTypes[type] || type}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="reference_field_key">Reference Field Key</Label>
+              <Label htmlFor="reference_field_key">{t.pricing.referenceFieldKey}</Label>
               <Input
                 id="reference_field_key"
                 value={formData.reference_field_key || ""}
                 onChange={(e) => setFormData({ ...formData, reference_field_key: e.target.value || null })}
-                placeholder="Key of referenced field"
+                placeholder={t.pricing.referenceFieldPlaceholder}
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="reference_percentage">Reference Percentage (Multiplier)</Label>
+              <Label htmlFor="reference_percentage">{t.pricing.referencePercentage}</Label>
               <Input
                 id="reference_percentage"
                 type="number"
@@ -353,9 +353,9 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                 max="99.99"
                 value={formData.reference_percentage || ""}
                 onChange={(e) => setFormData({ ...formData, reference_percentage: e.target.value ? parseFloat(e.target.value) : null })}
-                placeholder="e.g., 1.5 for 150%"
+                placeholder={t.pricing.referencePercentagePlaceholder}
               />
-              <p className="text-xs text-muted-foreground">Multiplier value (0 - 99.99). Example: 1.5 means 150%.</p>
+              <p className="text-xs text-muted-foreground">{t.pricing.referencePercentageDesc}</p>
             </div>
           </div>
         </CardContent>
@@ -392,12 +392,12 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="unit">Unit</Label>
+              <Label htmlFor="unit">{t.pricing.fieldUnit}</Label>
               <Input
                 id="unit"
                 value={formData.unit ?? ""}
                 onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                placeholder="e.g. $, kg, m²"
+                placeholder={t.pricing.fieldUnitPlaceholder}
               />
             </div>
           </div>
@@ -435,7 +435,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                 id="pattern"
                 value={formData.pattern ?? ""}
                 onChange={(e) => setFormData({ ...formData, pattern: e.target.value })}
-                placeholder="Regex pattern"
+                placeholder={t.form.patternPlaceholder}
               />
             </div>
           </div>
@@ -445,16 +445,16 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
       case "radio":
         return (
           <div className="grid gap-2">
-            <Label htmlFor="options">Options (JSON)</Label>
+            <Label htmlFor="options">{t.form.optionsJson}</Label>
             <Textarea
               id="options"
               value={optionsJson}
               onChange={(e) => setOptionsJson(e.target.value)}
-              placeholder='[{"label": "Option 1", "value": "1"}, ...]'
+              placeholder={t.pricing.optionsJsonPlaceholder}
               className="font-mono text-sm"
               rows={5}
             />
-            <p className="text-xs text-muted-foreground">Provide options as a JSON array of objects with label and value.</p>
+            <p className="text-xs text-muted-foreground">{t.form.optionsJsonHelp}</p>
           </div>
         );
       default:
@@ -496,7 +496,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Basic Information</CardTitle>
+            <CardTitle>{t.pricing.basicInfo}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -507,7 +507,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                 onChange={(e) => setFormData({ ...formData, field_key: e.target.value })}
                 placeholder={t.form.keyPlaceholder}
               />
-              <p className="text-xs text-muted-foreground">Unique identifier for this field (e.g. pet_name)</p>
+              <p className="text-xs text-muted-foreground">{t.pricing.keyDesc}</p>
             </div>
 
             <div className="grid gap-2">
@@ -554,14 +554,14 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                 checked={formData.is_active}
                 onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked as boolean })}
               />
-              <Label htmlFor="is_active">Is Active</Label>
+              <Label htmlFor="is_active">{t.form.isActive}</Label>
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Labels & Placeholders</CardTitle>
+            <CardTitle>{t.labelsPlaceholders}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -627,8 +627,8 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Type Configuration</CardTitle>
-            <CardDescription>Configuration specific to <strong>{formData.field_type}</strong></CardDescription>
+            <CardTitle>{t.typeConfiguration}</CardTitle>
+            <CardDescription>{t.typeConfigurationDescription} <strong>{formData.field_type}</strong></CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -648,7 +648,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Advanced Configuration</CardTitle>
+            <CardTitle>{t.advancedConfiguration}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -658,7 +658,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                   id="depends_on_field"
                   value={formData.depends_on_field ?? ""}
                   onChange={(e) => setFormData({ ...formData, depends_on_field: e.target.value })}
-                  placeholder="Key of parent field"
+                  placeholder={t.form.dependsOnFieldPlaceholder}
                 />
               </div>
               <div className="grid gap-2">
@@ -667,7 +667,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                   id="depends_on_value"
                   value={formData.depends_on_value ?? ""}
                   onChange={(e) => setFormData({ ...formData, depends_on_value: e.target.value })}
-                  placeholder="Value to trigger this field"
+                  placeholder={t.form.dependsOnValuePlaceholder}
                 />
               </div>
             </div>
@@ -690,7 +690,7 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
                         id="filter_type"
                         value={formData.filter_type ?? ""}
                         onChange={(e) => setFormData({ ...formData, filter_type: e.target.value })}
-                        placeholder="exact, range, etc."
+                        placeholder={t.form.filterTypePlaceholder}
                       />
                     </div>
                     <div className="grid gap-2 pl-6">
