@@ -24,69 +24,77 @@ export function VerificationStatus({ status, phoneVerified }: VerificationStatus
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter;
 
-  const steps = useMemo(() => [
-    {
-      id: 1,
-      title: t.steps.address.title,
-      description: t.steps.address.description,
-      completed: status.provider_address?.status === "approved",
-      pending: status.provider_address?.status === "pending",
-      rejected: status.provider_address?.status === "rejected",
-      expired: status.provider_address?.status === "expired",
-      rejectionReason: status.provider_address?.rejection_reason,
-      status: status.provider_address?.status,
-    },
-    {
-      id: 2,
-      title: t.steps.phone.title,
-      description: t.steps.phone.description,
-      completed: phoneVerified,
-      pending: false,
-    },
-    {
-      id: 3,
-      title: t.steps.identity.title,
-      description: t.steps.identity.description,
-      completed: status.national_code?.added && status.shahkar?.verified,
-      pending: false,
-    },
-    {
-      id: 4,
-      title: t.steps.documents.title,
-      description: t.steps.documents.description,
-      completed:
-        status.documents.national_card_front.status === "approved" &&
-        status.documents.national_card_back.status === "approved",
-      pending:
-        status.documents.national_card_front.status === "pending" &&
-        status.documents.national_card_back.status === "pending",
-      rejected:
-        status.documents.national_card_front.status === "rejected" ||
-        status.documents.national_card_back.status === "rejected",
-      expired:
-        status.documents.national_card_front.status === "expired" ||
-        status.documents.national_card_back.status === "expired",
-    },
-    {
-      id: 5,
-      title: t.steps.services.title,
-      description: t.steps.services.description,
-      completed: (status.service_types?.length ?? 0) > 0,
-      pending: false,
-    },
-    {
-      id: 6,
-      title: t.steps.details.title,
-      description: t.steps.details.description,
-      completed: false,
-      pending: false,
-    },
-  ], [status, t, phoneVerified]);
+  const steps = useMemo(() => {
+    const completedWizardService = status.service_types?.find(s => s.is_wizard_completed);
+
+    return [
+      {
+        id: 1,
+        title: t.steps.address.title,
+        description: t.steps.address.description,
+        completed: status.provider_address?.status === "approved",
+        pending: status.provider_address?.status === "pending",
+        rejected: status.provider_address?.status === "rejected",
+        expired: status.provider_address?.status === "expired",
+        rejectionReason: status.provider_address?.rejection_reason,
+        status: status.provider_address?.status,
+      },
+      {
+        id: 2,
+        title: t.steps.phone.title,
+        description: t.steps.phone.description,
+        completed: phoneVerified,
+        pending: false,
+      },
+      {
+        id: 3,
+        title: t.steps.identity.title,
+        description: t.steps.identity.description,
+        completed: status.national_code?.added && status.shahkar?.verified,
+        pending: false,
+      },
+      {
+        id: 4,
+        title: t.steps.documents.title,
+        description: t.steps.documents.description,
+        completed:
+          status.documents.national_card_front.status === "approved" &&
+          status.documents.national_card_back.status === "approved",
+        pending:
+          status.documents.national_card_front.status === "pending" &&
+          status.documents.national_card_back.status === "pending",
+        rejected:
+          status.documents.national_card_front.status === "rejected" ||
+          status.documents.national_card_back.status === "rejected",
+        expired:
+          status.documents.national_card_front.status === "expired" ||
+          status.documents.national_card_back.status === "expired",
+      },
+      {
+        id: 5,
+        title: t.steps.services.title,
+        description: t.steps.services.description,
+        completed: (status.service_types?.length ?? 0) > 0,
+        pending: false,
+      },
+      {
+        id: 6,
+        title: t.steps.details.title,
+        description: t.steps.details.description,
+        completed: !!completedWizardService?.is_wizard_approved,
+        pending: !!completedWizardService && !completedWizardService.is_wizard_approved,
+      },
+    ];
+  }, [status, t, phoneVerified]);
 
   // Find the first step that is not completed and not pending (i.e., the next actionable step)
   const currentStep = steps.find((s) => !s.completed && !s.pending);
 
-  const showGlobalPending = steps.find(s => s.id === 1)?.pending && steps.find(s => s.id === 4)?.pending;
+  const step1Pending = steps.find(s => s.id === 1)?.pending;
+  const step4Pending = steps.find(s => s.id === 4)?.pending;
+  const step6Pending = steps.find(s => s.id === 6)?.pending;
+
+  const showGlobalPending = (step1Pending && step4Pending) || step6Pending;
 
   const handleStartStep = (stepId: number) => {
     switch (stepId) {

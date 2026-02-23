@@ -39,6 +39,7 @@ export interface VerificationStatusResponse {
     name_fa: string;
     is_selected: boolean;
     is_wizard_completed: boolean;
+    is_wizard_approved: boolean;
   }[];
 }
 
