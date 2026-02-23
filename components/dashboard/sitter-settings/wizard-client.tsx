@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { startServiceWizard } from "@/services/provider-api";
-import { Loader2, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -73,12 +73,15 @@ export function WizardClient({ serviceId }: WizardClientProps) {
     <div className="max-w-3xl mx-auto py-8 space-y-6">
       <div className="mb-4">
         <Button variant="ghost" onClick={() => router.back()} className="gap-2">
-            {lang === 'fa' ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-            {commonT.back || "Back"}
+          {lang === 'fa' ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+          {commonT.back || "Back"}
         </Button>
       </div>
-      
-      <ServiceWizard providerServiceId={providerServiceId} />
+
+      <ServiceWizard
+        providerServiceId={providerServiceId}
+        onComplete={() => router.push("/app/sitter-settings")}
+      />
     </div>
   );
 }

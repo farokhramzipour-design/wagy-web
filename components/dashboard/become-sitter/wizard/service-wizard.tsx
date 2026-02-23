@@ -19,9 +19,10 @@ import { WizardResponse, WizardStep } from "./types";
 
 interface ServiceWizardProps {
   providerServiceId: number;
+  onComplete?: () => void;
 }
 
-export function ServiceWizard({ providerServiceId }: ServiceWizardProps) {
+export function ServiceWizard({ providerServiceId, onComplete }: ServiceWizardProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const isRtl = lang === "fa";
@@ -173,7 +174,11 @@ export function ServiceWizard({ providerServiceId }: ServiceWizardProps) {
         // Check if this is the last step
         if (wizard && currentStep.step_number === wizard.provider_service.total_steps) {
           await completeWizard(providerServiceId);
-          router.push("/app/become-sitter"); // Or wherever we go after completion
+          if (onComplete) {
+            onComplete();
+          } else {
+            router.push("/app/become-sitter");
+          }
           return;
         }
 
