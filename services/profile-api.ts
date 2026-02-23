@@ -53,6 +53,13 @@ export interface PhoneVerifyResponse {
   [key: string]: any;
 }
 
+export async function getProfile(token?: string) {
+  return apiFetch<ProfileMeResponse>(API_ENDPOINTS.profile.me, {
+    method: "GET",
+    token,
+  });
+}
+
 export async function requestPhoneOtp(payload: PhoneRequestPayload, token?: string) {
   return apiFetch<PhoneRequestResponse>(API_ENDPOINTS.profile.phoneRequest, {
     method: "POST",

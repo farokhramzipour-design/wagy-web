@@ -412,8 +412,16 @@
       "transactions": "Transactions",
       "chat": "Messages",
       "becomeSitter": "Become a Sitter",
+      "sitterSettings": "Sitter Settings",
       "profile": "Profile",
       "logout": "Logout"
+    },
+    "promo": {
+      "becomeSitter": {
+        "title": "Become a Sitter",
+        "description": "Earn money doing what you love. Join our community.",
+        "button": "Get Started"
+      }
     },
     "overview": {
       "title": "Dashboard",
