@@ -123,7 +123,7 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {profileCompletion && (
+                  {profileCompletion && !profileCompletion.is_complete && (
                     <>
                       <div className="px-2 py-2">
                         <div className="flex justify-between items-center mb-1.5">
