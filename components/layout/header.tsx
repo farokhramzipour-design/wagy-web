@@ -107,13 +107,13 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
             <div className="flex items-center gap-2">
               <NotificationList />
 
-              <DropdownMenu>
+              <DropdownMenu dir={isRtl ? "rtl" : "ltr"}>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <User className="h-5 w-5 text-neutral-600" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuContent className="w-56" align="end">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">{user.name}</p>
