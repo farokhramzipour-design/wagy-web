@@ -77,7 +77,7 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
     if (item.wizard_approval_status === 'rejected') {
       return (
         <Button className="min-w-[100px]" variant="outline" size="sm" onClick={() => handleAction(item)}>
-          {t.complete} {/* Assuming they need to fix things */}
+          {item.wizard_rejection_reason ? t.reappeal : t.complete}
         </Button>
       );
     }
@@ -128,7 +128,7 @@ export function SitterSettingsContent({ selectedServices }: SitterSettingsConten
                       <span>{t.approvalStatus}:</span>
                       {getStatusBadge(item.wizard_approval_status)}
                     </div>
-                    {item.wizard_rejection_reason && (
+                    {item.wizard_approval_status === 'rejected' && item.wizard_rejection_reason && (
                       <p className="text-sm text-red-600 mt-1">
                         {t.rejectionReason}: {item.wizard_rejection_reason}
                       </p>
