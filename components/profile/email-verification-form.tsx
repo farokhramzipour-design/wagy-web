@@ -10,7 +10,7 @@ import fa from "@/locales/fa.json";
 import { requestEmailOtp, verifyEmailOtp } from "@/services/profile-api";
 import { ArrowRight, Loader2, Mail, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 const content = { en, fa };
@@ -154,7 +154,7 @@ export function EmailVerificationForm({ token }: EmailVerificationFormProps) {
                   placeholder={t.otpPlaceholder}
                   value={otp}
                   onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
                     if (value.length <= 6) setOtp(value);
                   }}
                   className="text-center text-2xl tracking-[0.5em]"
