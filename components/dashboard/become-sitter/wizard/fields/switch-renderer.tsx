@@ -14,8 +14,8 @@ export function SwitchRenderer({ field, value, onChange, error }: FieldProps) {
       <div className="flex items-center space-x-2 space-x-reverse">
         <Switch
           id={field.field_key}
-          checked={!!value}
-          onCheckedChange={(checked) => onChange(checked)}
+          checked={value === true || value === "true"}
+          onCheckedChange={(checked) => onChange(!!checked)}
           required={field.is_required}
           className={error ? "border-red-500" : ""}
         />
