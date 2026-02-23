@@ -53,6 +53,38 @@
       "goToAddresses": "Go to Addresses",
       "verified": "Verified",
       "unverified": "Unverified"
+    },
+    "phoneVerification": {
+      "title": "Phone Verification",
+      "description": "Please verify your phone number to continue.",
+      "inputLabel": "Phone Number",
+      "inputPlaceholder": "09123456789",
+      "otpLabel": "Verification Code",
+      "otpPlaceholder": "Enter 6-digit code",
+      "requestButton": "Send Code",
+      "verifyButton": "Verify Code",
+      "resendButton": "Resend Code",
+      "changeNumber": "Change Number",
+      "success": "Phone number verified successfully",
+      "errorRequest": "Failed to send code",
+      "errorVerify": "Invalid code",
+      "countdown": "Resend in {seconds}"
+    },
+    "emailVerification": {
+      "title": "Email Verification",
+      "description": "Please verify your email address to continue.",
+      "inputLabel": "Email Address",
+      "inputPlaceholder": "example@email.com",
+      "otpLabel": "Verification Code",
+      "otpPlaceholder": "Enter 6-digit code",
+      "requestButton": "Send Code",
+      "verifyButton": "Verify Code",
+      "resendButton": "Resend Code",
+      "changeEmail": "Change Email",
+      "success": "Email verified successfully",
+      "errorRequest": "Failed to send code",
+      "errorVerify": "Invalid code",
+      "countdown": "Resend in {seconds}"
     }
   },
   "hero": {

@@ -83,6 +83,43 @@ export async function verifyPhoneOtp(payload: PhoneVerifyPayload, token?: string
   });
 }
 
+export interface EmailRequestPayload {
+  email: string;
+}
+
+export interface EmailRequestResponse {
+  message: string;
+  email: string;
+  otp_sent: boolean;
+  expires_in: number;
+}
+
+export interface EmailVerifyPayload {
+  email: string;
+  code: string;
+}
+
+export interface EmailVerifyResponse {
+  message: string;
+  [key: string]: any;
+}
+
+export async function requestEmailOtp(payload: EmailRequestPayload, token?: string) {
+  return apiFetch<EmailRequestResponse>(API_ENDPOINTS.profile.emailRequest, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    token,
+  });
+}
+
+export async function verifyEmailOtp(payload: EmailVerifyPayload, token?: string) {
+  return apiFetch<EmailVerifyResponse>(API_ENDPOINTS.profile.emailVerify, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    token,
+  });
+}
+
 export interface ProfileBasicPayload {
   first_name: string;
   last_name: string;

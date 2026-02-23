@@ -41,10 +41,10 @@ export const API_ENDPOINTS = {
     me: "/api/v1/profile/me",
     completion: "/api/v1/profile/completion",
     basic: "/api/v1/profile/basic",
-    emailRequest: "/api/v1/profile/email/request",
-    emailVerify: "/api/v1/profile/email/verify",
     phoneRequest: "/api/v1/profile/phone/request",
-    phoneVerify: "/api/v1/profile/phone/verify"
+    phoneVerify: "/api/v1/profile/phone/verify",
+    emailRequest: "/api/v1/profile/email/request",
+    emailVerify: "/api/v1/profile/email/verify"
   },
   addresses: {
     countries: "/api/v1/addresses/countries",

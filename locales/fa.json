@@ -53,6 +53,38 @@
       "goToAddresses": "برو به آدرس‌ها",
       "verified": "تایید شده",
       "unverified": "تایید نشده"
+    },
+    "phoneVerification": {
+      "title": "تایید شماره موبایل",
+      "description": "لطفاً شماره موبایل خود را تایید کنید.",
+      "inputLabel": "شماره موبایل",
+      "inputPlaceholder": "09123456789",
+      "otpLabel": "کد تایید",
+      "otpPlaceholder": "کد ۶ رقمی را وارد کنید",
+      "requestButton": "ارسال کد",
+      "verifyButton": "تایید کد",
+      "resendButton": "ارسال مجدد کد",
+      "changeNumber": "تغییر شماره",
+      "success": "شماره موبایل با موفقیت تایید شد",
+      "errorRequest": "خطا در ارسال کد",
+      "errorVerify": "کد نامعتبر است",
+      "countdown": "ارسال مجدد در {seconds}"
+    },
+    "emailVerification": {
+      "title": "تایید ایمیل",
+      "description": "لطفاً آدرس ایمیل خود را تایید کنید.",
+      "inputLabel": "آدرس ایمیل",
+      "inputPlaceholder": "example@email.com",
+      "otpLabel": "کد تایید",
+      "otpPlaceholder": "کد ۶ رقمی را وارد کنید",
+      "requestButton": "ارسال کد",
+      "verifyButton": "تایید کد",
+      "resendButton": "ارسال مجدد کد",
+      "changeEmail": "تغییر ایمیل",
+      "success": "ایمیل با موفقیت تایید شد",
+      "errorRequest": "خطا در ارسال کد",
+      "errorVerify": "کد نامعتبر است",
+      "countdown": "ارسال مجدد در {seconds}"
     }
   },
   "hero": {

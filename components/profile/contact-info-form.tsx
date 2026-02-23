@@ -53,15 +53,19 @@ export function ContactInfoForm({ profile, completion }: ContactInfoFormProps) {
               <p className="text-sm text-muted-foreground">
                 {/* You might want a localized string here for "No phone number added" */}
               </p>
-              <Button variant="outline" className="w-full sm:w-auto justify-start">
-                {tContact.addPhone}
+              <Button asChild variant="outline" className="w-full sm:w-auto justify-start">
+                <Link href="/app/profile/phone">
+                  {tContact.addPhone}
+                </Link>
               </Button>
             </div>
           ) : (
             <div className="flex items-center justify-between p-3 border rounded-md bg-muted/20">
               <span className="font-mono text-sm">{profile.phone_e164}</span>
-              <Button variant="ghost" size="sm">
-                {tContact.editPhone}
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/app/profile/phone">
+                  {tContact.editPhone}
+                </Link>
               </Button>
             </div>
           )}
@@ -83,15 +87,19 @@ export function ContactInfoForm({ profile, completion }: ContactInfoFormProps) {
 
           {isEmailMissing ? (
             <div className="flex flex-col gap-2">
-              <Button variant="outline" className="w-full sm:w-auto justify-start">
-                {tContact.addEmail}
+              <Button asChild variant="outline" className="w-full sm:w-auto justify-start">
+                <Link href="/app/profile/email">
+                  {tContact.addEmail}
+                </Link>
               </Button>
             </div>
           ) : (
             <div className="flex items-center justify-between p-3 border rounded-md bg-muted/20">
               <span className="text-sm">{profile.email}</span>
-              <Button variant="ghost" size="sm">
-                {tContact.editEmail}
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/app/profile/email">
+                  {tContact.editEmail}
+                </Link>
               </Button>
             </div>
           )}
