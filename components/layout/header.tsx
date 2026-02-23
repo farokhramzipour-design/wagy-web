@@ -169,7 +169,7 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
 
           {!user && (
             <div className="flex items-center gap-4">
-              <Link href="/auth/login" className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
+              <Link href="/auth" className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
                 {t.auth.login}
               </Link>
               <Button asChild className="bg-[#0ea5a4] hover:bg-[#0b7c7b] text-white">

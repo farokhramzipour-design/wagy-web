@@ -8,7 +8,7 @@ export default function PhonePage() {
   const token = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
 
   if (!token) {
-    redirect("/auth/login");
+    redirect("/auth");
   }
 
   return (

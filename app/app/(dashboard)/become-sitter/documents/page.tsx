@@ -11,7 +11,7 @@ export default async function DocumentsPage() {
   const token = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
 
   if (!token) {
-    redirect("/auth/login");
+    redirect("/auth");
   }
 
   let status: VerificationStatusResponse | null = null;

@@ -8,7 +8,7 @@ export default async function EditPetPage({ params }: { params: { id: string } }
   const accessToken = cookieStore.get("waggy_access_token")?.value;
 
   if (!accessToken) {
-    redirect("/auth/login");
+    redirect("/auth");
   }
 
   try {
@@ -19,7 +19,7 @@ export default async function EditPetPage({ params }: { params: { id: string } }
     }
 
     return (
-      <PetForm 
+      <PetForm
         accessToken={accessToken}
         initialData={pet}
         petId={params.id}

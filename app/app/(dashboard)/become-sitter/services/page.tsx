@@ -9,7 +9,7 @@ export default async function ServicesPage() {
   const token = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
 
   if (!token) {
-    redirect("/auth/login");
+    redirect("/auth");
   }
 
   let serviceTypes: ServiceType[] = [];
