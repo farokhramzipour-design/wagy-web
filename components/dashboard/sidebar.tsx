@@ -39,7 +39,8 @@ export function DashboardSidebarNav({ session, profile, className, onLinkClick }
   const tPromo = (content[lang] as any).dashboard.promo?.becomeSitter;
 
   const isAdmin = session?.isAdmin ?? false;
-  const isSitter = profile?.is_provider && profile?.provider_is_active;
+  const showSitterSettings = profile?.is_provider && profile?.provider_is_active;
+  const showBecomeSitter = !profile?.is_provider;
 
   const links = [
     {
@@ -116,7 +117,7 @@ export function DashboardSidebarNav({ session, profile, className, onLinkClick }
           </Link>
         )}
 
-        {isSitter && (
+        {showSitterSettings && (
           <Link
             href="/app/sitter-settings"
             onClick={onLinkClick}
@@ -137,8 +138,8 @@ export function DashboardSidebarNav({ session, profile, className, onLinkClick }
           </button>
         </form>
 
-        {!isSitter && (
-          <div className="mt-12 p-4 rounded-xl bg-gradient-to-br from-[#0ea5a4]/10 to-[#0ea5a4]/20 border border-[#0ea5a4]/20">
+        {showBecomeSitter && (
+          <div className="mt-8 p-4 rounded-xl bg-gradient-to-br from-[#0ea5a4]/10 to-[#0ea5a4]/20 border border-[#0ea5a4]/20">
             <div className="flex items-center gap-2 mb-2">
               <div className="p-1.5 rounded-lg bg-white shadow-sm">
                 <Sparkles className="w-4 h-4 text-[#0ea5a4]" />
