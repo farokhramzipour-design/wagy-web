@@ -1189,5 +1189,21 @@
       "noTransactions": "No transactions found."
     }
   },
-  "provider": {}
+  "provider": {},
+  "sitterSettings": {
+    "title": "Sitter Settings",
+    "selectServices": "Select Services",
+    "status": "Status",
+    "approvalStatus": "Approval Status",
+    "wizardStarted": "Wizard Started",
+    "wizardComplete": "Wizard Complete",
+    "notSubmitted": "Not Submitted",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "rejectionReason": "Rejection Reason",
+    "start": "Start",
+    "complete": "Complete",
+    "edit": "Edit"
+  }
 }

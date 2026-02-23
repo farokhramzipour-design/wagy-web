@@ -23,6 +23,30 @@ export interface ServiceTypesResponse {
   items: ServiceType[];
 }
 
+export interface ProviderService {
+  provider_service_id: number;
+  provider_id: number;
+  service_type_id: number;
+  current_step: number;
+  current_step_id: number;
+  total_steps: number;
+  completed_steps: number;
+  status: string;
+  is_complete: boolean;
+  completed_at: string | null;
+  is_active: boolean;
+  activated_at: string | null;
+  last_edited_step: number | null;
+  wizard_approval_status: "not_submitted" | "pending" | "approved" | "rejected";
+  wizard_submitted_at: string | null;
+  wizard_reviewed_at: string | null;
+  wizard_reviewed_by_admin_id: number | null;
+  wizard_rejection_reason: string | null;
+  has_pending_wizard_changes: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface SelectedServiceItem {
   selected_service_id: number;
   service_type_id: number;
@@ -31,11 +55,15 @@ export interface SelectedServiceItem {
   name_fa: string;
   has_wizard_started: boolean;
   is_wizard_complete: boolean;
+  is_wizard_approved: boolean;
+  wizard_approval_status: "not_submitted" | "pending" | "approved" | "rejected";
+  wizard_rejection_reason: string | null;
+  provider_service: ProviderService | null;
 }
 
 export interface SelectedServicesResponse {
   items: SelectedServiceItem[];
-  top_service_type_id: number;
+  top_service_type_id: number | null;
 }
 
 export interface UpdateSelectedServicesPayload {
@@ -65,6 +93,13 @@ export interface StartServiceWizardPayload {
 
 export async function getAvailableServiceTypes(token?: string) {
   return apiFetch<ServiceTypesResponse>(API_ENDPOINTS.provider.serviceTypes, {
+    token,
+    cache: "no-store",
+  });
+}
+
+export async function getSelectedServicesData(token?: string) {
+  return apiFetch<SelectedServicesResponse>(API_ENDPOINTS.provider.selectedServices, {
     token,
     cache: "no-store",
   });

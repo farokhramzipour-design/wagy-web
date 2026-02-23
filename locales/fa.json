@@ -1188,5 +1188,21 @@
       "noTransactions": "هیچ تراکنشی یافت نشد."
     },
     "open": "باز کردن"
+  },
+  "sitterSettings": {
+    "title": "تنظیمات مراقب",
+    "selectServices": "انتخاب سرویس‌ها",
+    "status": "وضعیت",
+    "approvalStatus": "وضعیت تایید",
+    "wizardStarted": "ویزارد شروع شده",
+    "wizardComplete": "ویزارد تکمیل شده",
+    "notSubmitted": "ارسال نشده",
+    "pending": "در انتظار بررسی",
+    "approved": "تایید شده",
+    "rejected": "رد شده",
+    "rejectionReason": "دلیل رد شدن",
+    "start": "شروع",
+    "complete": "تکمیل",
+    "edit": "ویرایش"
   }
 }
