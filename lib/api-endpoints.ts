@@ -64,7 +64,8 @@ export const API_ENDPOINTS = {
     step: "/api/v1/provider/services/{provider_service_id}/step/{step_id}",
     next: "/api/v1/provider/services/{provider_service_id}/next",
     back: "/api/v1/provider/services/{provider_service_id}/back",
-    complete: "/api/v1/provider/services/{provider_service_id}/complete"
+    complete: "/api/v1/provider/services/{provider_service_id}/complete",
+    calculatePricing: "/api/v1/provider/services/{service_type_id}/calculate-pricing"
   },
   adminProviders: {
     applications: "/api/v1/admin/providers/applications",

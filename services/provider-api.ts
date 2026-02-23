@@ -215,6 +215,33 @@ export async function backStep(providerServiceId: number) {
   return response.json() as Promise<ProviderServiceResponse>;
 }
 
+export interface PricingCalculationResponse {
+  calculated_fields: Record<string, number>;
+  derived_fields: Record<string, number>;
+  field_formulas: Record<string, string>;
+  unresolved_fields: string[];
+}
+
+export async function calculatePricing(serviceTypeId: number, values: Record<string, any>) {
+  const response = await fetch(`/api/provider/services/${serviceTypeId}/calculate-pricing`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ values }),
+  });
+
+  if (!response.ok) {
+    // try to parse error as json, fallback to text if fails (e.g. 404 html)
+    try {
+      const error = await response.json();
+      throw new Error(error.error || "Failed to calculate pricing");
+    } catch (e) {
+      throw new Error(`Failed to calculate pricing: ${response.status} ${response.statusText}`);
+    }
+  }
+
+  return response.json() as Promise<PricingCalculationResponse>;
+}
+
 export async function completeWizard(providerServiceId: number) {
   const response = await fetch(`/api/provider/services/${providerServiceId}/complete`, {
     method: "POST",

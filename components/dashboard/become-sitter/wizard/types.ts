@@ -32,6 +32,14 @@ export interface WizardField {
   depends_on_field?: string | null;
   depends_on_value?: string | null;
   options?: WizardOption[];
+  // Pricing Metadata
+  pricing_role?: string | null;
+  pricing_component?: string | null;
+  pricing_unit?: string | null;
+  unit?: string | null;
+  reference_field_key?: string | null;
+  reference_percentage?: number | null;
+  condition_type?: string | null;
 }
 
 export interface WizardStep {

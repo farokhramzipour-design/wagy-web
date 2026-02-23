@@ -32,6 +32,25 @@ const FIELD_TYPES = [
   "file", "image", "color", "json", "html"
 ];
 
+const PRICING_ROLES = [
+  "base_price", "hourly_rate", "nightly_rate",
+  "additional_pet_rate", "additional_pet_hourly", "additional_pet_nightly",
+  "base_price_holiday_multiplier", "hourly_rate_holiday_multiplier", "nightly_rate_holiday_multiplier"
+];
+
+const PRICING_COMPONENTS = [
+  "base_rate", "additional_pet_rate", "additional_rate",
+  "multiplier", "conditional_fee", "discount"
+];
+
+const PRICING_UNITS = [
+  "flat", "per_night", "per_hour", "per_pet", "percentage"
+];
+
+const CONDITION_TYPES = [
+  "always", "holiday", "weekend", "weekday", "peak_season", "custom_date"
+];
+
 export default function EditServiceStepFieldPage({ params }: { params: { id: string; stepId: string; fieldId: string } }) {
   const router = useRouter();
   const { lang } = useLanguage();
@@ -69,6 +88,13 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
     filter_type: null,
     is_searchable: false,
     filter_priority: 0,
+    pricing_role: null,
+    pricing_component: null,
+    pricing_unit: null,
+    unit: null,
+    reference_field_key: null,
+    reference_percentage: null,
+    condition_type: null,
   });
 
   const [optionsJson, setOptionsJson] = useState("");
@@ -104,6 +130,13 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
             filter_type: field.filter_type ?? null,
             is_searchable: field.is_searchable ?? false,
             filter_priority: field.filter_priority ?? 0,
+            pricing_role: (field as any).pricing_role ?? null,
+            pricing_component: (field as any).pricing_component ?? null,
+            pricing_unit: (field as any).pricing_unit ?? null,
+            unit: (field as any).unit ?? null,
+            reference_field_key: (field as any).reference_field_key ?? null,
+            reference_percentage: (field as any).reference_percentage ?? null,
+            condition_type: (field as any).condition_type ?? null,
           });
 
           if (field.options) {
@@ -164,6 +197,45 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
       if (!payload.depends_on_field) payload.depends_on_field = null;
       if (!payload.depends_on_value) payload.depends_on_value = null;
       if (!payload.filter_type) payload.filter_type = null;
+      if (!payload.pricing_role) payload.pricing_role = null;
+      if (!payload.pricing_component) payload.pricing_component = null;
+      if (!payload.pricing_unit) payload.pricing_unit = null;
+      if (!payload.unit) payload.unit = null;
+      if (!payload.reference_field_key) payload.reference_field_key = null;
+      if (!payload.reference_percentage) payload.reference_percentage = null;
+      if (!payload.condition_type) payload.condition_type = null;
+
+      // Pricing Validation
+      if (payload.pricing_component && !payload.pricing_unit) {
+        toast.error("Pricing Unit is required when Pricing Component is set");
+        setSubmitting(false);
+        return;
+      }
+      if (payload.pricing_unit && !payload.pricing_component) {
+        toast.error("Pricing Component is required when Pricing Unit is set");
+        setSubmitting(false);
+        return;
+      }
+      if (payload.reference_percentage && !payload.reference_field_key) {
+        toast.error("Reference Field Key is required when Reference Percentage is set");
+        setSubmitting(false);
+        return;
+      }
+      if (payload.reference_field_key && !payload.reference_percentage) {
+        toast.error("Reference Percentage is required when Reference Field Key is set");
+        setSubmitting(false);
+        return;
+      }
+      if (payload.condition_type && !payload.pricing_component) {
+        toast.error("Pricing Component is required when Condition Type is set");
+        setSubmitting(false);
+        return;
+      }
+      if (payload.reference_field_key && payload.reference_field_key === payload.field_key) {
+        toast.error("Reference Field Key cannot reference itself");
+        setSubmitting(false);
+        return;
+      }
 
       await updateServiceStepFieldAction(stepId, fieldId, payload);
       toast.success(t.form.successUpdate || "Field updated successfully");
@@ -176,6 +248,121 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
     }
   };
 
+  const renderPricingConfiguration = () => {
+    if (!["number", "currency", "slider"].includes(formData.field_type)) {
+      return null;
+    }
+
+    return (
+      <Card className="md:col-span-2 border-orange-200 bg-orange-50/30">
+        <CardHeader>
+          <CardTitle className="text-orange-700">Pricing Configuration</CardTitle>
+          <CardDescription>Configure how this field affects service pricing calculations</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="pricing_role">Pricing Role</Label>
+              <Select
+                value={formData.pricing_role || "none"}
+                onValueChange={(value) => setFormData({ ...formData, pricing_role: value === "none" ? null : value })}
+              >
+                <SelectTrigger id="pricing_role">
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {PRICING_ROLES.map((role) => (
+                    <SelectItem key={role} value={role}>{role}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="pricing_component">Pricing Component</Label>
+              <Select
+                value={formData.pricing_component || "none"}
+                onValueChange={(value) => setFormData({ ...formData, pricing_component: value === "none" ? null : value })}
+              >
+                <SelectTrigger id="pricing_component">
+                  <SelectValue placeholder="Select component" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {PRICING_COMPONENTS.map((comp) => (
+                    <SelectItem key={comp} value={comp}>{comp}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="pricing_unit">Pricing Unit</Label>
+              <Select
+                value={formData.pricing_unit || "none"}
+                onValueChange={(value) => setFormData({ ...formData, pricing_unit: value === "none" ? null : value })}
+              >
+                <SelectTrigger id="pricing_unit">
+                  <SelectValue placeholder="Select unit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {PRICING_UNITS.map((unit) => (
+                    <SelectItem key={unit} value={unit}>{unit}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="condition_type">Condition Type</Label>
+              <Select
+                value={formData.condition_type || "none"}
+                onValueChange={(value) => setFormData({ ...formData, condition_type: value === "none" ? null : value })}
+              >
+                <SelectTrigger id="condition_type">
+                  <SelectValue placeholder="Select condition" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {CONDITION_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="reference_field_key">Reference Field Key</Label>
+              <Input
+                id="reference_field_key"
+                value={formData.reference_field_key || ""}
+                onChange={(e) => setFormData({ ...formData, reference_field_key: e.target.value || null })}
+                placeholder="Key of referenced field"
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="reference_percentage">Reference Percentage (Multiplier)</Label>
+              <Input
+                id="reference_percentage"
+                type="number"
+                step="0.01"
+                min="0"
+                max="99.99"
+                value={formData.reference_percentage || ""}
+                onChange={(e) => setFormData({ ...formData, reference_percentage: e.target.value ? parseFloat(e.target.value) : null })}
+                placeholder="e.g., 1.5 for 150%"
+              />
+              <p className="text-xs text-muted-foreground">Multiplier value (0 - 99.99). Example: 1.5 means 150%.</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
   // Factory for type-specific fields
   const renderTypeSpecificFields = () => {
     switch (formData.field_type) {
@@ -183,23 +370,34 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
       case "currency":
       case "slider":
         return (
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="min_value">{t.form.minValue}</Label>
-              <Input
-                id="min_value"
-                type="number"
-                value={formData.min_value ?? ""}
-                onChange={(e) => setFormData({ ...formData, min_value: e.target.value ? parseFloat(e.target.value) : null })}
-              />
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="min_value">{t.form.minValue}</Label>
+                <Input
+                  id="min_value"
+                  type="number"
+                  value={formData.min_value ?? ""}
+                  onChange={(e) => setFormData({ ...formData, min_value: e.target.value ? parseFloat(e.target.value) : null })}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="max_value">{t.form.maxValue}</Label>
+                <Input
+                  id="max_value"
+                  type="number"
+                  value={formData.max_value ?? ""}
+                  onChange={(e) => setFormData({ ...formData, max_value: e.target.value ? parseFloat(e.target.value) : null })}
+                />
+              </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="max_value">{t.form.maxValue}</Label>
+              <Label htmlFor="unit">Unit</Label>
               <Input
-                id="max_value"
-                type="number"
-                value={formData.max_value ?? ""}
-                onChange={(e) => setFormData({ ...formData, max_value: e.target.value ? parseFloat(e.target.value) : null })}
+                id="unit"
+                value={formData.unit ?? ""}
+                onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                placeholder="e.g. $, kg, m²"
               />
             </div>
           </div>
@@ -445,6 +643,8 @@ export default function EditServiceStepFieldPage({ params }: { params: { id: str
             {renderTypeSpecificFields()}
           </CardContent>
         </Card>
+
+        {renderPricingConfiguration()}
 
         <Card className="md:col-span-2">
           <CardHeader>

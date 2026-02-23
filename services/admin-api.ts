@@ -229,6 +229,14 @@ export interface ServiceStepField {
   filter_type?: string;
   is_searchable?: boolean;
   filter_priority?: number;
+  // Pricing Metadata
+  pricing_role?: "base_price" | "hourly_rate" | "nightly_rate" | "additional_pet_rate" | "additional_pet_hourly" | "additional_pet_nightly" | "base_price_holiday_multiplier" | "hourly_rate_holiday_multiplier" | "nightly_rate_holiday_multiplier";
+  pricing_component?: "base_rate" | "additional_pet_rate" | "additional_rate" | "multiplier" | "conditional_fee" | "discount";
+  pricing_unit?: "flat" | "per_night" | "per_hour" | "per_pet" | "percentage";
+  unit?: string;
+  reference_field_key?: string;
+  reference_percentage?: number;
+  condition_type?: "always" | "holiday" | "weekend" | "weekday" | "peak_season" | "custom_date";
   created_at: string;
   updated_at: string;
 }
@@ -258,6 +266,14 @@ export interface CreateServiceStepFieldRequest {
   is_searchable?: boolean;
   filter_priority?: number;
   is_active?: boolean;
+  // Pricing Metadata
+  pricing_role?: string | null;
+  pricing_component?: string | null;
+  pricing_unit?: string | null;
+  unit?: string | null;
+  reference_field_key?: string | null;
+  reference_percentage?: number | null;
+  condition_type?: string | null;
 }
 
 export interface ServiceStep {

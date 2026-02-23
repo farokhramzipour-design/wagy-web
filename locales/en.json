@@ -1074,7 +1074,7 @@
           }
         }
       },
-      "users": {
+      "form": {
         "nameEnPlaceholder": "e.g. Dog Walking",
         "nameFaPlaceholder": "e.g. پیاده‌روی سگ",
         "descPlaceholder": "Describe the service...",

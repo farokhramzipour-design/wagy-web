@@ -56,6 +56,13 @@ export interface ServiceStepField {
   filter_type?: string;
   is_searchable?: boolean;
   filter_priority?: number;
+  pricing_role?: string;
+  pricing_component?: string;
+  pricing_unit?: string;
+  unit?: string;
+  reference_field_key?: string;
+  reference_percentage?: number;
+  condition_type?: string;
   created_at: string;
   updated_at: string;
 }
@@ -143,10 +150,16 @@ export interface ServiceFieldCreateRequest {
   is_searchable?: boolean;
   filter_priority?: number;
   is_active?: boolean;
+  pricing_role?: string | null;
+  pricing_component?: string | null;
+  pricing_unit?: string | null;
+  unit?: string | null;
+  reference_field_key?: string | null;
+  reference_percentage?: number | null;
+  condition_type?: string | null;
 }
 
 export interface ServiceFieldUpdateRequest {
-  field_key?: string;
   label_en?: string;
   label_fa?: string;
   field_type?: string;
@@ -169,6 +182,13 @@ export interface ServiceFieldUpdateRequest {
   filter_type?: string | null;
   is_searchable?: boolean;
   filter_priority?: number;
+  pricing_role?: string | null;
+  pricing_component?: string | null;
+  pricing_unit?: string | null;
+  unit?: string | null;
+  reference_field_key?: string | null;
+  reference_percentage?: number | null;
+  condition_type?: string | null;
 }
 
 export interface ReorderFieldsRequest {

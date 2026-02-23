@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   backStep,
+  calculatePricing,
   completeWizard,
   getStepDetails,
   getWizard,
@@ -34,6 +35,95 @@ export function ServiceWizard({ providerServiceId, onComplete }: ServiceWizardPr
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [debouncedFormData, setDebouncedFormData] = useState(formData);
+
+  // Debounce formData
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFormData(formData);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [formData]);
+
+  // Handle Pricing Calculation
+  useEffect(() => {
+    let isCancelled = false;
+
+    const runCalculation = async () => {
+      if (!currentStep || !wizard) return;
+
+      // The preview endpoint is read-only and computes derived fields.
+      // We trigger calculation if there are ANY fields in the wizard that might need recalculation.
+      // Specifically, if a field has a reference_field_key, it depends on another field.
+      // Or if a field is referenced by another (which we don't know easily), it should trigger.
+      // Simplest robust approach: if any numeric field exists in the step, try to calculate.
+      // Or stick to: if any field has pricing metadata.
+      const hasPricingFields = currentStep.fields.some(f =>
+        f.pricing_role || f.pricing_component || f.reference_field_key || f.reference_percentage
+      );
+
+      if (!hasPricingFields) return;
+
+      try {
+        setIsCalculating(true);
+        // We need service_type_id. provider_service has it.
+        const serviceTypeId = wizard.provider_service.service_type_id;
+
+        // Pass current form data. The API expects "values".
+        // Note: The preview endpoint uses these values to override saved data.
+        const result = await calculatePricing(serviceTypeId, debouncedFormData);
+
+        if (isCancelled) return;
+
+        // Handle unresolved fields (e.g. show warning)
+        if (result.unresolved_fields && result.unresolved_fields.length > 0) {
+          console.warn("Unresolved pricing fields:", result.unresolved_fields);
+          // We could show a toast here, but it might be spammy while typing.
+          // Ideally, we'd mark these fields in the UI.
+        }
+
+        // Update form data with calculated fields if they differ
+        setFormData(prev => {
+          const next = { ...prev };
+          let changed = false;
+
+          if (result.calculated_fields) {
+            Object.entries(result.calculated_fields).forEach(([key, value]) => {
+              // Only update if field exists in current step
+              const fieldInStep = currentStep.fields.find(f => f.field_key === key);
+              if (fieldInStep) {
+                // Check if value is different (handling number/string conversion if needed)
+                if (next[key] !== value) {
+                  next[key] = value;
+                  changed = true;
+                }
+              }
+            });
+          }
+
+          return changed ? next : prev;
+        });
+      } catch (e) {
+        if (!isCancelled) {
+          console.error("Pricing calculation failed", e);
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsCalculating(false);
+        }
+      }
+    };
+
+    // Only run if debouncedFormData has keys (not empty initial state)
+    if (Object.keys(debouncedFormData).length > 0) {
+      runCalculation();
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [debouncedFormData, currentStep, wizard]);
 
   // Load wizard definition
   useEffect(() => {

@@ -22,6 +22,8 @@ export function NumberRenderer({ field, value, onChange, error }: FieldProps) {
     }
   };
 
+  const hasUnit = !!field.unit;
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
@@ -31,17 +33,24 @@ export function NumberRenderer({ field, value, onChange, error }: FieldProps) {
         </Label>
         <HelpTooltip text={helpText} />
       </div>
-      <Input
-        id={field.field_key}
-        type="number"
-        value={value ?? ""}
-        onChange={handleChange}
-        placeholder={placeholder}
-        required={field.is_required}
-        min={field.min_value ?? undefined}
-        max={field.max_value ?? undefined}
-        className={error ? "border-red-500" : ""}
-      />
+      <div className="relative">
+        <Input
+          id={field.field_key}
+          type="number"
+          value={value ?? ""}
+          onChange={handleChange}
+          placeholder={placeholder}
+          required={field.is_required}
+          min={field.min_value ?? undefined}
+          max={field.max_value ?? undefined}
+          className={`${error ? "border-red-500" : ""} ${hasUnit ? "ltr:pr-16 rtl:pl-16" : ""}`}
+        />
+        {hasUnit && (
+          <span className="absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center px-3 text-muted-foreground text-sm pointer-events-none bg-muted/50 border-l rtl:border-l-0 rtl:border-r rounded-e-md">
+            {field.unit}
+          </span>
+        )}
+      </div>
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
