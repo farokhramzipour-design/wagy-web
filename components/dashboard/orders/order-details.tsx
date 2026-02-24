@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatPrice } from "@/lib/utils";
 import { BookingResponse } from "@/services/booking-api";
-import { ArrowLeft, PawPrint, ShieldCheck, User } from "lucide-react";
+import { ArrowLeft, MessageSquare, PawPrint, ShieldCheck, User } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { CancelBookingDialog } from "./cancel-booking-dialog";
+import { CreateTicketDialog } from "./create-ticket-dialog";
 import { OrderStatusBadge } from "./order-status-badge";
 import { PayButton } from "./pay-button";
 
@@ -20,6 +21,7 @@ interface OrderDetailsProps {
 
 export function OrderDetails({ booking, t, lang, token }: OrderDetailsProps) {
     const [cancelOpen, setCancelOpen] = useState(false);
+    const [messageOpen, setMessageOpen] = useState(false);
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString(lang === "fa" ? "fa-IR" : "en-US", {
@@ -36,6 +38,7 @@ export function OrderDetails({ booking, t, lang, token }: OrderDetailsProps) {
 
     const showPay = ["pending", "confirmed"].includes(booking.status);
     const showCancel = ["pending", "confirmed", "paid"].includes(booking.status);
+    const showMessage = booking.status === "confirmed" || booking.status === "paid" || booking.status === "in_progress" || booking.status === "pending";
 
     return (
         <div className="space-y-6">
@@ -168,7 +171,17 @@ export function OrderDetails({ booking, t, lang, token }: OrderDetailsProps) {
                     {/* Actions */}
                     {showCancel && (
                         <Card>
-                            <CardContent className="pt-6">
+                            <CardContent className="pt-6 space-y-3">
+                                {showMessage && (
+                                    <Button
+                                        variant="outline"
+                                        className="w-full"
+                                        onClick={() => setMessageOpen(true)}
+                                    >
+                                        <MessageSquare className="h-4 w-4 mr-2" />
+                                        {t.details.actions.message || "Message the Provider"}
+                                    </Button>
+                                )}
                                 <Button
                                     variant="destructive"
                                     className="w-full"
@@ -186,6 +199,16 @@ export function OrderDetails({ booking, t, lang, token }: OrderDetailsProps) {
                 bookingId={booking.booking_id}
                 open={cancelOpen}
                 onOpenChange={setCancelOpen}
+                t={t}
+                token={token}
+            />
+
+            <CreateTicketDialog
+                bookingId={booking.booking_id}
+                providerId={booking.provider.provider_id}
+                providerName={booking.provider.business_name || booking.provider.user_name}
+                open={messageOpen}
+                onOpenChange={setMessageOpen}
                 t={t}
                 token={token}
             />

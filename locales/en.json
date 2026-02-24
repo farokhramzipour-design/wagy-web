@@ -599,6 +599,7 @@
         "specialRequests": "Special Requests",
         "cancellationPolicy": "Cancellation Policy",
         "actions": {
+          "message": "Message the Provider",
           "cancel": "Cancel Booking",
           "pay": "Pay Now",
           "checkIn": "Check In",
@@ -612,6 +613,19 @@
           "notesLabel": "Notes (Optional)",
           "confirm": "Confirm Cancellation",
           "cancel": "Keep Booking"
+        },
+        "messageModal": {
+          "title": "Message {provider}",
+          "description": "Send a message to the provider about your booking.",
+          "subjectLabel": "Subject (Optional)",
+          "messageLabel": "Message",
+          "send": "Send Message",
+          "cancel": "Cancel",
+          "success": "Message sent successfully",
+          "error": "Failed to send message",
+          "placeholder": "Type your message here...",
+          "emptyError": "Please enter a message",
+          "duplicateError": "A conversation for this booking already exists."
         },
         "paymentStatus": {
           "pending": "Pending",

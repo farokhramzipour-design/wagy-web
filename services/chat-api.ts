@@ -1,11 +1,12 @@
 import { apiFetch } from "@/lib/api-client";
-import { 
-  TicketListResponse, 
-  TicketMessageListResponse, 
-  SendTicketMessageRequest, 
+import {
+  ChatAttachmentUploadResponse,
+  CreateTicketRequest,
+  SendTicketMessageRequest,
+  TicketListResponse,
+  TicketMessageListResponse,
   TicketMessageResponse,
-  TicketResponse,
-  ChatAttachmentUploadResponse
+  TicketResponse
 } from "@/types/chat";
 
 export const chatApi = {
@@ -20,12 +21,20 @@ export const chatApi = {
     if (params.status_filter) query.append('status_filter', params.status_filter);
     if (params.skip) query.append('skip', params.skip.toString());
     if (params.limit) query.append('limit', params.limit.toString());
-    
+
     return apiFetch<TicketListResponse>(`/api/v1/chat/tickets?${query.toString()}`, { token });
   },
 
   getTicket: async (token: string, ticketId: number) => {
     return apiFetch<TicketResponse>(`/api/v1/chat/tickets/${ticketId}`, { token });
+  },
+
+  createTicket: async (token: string, data: CreateTicketRequest) => {
+    return apiFetch<TicketResponse>(`/api/v1/chat/tickets`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      token,
+    });
   },
 
   getMessages: async (token: string, ticketId: number, beforeId?: number, limit: number = 50) => {
@@ -50,7 +59,7 @@ export const chatApi = {
       token,
     });
   },
-  
+
   uploadAttachment: async (token: string, file: File) => {
     const formData = new FormData();
     formData.append("file", file);

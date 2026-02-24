@@ -50,6 +50,14 @@ export interface TicketMessageListResponse {
   has_more: boolean;
 }
 
+export interface CreateTicketRequest {
+  provider_id: number;
+  subject?: string;
+  booking_id?: number;
+  text?: string | null;
+  media_id?: number | null;
+}
+
 export interface SendTicketMessageRequest {
   text?: string | null;
   media_id?: number | null;
