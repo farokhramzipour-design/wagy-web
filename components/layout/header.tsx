@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import type { SessionData } from "@/lib/session";
 import { ProfileCompletionResponse } from "@/services/profile-api";
-import { LayoutDashboard, LogOut, Menu, Settings, User } from "lucide-react";
+import { LayoutDashboard, LogOut, Menu, Settings, User, Wallet } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import en from "../../locales/en.json";
@@ -36,9 +36,10 @@ interface HeaderProps {
   showNavLinks?: boolean;
   mobileNav?: React.ReactNode;
   profileCompletion?: ProfileCompletionResponse | null;
+  walletBalance?: number | null;
 }
 
-export function Header({ user, showNavLinks = true, mobileNav, profileCompletion }: HeaderProps) {
+export function Header({ user, showNavLinks = true, mobileNav, profileCompletion, walletBalance }: HeaderProps) {
   const { lang, setLang } = useLanguage();
   const t = useMemo(() => content[lang], [lang]);
   const [open, setOpen] = useState(false);
@@ -120,6 +121,17 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
                       <p className="text-xs leading-none text-muted-foreground">
                         {user.role}
                       </p>
+                      {walletBalance !== undefined && walletBalance !== null && (
+                        <>
+                          <div className="flex items-center gap-1 mt-2 text-xs text-emerald-600 font-medium">
+                            <span className="text-muted-foreground">{t.wallet?.balance}:</span>
+                            <span>{walletBalance.toLocaleString(lang === "fa" ? "fa-IR" : "en-US")} IRR</span>
+                          </div>
+                          <Link href="/app/wallet" className="text-[10px] text-emerald-600 hover:text-emerald-700 hover:underline mt-1 block">
+                            {t.wallet?.increaseBalance}
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -149,6 +161,12 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
                     <Link href="/app/dashboard">
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       <span>{t.nav.dashboard}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/app/wallet">
+                      <Wallet className="mr-2 h-4 w-4" />
+                      <span>{t.wallet?.manage}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>

@@ -2,6 +2,7 @@ import { DashboardSidebarNav, Sidebar } from "@/components/dashboard/sidebar";
 import { Header } from "@/components/layout/header";
 import { parseSession } from "@/lib/session";
 import { getProfile, getProfileCompletion } from "@/services/profile-api";
+import { walletApi } from "@/services/wallet-api";
 import { cookies } from "next/headers";
 
 export default async function AppLayout({
@@ -16,11 +17,13 @@ export default async function AppLayout({
 
   let profile = null;
   let profileCompletion = null;
+  let walletBalance = null;
 
   if (accessToken) {
-    const [profileResult, completionResult] = await Promise.allSettled([
+    const [profileResult, completionResult, balanceResult] = await Promise.allSettled([
       getProfile(accessToken),
-      getProfileCompletion(accessToken)
+      getProfileCompletion(accessToken),
+      walletApi.getBalance(accessToken)
     ]);
 
     if (profileResult.status === "fulfilled") {
@@ -34,6 +37,12 @@ export default async function AppLayout({
     } else {
       console.error("Failed to fetch profile completion in dashboard layout", completionResult.reason);
     }
+
+    if (balanceResult.status === "fulfilled") {
+      walletBalance = balanceResult.value.balance_minor;
+    } else {
+      console.error("Failed to fetch wallet balance in dashboard layout", balanceResult.reason);
+    }
   }
 
   return (
@@ -43,6 +52,7 @@ export default async function AppLayout({
         showNavLinks={false}
         mobileNav={<DashboardSidebarNav session={session} profile={profile} />}
         profileCompletion={profileCompletion}
+        walletBalance={walletBalance}
       />
       <div className="flex max-w-7xl mx-auto">
         <Sidebar session={session} profile={profile} />
