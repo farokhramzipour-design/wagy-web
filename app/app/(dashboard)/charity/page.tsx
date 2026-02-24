@@ -1,10 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useLanguage } from "@/components/providers/language-provider";
-import { adminCharityApi } from "@/services/admin-charity-api";
-import { CharityCaseSummary } from "@/types/charity";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -14,47 +11,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Plus, Search, Edit, Eye, Loader2, Heart } from "lucide-react";
-import { toast } from "sonner";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
-import { Badge } from "@/components/ui/badge";
+import { adminCharityApi } from "@/services/admin-charity-api";
+import { CharityCaseSummary } from "@/types/charity";
 import { format } from "date-fns-jalali";
+import { Edit, Heart, Loader2, MessageSquarePlus, Plus } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const content = { en, fa };
 
 export default function CharityCasesPage() {
   const { lang } = useLanguage();
   const t = (content[lang] as any).dashboard.charity;
-  
+
   const [loading, setLoading] = useState(true);
   const [cases, setCases] = useState<CharityCaseSummary[]>([]);
-  
+
   // Filters
-  const [status, setStatus] = useState<string>("all");
   const [page, setPage] = useState(1);
   const limit = 20;
 
   useEffect(() => {
     fetchCases();
-  }, [page, status]);
+  }, [page]);
 
   const fetchCases = async () => {
     try {
       setLoading(true);
-      const data = await adminCharityApi.getAdminCases({
-        status_filter: status === "all" ? undefined : status,
+      const data = await adminCharityApi.getMineCases({
         skip: (page - 1) * limit,
         limit,
       });
-      // The API returns an array directly according to my service implementation
       setCases(data || []);
     } catch (error) {
       console.error("Failed to fetch cases", error);
@@ -94,23 +84,7 @@ export default function CharityCasesPage() {
         </Link>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 flex flex-col sm:flex-row gap-4">
-        <Select value={status} onValueChange={(v) => { setStatus(v); setPage(1); }}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder={t.status} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t.status}: All</SelectItem>
-            <SelectItem value="draft">Draft</SelectItem>
-            <SelectItem value="pending_review">Pending Review</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="funded">Funded</SelectItem>
-            <SelectItem value="closed">Closed</SelectItem>
-            <SelectItem value="rejected">Rejected</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Filters removed as per requirement */}
 
       {/* Table */}
       <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
@@ -167,9 +141,14 @@ export default function CharityCasesPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
+                      <Link href={`/app/charity/${item.charity_case_id}/update`}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50" title={t.addUpdate}>
+                          <MessageSquarePlus className="w-4 h-4" />
+                        </Button>
+                      </Link>
                       <Link href={`/app/charity/${item.charity_case_id}`}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <Eye className="w-4 h-4" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-neutral-600 hover:text-neutral-900" title={t.edit}>
+                          <Edit className="w-4 h-4" />
                         </Button>
                       </Link>
                     </div>

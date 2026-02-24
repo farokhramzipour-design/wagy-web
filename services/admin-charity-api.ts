@@ -3,7 +3,8 @@ import {
   CharityCaseDetail,
   CharityCaseSummary,
   CreateCharityCaseRequest,
-  UpdateCharityCaseRequest
+  UpdateCharityCaseRequest,
+  CreateCharityCaseUpdate
 } from "@/types/charity";
 
 async function localFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -55,6 +56,19 @@ export const adminCharityApi = {
     return localFetch<CharityCaseSummary[]>(`/api/v1/charity/cases?${searchParams.toString()}`);
   },
 
+  getMineCases: async (params: {
+    skip?: number;
+    limit?: number;
+    status_filter?: string;
+  }) => {
+    const searchParams = new URLSearchParams();
+    if (params.skip !== undefined) searchParams.append("skip", params.skip.toString());
+    if (params.limit !== undefined) searchParams.append("limit", params.limit.toString());
+    if (params.status_filter) searchParams.append("status_filter", params.status_filter);
+
+    return localFetch<CharityCaseSummary[]>(`/api/v1/charity/cases/mine?${searchParams.toString()}`);
+  },
+
   getCaseById: async (id: number) => {
     return localFetch<CharityCaseDetail>(`/api/v1/charity/cases/${id}`);
   },
@@ -88,6 +102,13 @@ export const adminCharityApi = {
   closeCase: async (id: number) => {
     return localFetch<void>(`/api/v1/charity/cases/${id}/close`, {
       method: "POST",
+    });
+  },
+
+  addUpdate: async (id: number, data: CreateCharityCaseUpdate) => {
+    return localFetch<void>(`/api/v1/charity/cases/${id}/updates`, {
+      method: "POST",
+      body: JSON.stringify(data),
     });
   }
 };

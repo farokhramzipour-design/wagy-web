@@ -30,7 +30,7 @@
 ### 1. Data Fetching
 - **Server Components**: Prefer fetching data in Server Components (e.g., `page.tsx`) using `cookies()` and passing data to Client Components.
 - **Client Components**: Use `lib/api-client.ts` for client-side data fetching and mutations.
-- **API Routes**: Use Next.js Route Handlers (`app/api/`) as a proxy/BFF to handle secure HTTP-only cookies and interface with the backend API.
+- **API Routes**: Use Next.js Route Handlers (`app/api/`) as a proxy/BFF to handle secure HTTP-only cookies and interface with the backend API. **CRITICAL**: For any new API endpoint called from Client Components, you MUST create a corresponding route handler in `app/api/` that proxies the request to the backend using `apiFetch` from `lib/api-client.ts`. This ensures that authentication cookies are handled securely and requests are sent to the correct backend URL.
 - **Authentication**: **ALWAYS** extract the `waggy_access_token` from cookies in Server Components and pass it to API service functions. The backend requires authentication for most endpoints.
 
 ### 2. State Management

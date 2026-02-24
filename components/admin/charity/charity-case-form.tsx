@@ -223,6 +223,7 @@ export function CharityCaseForm({ initialData, accessToken }: CharityCaseFormPro
           lng: submitData.lng,
           province_id: submitData.province_id,
           city_id: submitData.city_id,
+          primary_media_id: submitData.primary_media_id,
         });
       } else {
         // Create logic

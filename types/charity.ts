@@ -15,6 +15,10 @@ export interface CharityCaseSummary {
   incident_date?: string;
   created_at: string;
   expires_at?: string;
+  can_edit?: boolean;
+  can_delete?: boolean;
+  can_submit?: boolean;
+  primary_media_id?: number;
 }
 
 export interface CharityUserSummary {
@@ -65,6 +69,15 @@ export interface UpdateCharityCaseRequest {
   lng?: number;
   incident_date?: string;
   expires_at?: string;
+  media_ids?: number[];
+  primary_media_id?: number;
+}
+
+export interface CreateCharityCaseUpdate {
+  title: string;
+  body: string;
+  spent_amount_minor?: number;
+  currency_code?: string;
   media_ids?: number[];
 }
 
