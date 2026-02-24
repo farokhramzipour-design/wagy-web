@@ -764,6 +764,10 @@
       "editDesc": "Update existing charity case details.",
       "addUpdate": "Add Update",
       "addUpdateDesc": "Add a new update for this charity case",
+      "updatesTitle": "Case Updates",
+      "updatesDesc": "Track recent developments and fund usage",
+      "viewUpdates": "View Updates",
+      "noUpdates": "No updates found for this case.",
       "form": {
         "titleLabel": "Title",
         "titlePlaceholder": "Enter case title",

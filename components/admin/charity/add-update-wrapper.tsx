@@ -5,7 +5,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
-import { ArrowLeft, MessageSquarePlus } from "lucide-react";
+import { ArrowLeft, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 const content = { en, fa };
@@ -29,7 +29,7 @@ export function AddUpdateWrapper({ charityCaseId, accessToken }: AddUpdateWrappe
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-neutral-800 flex items-center gap-2">
-            <MessageSquarePlus className="w-6 h-6 text-[#0ea5a4]" />
+            <PlusCircle className="w-6 h-6 text-[#0ea5a4]" />
             {t.addUpdate}
           </h1>
           <p className="text-neutral-500">{t.addUpdateDesc}</p>

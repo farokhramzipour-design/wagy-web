@@ -81,6 +81,32 @@ export interface CreateCharityCaseUpdate {
   media_ids?: number[];
 }
 
+export interface CharityCaseUpdateMedia {
+  media_id: number;
+  url: string;
+  thumbnail_url?: string;
+  caption?: string;
+  sort_order: number;
+}
+
+export interface CharityCaseUpdateAuthor {
+  user_id: number;
+  name: string;
+  avatar_url?: string;
+}
+
+export interface CharityCaseUpdate {
+  charity_update_id: number;
+  charity_case_id: number;
+  title: string;
+  body: string;
+  spent_amount_minor: number;
+  currency_code: string;
+  media: CharityCaseUpdateMedia[];
+  author: CharityCaseUpdateAuthor;
+  created_at: string;
+}
+
 export interface CharityCaseListResponse {
   items: CharityCaseSummary[];
   total?: number; // Admin endpoint might return total, public might be just array

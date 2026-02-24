@@ -2,9 +2,10 @@ import { apiFetch } from "@/lib/api-client";
 import {
   CharityCaseDetail,
   CharityCaseSummary,
+  CharityCaseUpdate,
   CreateCharityCaseRequest,
-  UpdateCharityCaseRequest,
-  CreateCharityCaseUpdate
+  CreateCharityCaseUpdate,
+  UpdateCharityCaseRequest
 } from "@/types/charity";
 
 async function localFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -109,6 +110,16 @@ export const adminCharityApi = {
     return localFetch<void>(`/api/v1/charity/cases/${id}/updates`, {
       method: "POST",
       body: JSON.stringify(data),
+    });
+  },
+
+  getUpdates: async (id: number) => {
+    return localFetch<CharityCaseUpdate[]>(`/api/v1/charity/cases/${id}/updates`);
+  },
+
+  getUpdatesServer: async (id: number, token: string) => {
+    return apiFetch<CharityCaseUpdate[]>(`/api/v1/charity/cases/${id}/updates`, {
+      token,
     });
   }
 };

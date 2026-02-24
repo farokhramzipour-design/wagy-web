@@ -16,7 +16,7 @@ import fa from "@/locales/fa.json";
 import { adminCharityApi } from "@/services/admin-charity-api";
 import { CharityCaseSummary } from "@/types/charity";
 import { format } from "date-fns-jalali";
-import { Edit, Heart, Loader2, MessageSquarePlus, Plus } from "lucide-react";
+import { Edit, Heart, List, Loader2, Plus, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -141,9 +141,14 @@ export default function CharityCasesPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
+                      <Link href={`/app/charity/${item.charity_case_id}/updates`}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-[#0ea5a4] hover:text-[#0b7c7b] hover:bg-[#0ea5a4]/5" title={t.viewUpdates || "View Updates"}>
+                          <List className="w-4 h-4" />
+                        </Button>
+                      </Link>
                       <Link href={`/app/charity/${item.charity_case_id}/update`}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50" title={t.addUpdate}>
-                          <MessageSquarePlus className="w-4 h-4" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-[#0ea5a4] hover:text-[#0b7c7b] hover:bg-[#0ea5a4]/5" title={t.addUpdate}>
+                          <PlusCircle className="w-4 h-4" />
                         </Button>
                       </Link>
                       <Link href={`/app/charity/${item.charity_case_id}`}>
