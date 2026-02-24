@@ -1,5 +1,6 @@
 "use client";
 
+import { CharitySection } from "@/components/landing/charity-section";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -179,6 +180,8 @@ export function LandingPage({ user, profileCompletion }: { user: SessionData | n
             ))}
           </div>
         </section>
+
+        <CharitySection />
 
         <section id="how" className="mt-[18px] rounded-[20px] bg-[#fbfdfd] p-6 border border-neutral-200 shadow-sm">
           <h2 className="m-0 text-2xl lg:text-3xl leading-[1.25] text-[#103745] text-center font-bold">{t.how.title}</h2>

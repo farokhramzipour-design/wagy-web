@@ -10,6 +10,38 @@
   "common": {
     "back": "Back"
   },
+  "charity": {
+    "pageTitle": "Help Animals in Need",
+    "pageSubtitle": "Join us in making a difference. Every donation counts.",
+    "donate": "Donate Now",
+    "target": "Goal",
+    "collected": "Raised",
+    "donors": "Donors",
+    "daysLeft": "days left",
+    "closed": "Closed",
+    "success": "Funded",
+    "share": "Share",
+    "recentDonations": "Recent Donations",
+    "noDonations": "Be the first to donate!",
+    "updates": "Updates",
+    "story": "Story",
+    "loginToDonate": "Please login to donate",
+    "donationDialog": {
+      "title": "Donate to this cause",
+      "description": "Your contribution helps us reach our goal.",
+      "amountLabel": "Amount (IRR)",
+      "customAmount": "Custom Amount",
+      "submit": "Donate",
+      "processing": "Processing...",
+      "success": "Thank you for your donation!",
+      "error": "Donation failed. Please try again."
+    },
+    "landing": {
+      "title": "Make a Difference Today",
+      "subtitle": "Help us support animals in need. Your contribution can save a life.",
+      "cta": "View Charity Cases"
+    }
+  },
   "nav": {
     "services": "Services",
     "how": "How It Works",
