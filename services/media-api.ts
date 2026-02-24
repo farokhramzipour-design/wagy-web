@@ -12,9 +12,12 @@ export interface Media {
   created_at: string;
 }
 
-export async function uploadMedia(accessToken: string, file: File): Promise<Media> {
+export async function uploadMedia(accessToken: string, file: File, mediaType?: string): Promise<Media> {
   const formData = new FormData();
   formData.append("file", file);
+  if (mediaType) {
+    formData.append("media_type", mediaType);
+  }
 
   // Use apiFetch which handles headers and base URL correctly
   // It won't set Content-Type for FormData, allowing browser to set boundary

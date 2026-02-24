@@ -1,81 +1,39 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useLanguage } from "@/components/providers/language-provider";
-import { CharityCaseForm } from "@/components/admin/charity/charity-case-form";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Heart, Loader2 } from "lucide-react";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { EditCharityCaseWrapper } from "@/components/admin/charity/edit-charity-case-wrapper";
+import { AUTH_COOKIES } from "@/lib/auth-config";
 import { adminCharityApi } from "@/services/admin-charity-api";
-import { CharityCaseDetail } from "@/types/charity";
-import { toast } from "sonner";
-import en from "@/locales/en.json";
-import fa from "@/locales/fa.json";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 
-const content = { en, fa };
+export default async function EditCharityCasePage({ params }: { params: { id: string } }) {
+  const cookieStore = cookies();
+  const token = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
 
-export default function EditCharityCasePage() {
-  const { lang } = useLanguage();
-  const params = useParams();
-  const router = useRouter();
+  if (!token) {
+    redirect("/auth");
+  }
+
   const id = Number(params.id);
-  const t = (content[lang] as any).dashboard.charity;
+  if (isNaN(id)) {
+    notFound();
+  }
 
-  const [loading, setLoading] = useState(true);
-  const [caseDetail, setCaseDetail] = useState<CharityCaseDetail | undefined>(undefined);
+  try {
+    const caseDetail = await adminCharityApi.getCaseByIdServer(id, token);
 
-  useEffect(() => {
-    if (!id) return;
-    fetchCase();
-  }, [id]);
-
-  const fetchCase = async () => {
-    try {
-      setLoading(true);
-      const data = await adminCharityApi.getCaseById(id);
-      setCaseDetail(data);
-    } catch (error) {
-      console.error("Failed to fetch case", error);
-      toast.error("Failed to fetch case details");
-      router.push("/app/charity");
-    } finally {
-      setLoading(false);
+    if (!caseDetail) {
+      notFound();
     }
-  };
 
-  if (loading) {
-    return (
-      <div className="flex h-96 items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-neutral-400" />
-      </div>
-    );
+    return <EditCharityCaseWrapper initialData={caseDetail} accessToken={token} />;
+  } catch (error) {
+    console.error("Failed to fetch case", error);
+    // If we can't fetch it, it might not exist or we don't have permission
+    // Redirect to list or show error
+    // For now, redirect to list seems safest as per original behavior (mostly)
+    // Original behavior: toast error and redirect to /app/charity
+    // Since we can't toast easily from server component without a client wrapper triggering it,
+    // we might just redirect or let the error boundary handle it.
+    // Let's redirect to list.
+    redirect("/app/charity");
   }
-
-  if (!caseDetail) {
-    return null; // Will redirect in catch block
-  }
-
-  return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center gap-4">
-        <Link href="/app/charity">
-          <Button variant="ghost" size="icon">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-neutral-800 flex items-center gap-2">
-            <Heart className="w-6 h-6 text-rose-500" />
-            {t.editTitle}
-          </h1>
-          <p className="text-neutral-500">{t.editDesc}</p>
-        </div>
-      </div>
-
-      <div className="bg-white p-6 rounded-xl border border-neutral-200">
-        <CharityCaseForm initialData={caseDetail} />
-      </div>
-    </div>
-  );
 }

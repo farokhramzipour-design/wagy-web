@@ -1,6 +1,7 @@
+import { apiFetch } from "@/lib/api-client";
 import {
-  CharityCaseSummary,
   CharityCaseDetail,
+  CharityCaseSummary,
   CreateCharityCaseRequest,
   UpdateCharityCaseRequest
 } from "@/types/charity";
@@ -56,6 +57,12 @@ export const adminCharityApi = {
 
   getCaseById: async (id: number) => {
     return localFetch<CharityCaseDetail>(`/api/v1/charity/cases/${id}`);
+  },
+
+  getCaseByIdServer: async (id: number, token: string) => {
+    return apiFetch<CharityCaseDetail>(`/api/v1/charity/cases/${id}`, {
+      token,
+    });
   },
 
   createCase: async (data: CreateCharityCaseRequest) => {

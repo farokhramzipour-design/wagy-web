@@ -42,7 +42,6 @@ export interface CharityCaseDetail extends CharityCaseSummary {
 export interface CreateCharityCaseRequest {
   title: string;
   description: string;
-  country_code: string;
   province_id: number;
   city_id: number;
   location_text: string;
@@ -52,13 +51,13 @@ export interface CreateCharityCaseRequest {
   currency_code: string;
   incident_date: string;
   expires_at: string;
+  primary_media_id?: number;
   media_ids: number[];
 }
 
 export interface UpdateCharityCaseRequest {
   title?: string;
   description?: string;
-  country_code?: string;
   province_id?: number;
   city_id?: number;
   location_text?: string;

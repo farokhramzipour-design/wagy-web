@@ -59,7 +59,7 @@ export default async function CreateCharityCasePage() {
     status.documents.national_card_back.status === "approved";
 
   if (isAddressVerified && isPhoneVerified && isIdentityVerified && isDocumentsVerified) {
-    return <CharityCaseWrapper />;
+    return <CharityCaseWrapper accessToken={token} />;
   }
 
   return (
