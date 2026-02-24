@@ -598,7 +598,10 @@
         "totalPrice": "Total Price",
         "specialRequests": "Special Requests",
         "cancellationPolicy": "Cancellation Policy",
+        "paymentSuccess": "Payment successful",
+        "paymentError": "Payment failed",
         "actions": {
+          "processing": "Processing...",
           "message": "Message the Provider",
           "cancel": "Cancel Booking",
           "pay": "Pay Now",

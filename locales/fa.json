@@ -598,7 +598,10 @@
         "totalPrice": "قیمت کل",
         "specialRequests": "درخواست‌های ویژه",
         "cancellationPolicy": "قوانین لغو",
+        "paymentSuccess": "پرداخت با موفقیت انجام شد",
+        "paymentError": "پرداخت ناموفق بود",
         "actions": {
+          "processing": "در حال پردازش...",
           "message": "پیام به ارائه‌دهنده",
           "cancel": "لغو رزرو",
           "pay": "پرداخت",
