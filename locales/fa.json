@@ -557,8 +557,73 @@
       }
     },
     "orders": {
+      "pagination": {
+        "prev": "قبلی",
+        "next": "بعدی",
+        "page": "صفحه"
+      },
       "title": "سفارش‌های من",
-      "empty": "هنوز سفارشی نداری."
+      "empty": "هنوز سفارشی ثبت نشده است.",
+      "list": {
+        "bookingDate": "تاریخ رزرو",
+        "service": "سرویس",
+        "provider": "ارائه‌دهنده",
+        "price": "قیمت",
+        "status": "وضعیت",
+        "actions": "عملیات",
+        "viewDetails": "مشاهده جزئیات"
+      },
+      "status": {
+        "pending": "در انتظار تایید",
+        "confirmed": "تایید شده",
+        "paid": "پرداخت شده",
+        "in_progress": "در حال انجام",
+        "completed": "تکمیل شده",
+        "cancelled_user": "لغو توسط شما",
+        "cancelled_provider": "لغو توسط ارائه‌دهنده",
+        "cancelled_admin": "لغو توسط مدیر",
+        "expired": "منقضی شده"
+      },
+      "details": {
+        "title": "جزئیات سفارش",
+        "bookingId": "شناسه رزرو",
+        "created": "تاریخ ایجاد",
+        "providerInfo": "اطلاعات ارائه‌دهنده",
+        "serviceInfo": "اطلاعات سرویس",
+        "petInfo": "حیوانات خانگی",
+        "paymentInfo": "اطلاعات پرداخت",
+        "basePrice": "قیمت پایه",
+        "additionalPetPrice": "قیمت حیوان اضافه",
+        "serviceFee": "کارمزد سرویس",
+        "totalPrice": "قیمت کل",
+        "specialRequests": "درخواست‌های ویژه",
+        "cancellationPolicy": "قوانین لغو",
+        "actions": {
+          "cancel": "لغو رزرو",
+          "pay": "پرداخت آنلاین",
+          "checkIn": "اعلام ورود",
+          "checkOut": "اعلام خروج",
+          "back": "بازگشت به سفارش‌ها"
+        },
+        "cancelModal": {
+          "title": "لغو رزرو",
+          "description": "آیا از لغو این رزرو اطمینان دارید؟",
+          "reasonLabel": "دلیل لغو",
+          "notesLabel": "توضیحات (اختیاری)",
+          "confirm": "تایید لغو",
+          "cancel": "انصراف"
+        },
+        "paymentStatus": {
+          "pending": "در انتظار پرداخت",
+          "processing": "در حال پردازش",
+          "completed": "تکمیل شده",
+          "captured": "پرداخت موفق",
+          "paid_out": "تسویه شده",
+          "failed": "ناموفق",
+          "refunded": "مرجوع شده",
+          "partial_refund": "مرجوع شده (جزئی)"
+        }
+      }
     },
     "addresses": {
       "title": "آدرس‌های من",

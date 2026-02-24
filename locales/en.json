@@ -557,8 +557,73 @@
       }
     },
     "orders": {
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "page": "Page"
+      },
       "title": "My Orders",
-      "empty": "No orders yet."
+      "empty": "No orders yet.",
+      "list": {
+        "bookingDate": "Booking Date",
+        "service": "Service",
+        "provider": "Provider",
+        "price": "Price",
+        "status": "Status",
+        "actions": "Actions",
+        "viewDetails": "View Details"
+      },
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "paid": "Paid",
+        "in_progress": "In Progress",
+        "completed": "Completed",
+        "cancelled_user": "Cancelled by You",
+        "cancelled_provider": "Cancelled by Provider",
+        "cancelled_admin": "Cancelled by Admin",
+        "expired": "Expired"
+      },
+      "details": {
+        "title": "Order Details",
+        "bookingId": "Booking ID",
+        "created": "Created",
+        "providerInfo": "Provider Information",
+        "serviceInfo": "Service Information",
+        "petInfo": "Pets",
+        "paymentInfo": "Payment Information",
+        "basePrice": "Base Price",
+        "additionalPetPrice": "Additional Pet Price",
+        "serviceFee": "Service Fee",
+        "totalPrice": "Total Price",
+        "specialRequests": "Special Requests",
+        "cancellationPolicy": "Cancellation Policy",
+        "actions": {
+          "cancel": "Cancel Booking",
+          "pay": "Pay Now",
+          "checkIn": "Check In",
+          "checkOut": "Check Out",
+          "back": "Back to Orders"
+        },
+        "cancelModal": {
+          "title": "Cancel Booking",
+          "description": "Are you sure you want to cancel this booking?",
+          "reasonLabel": "Reason",
+          "notesLabel": "Notes (Optional)",
+          "confirm": "Confirm Cancellation",
+          "cancel": "Keep Booking"
+        },
+        "paymentStatus": {
+          "pending": "Pending",
+          "processing": "Processing",
+          "completed": "Completed",
+          "captured": "Paid",
+          "paid_out": "Paid Out",
+          "failed": "Failed",
+          "refunded": "Refunded",
+          "partial_refund": "Partially Refunded"
+        }
+      }
     },
     "addresses": {
       "title": "My Addresses",
