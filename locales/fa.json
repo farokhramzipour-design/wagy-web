@@ -672,7 +672,34 @@
     },
     "transactions": {
       "title": "تراکنش‌ها",
-      "empty": "تراکنشی یافت نشد."
+      "empty": "تراکنشی یافت نشد.",
+      "list": {
+        "id": "شناسه",
+        "date": "تاریخ",
+        "amount": "مبلغ",
+        "reason": "علت",
+        "description": "توضیحات",
+        "balance": "موجودی پس از تراکنش"
+      },
+      "reasons": {
+        "wallet_charge": "شارژ کیف پول",
+        "booking_refund": "استرداد رزرو",
+        "charity_donation": "کمک به خیریه",
+        "payout_received": "دریافت تسویه",
+        "promo_credit": "اعتبار هدیه",
+        "admin_adjustment": "تعدیل توسط ادمین",
+        "booking_payment": "پرداخت رزرو",
+        "withdrawal": "برداشت وجه"
+      },
+      "pagination": {
+        "prev": "قبلی",
+        "next": "بعدی",
+        "page": "صفحه"
+      },
+      "filter": {
+        "placeholder": "فیلتر بر اساس علت",
+        "all": "همه تراکنش‌ها"
+      }
     },
     "chat": {
       "title": "پیام‌ها",

@@ -31,6 +31,7 @@
 - **Server Components**: Prefer fetching data in Server Components (e.g., `page.tsx`) using `cookies()` and passing data to Client Components.
 - **Client Components**: Use `lib/api-client.ts` for client-side data fetching and mutations.
 - **API Routes**: Use Next.js Route Handlers (`app/api/`) as a proxy/BFF to handle secure HTTP-only cookies and interface with the backend API.
+- **Authentication**: **ALWAYS** extract the `waggy_access_token` from cookies in Server Components and pass it to API service functions. The backend requires authentication for most endpoints.
 
 ### 2. State Management
 - **Global State**: Avoid global state libraries (Redux/Zustand). Use URL search params and Cookies for persistent state.
@@ -46,6 +47,7 @@
 ### 4. Internationalization (i18n)
 - **Current Strategy**: Client-side translation for the landing page.
 - **Implementation**: JSON files in `locales/` loaded manually in components.
+- **Requirement**: **ALWAYS** implement localization (l10n) for all new UI text. Add keys to both `locales/en.json` and `locales/fa.json`. Use the correct translation object based on the current language.
 - **Note**: Ensure `dir="rtl"` or `dir="ltr"` is set correctly on the document element based on the selected language.
 
 ### 5. SEO & Performance

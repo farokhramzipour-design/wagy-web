@@ -672,7 +672,34 @@
     },
     "transactions": {
       "title": "Transactions",
-      "empty": "No transactions found."
+      "empty": "No transactions found.",
+      "list": {
+        "id": "ID",
+        "date": "Date",
+        "amount": "Amount",
+        "reason": "Reason",
+        "description": "Description",
+        "balance": "Balance After"
+      },
+      "reasons": {
+        "wallet_charge": "Wallet Charge",
+        "booking_refund": "Booking Refund",
+        "charity_donation": "Charity Donation",
+        "payout_received": "Payout Received",
+        "promo_credit": "Promo Credit",
+        "admin_adjustment": "Admin Adjustment",
+        "booking_payment": "Booking Payment",
+        "withdrawal": "Withdrawal"
+      },
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "page": "Page"
+      },
+      "filter": {
+        "placeholder": "Filter by reason",
+        "all": "All Transactions"
+      }
     },
     "chat": {
       "title": "Messages",
