@@ -1,39 +1,70 @@
-"use client";
+import { CharityCaseWrapper } from "@/components/admin/charity/charity-case-wrapper";
+import { CharityVerificationStatus } from "@/components/admin/charity/charity-verification-status";
+import { apiFetch } from "@/lib/api-client";
+import { API_ENDPOINTS } from "@/lib/api-endpoints";
+import { AUTH_COOKIES } from "@/lib/auth-config";
+import { ProfileMeResponse } from "@/services/profile-api";
+import { VerificationStatusResponse } from "@/services/verification-api";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { useLanguage } from "@/components/providers/language-provider";
-import { CharityCaseForm } from "@/components/admin/charity/charity-case-form";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Heart } from "lucide-react";
-import Link from "next/link";
-import en from "@/locales/en.json";
-import fa from "@/locales/fa.json";
+export default async function CreateCharityCasePage() {
+  const cookieStore = cookies();
+  const token = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
 
-const content = { en, fa };
+  if (!token) {
+    redirect("/auth");
+  }
 
-export default function CreateCharityCasePage() {
-  const { lang } = useLanguage();
-  const t = (content[lang] as any).dashboard.charity;
+  let status: VerificationStatusResponse | null = null;
+  let user: ProfileMeResponse | null = null;
+
+  try {
+    const [statusData, userData] = await Promise.all([
+      apiFetch<VerificationStatusResponse>(
+        API_ENDPOINTS.iranianVerification.status,
+        {
+          token,
+          cache: "no-store",
+        }
+      ),
+      apiFetch<ProfileMeResponse>(
+        API_ENDPOINTS.profile.me,
+        {
+          token,
+          cache: "no-store",
+        }
+      )
+    ]);
+    status = statusData;
+    user = userData;
+  } catch (error) {
+    console.error("Failed to fetch verification data", error);
+  }
+
+  if (!status || !user) {
+    return (
+      <div className="container mx-auto py-8 text-center">
+        <p className="text-muted-foreground">Failed to load verification status. Please try again later.</p>
+      </div>
+    );
+  }
+
+  // Check if steps 1-4 are verified
+  const isAddressVerified = status.provider_address?.status === "approved";
+  const isPhoneVerified = user.phone_verified;
+  const isIdentityVerified = status.national_code?.added && status.shahkar?.verified;
+  const isDocumentsVerified =
+    status.documents.national_card_front.status === "approved" &&
+    status.documents.national_card_back.status === "approved";
+
+  if (isAddressVerified && isPhoneVerified && isIdentityVerified && isDocumentsVerified) {
+    return <CharityCaseWrapper />;
+  }
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center gap-4">
-        <Link href="/app/charity">
-          <Button variant="ghost" size="icon">
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-neutral-800 flex items-center gap-2">
-            <Heart className="w-6 h-6 text-rose-500" />
-            {t.createTitle}
-          </h1>
-          <p className="text-neutral-500">{t.createDesc}</p>
-        </div>
-      </div>
-
-      <div className="bg-white p-6 rounded-xl border border-neutral-200">
-        <CharityCaseForm />
-      </div>
+    <div className="container mx-auto py-8">
+      <CharityVerificationStatus status={status} phoneVerified={user.phone_verified} />
     </div>
   );
 }

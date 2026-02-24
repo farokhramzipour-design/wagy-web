@@ -189,6 +189,11 @@
   "becomeSitter": {
     "title": "Path to Become a Sitter",
     "description": "To start operating as a sitter, please complete the following steps.",
+    "charityVerification": {
+      "title": "Charity Verification",
+      "description": "To create a charity case, please complete the following verification steps.",
+      "pendingMessage": "Your verification is under review."
+    },
     "status": {
       "title": "Account Status",
       "currentStep": "Current Step:",

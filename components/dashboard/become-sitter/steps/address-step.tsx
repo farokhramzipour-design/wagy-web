@@ -19,7 +19,12 @@ import * as z from "zod";
 
 const content = { en, fa };
 
-export function AddressStep() {
+export interface AddressStepProps {
+  redirectPath?: string;
+  title?: string;
+}
+
+export function AddressStep({ redirectPath = "/app/become-sitter", title }: AddressStepProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter.addressPage;
@@ -91,7 +96,7 @@ export function AddressStep() {
         lng: location.lng,
       });
 
-      router.push("/app/become-sitter");
+      router.push(redirectPath);
       router.refresh();
     } catch (err: any) {
       console.error(err);
@@ -104,7 +109,7 @@ export function AddressStep() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{title || t.title}</h1>
         <p className="text-muted-foreground">
           {step === "map" ? t.mapDesc : t.formDesc}
         </p>

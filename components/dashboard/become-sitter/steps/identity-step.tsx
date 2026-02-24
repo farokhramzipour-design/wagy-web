@@ -15,7 +15,12 @@ import { toast } from "sonner";
 
 const content = { en, fa };
 
-export function IdentityStep() {
+interface IdentityStepProps {
+  redirectPath?: string;
+  title?: string;
+}
+
+export function IdentityStep({ redirectPath = "/app/become-sitter", title }: IdentityStepProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter.identityPage;
@@ -39,7 +44,7 @@ export function IdentityStep() {
       const response = await verifyNationalCode({ national_code: nationalCode });
       if (response.verified) {
         toast.success(response.message || t.success);
-        router.push("/app/become-sitter");
+        router.push(redirectPath);
         router.refresh();
       } else {
         toast.error(response.message || t.error);
@@ -56,7 +61,7 @@ export function IdentityStep() {
     <div className="max-w-md mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle>{t.title}</CardTitle>
+          <CardTitle>{title || t.title}</CardTitle>
           <CardDescription>{t.description}</CardDescription>
         </CardHeader>
         <CardContent>

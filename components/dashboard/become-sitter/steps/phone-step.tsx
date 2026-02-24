@@ -17,9 +17,11 @@ const content = { en, fa };
 
 interface PhoneStepProps {
   token: string;
+  redirectPath?: string;
+  title?: string;
 }
 
-export function PhoneStep({ token }: PhoneStepProps) {
+export function PhoneStep({ token, redirectPath = "/app/become-sitter", title }: PhoneStepProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter.phonePage;
@@ -76,7 +78,7 @@ export function PhoneStep({ token }: PhoneStepProps) {
     try {
       await verifyPhoneOtp({ phone, otp }, token);
       toast.success(t.success);
-      router.push("/app/become-sitter");
+      router.push(redirectPath);
       router.refresh();
     } catch (error) {
       console.error("Failed to verify OTP:", error);
@@ -96,7 +98,7 @@ export function PhoneStep({ token }: PhoneStepProps) {
     <div className="max-w-md mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle>{t.title}</CardTitle>
+          <CardTitle>{title || t.title}</CardTitle>
           <CardDescription>{t.description}</CardDescription>
         </CardHeader>
         <CardContent>

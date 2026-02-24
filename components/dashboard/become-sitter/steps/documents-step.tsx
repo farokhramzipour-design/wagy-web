@@ -107,17 +107,17 @@ function DocumentUpload({ type, title, description, status, rejectionReason, onU
       )}
 
       {status === "pending" && (
-         <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-3 text-xs text-yellow-800 flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            {t.status.pending}
-         </div>
+        <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-3 text-xs text-yellow-800 flex items-center gap-2">
+          <Clock className="h-4 w-4" />
+          {t.status.pending}
+        </div>
       )}
-      
+
       {status === "approved" && (
-         <div className="bg-green-50 border border-green-100 rounded-lg p-3 text-xs text-green-800 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4" />
-            {t.status.approved}
-         </div>
+        <div className="bg-green-50 border border-green-100 rounded-lg p-3 text-xs text-green-800 flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4" />
+          {t.status.approved}
+        </div>
       )}
     </div>
   );
@@ -125,9 +125,11 @@ function DocumentUpload({ type, title, description, status, rejectionReason, onU
 
 interface DocumentsStepProps {
   status: VerificationStatusResponse;
+  redirectPath?: string;
+  title?: string;
 }
 
-export function DocumentsStep({ status: initialStatus }: DocumentsStepProps) {
+export function DocumentsStep({ status: initialStatus, redirectPath = "/app/become-sitter", title }: DocumentsStepProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = content[lang].becomeSitter.documentsPage;
@@ -140,7 +142,7 @@ export function DocumentsStep({ status: initialStatus }: DocumentsStepProps) {
     <div className="max-w-2xl mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle>{t.title}</CardTitle>
+          <CardTitle>{title || t.title}</CardTitle>
           <CardDescription>{t.description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -163,7 +165,7 @@ export function DocumentsStep({ status: initialStatus }: DocumentsStepProps) {
           />
 
           <div className="flex justify-end pt-4">
-            <Button variant="outline" onClick={() => router.push("/app/become-sitter")}>
+            <Button variant="outline" onClick={() => router.push(redirectPath)}>
               {lang === 'fa' ? 'بازگشت' : 'Back'}
             </Button>
           </div>
