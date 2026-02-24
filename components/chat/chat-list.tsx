@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useLanguage } from "@/components/providers/language-provider";
-import { chatApi } from "@/services/chat-api";
-import { TicketResponse } from "@/types/chat";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, MessageSquare } from "lucide-react";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
+import { chatApi } from "@/services/chat-api";
+import { TicketResponse } from "@/types/chat";
 import { formatDistanceToNow } from "date-fns";
 import { format } from "date-fns-jalali";
+import { Loader2, MessageSquare } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const content = { en, fa };
 
@@ -28,7 +28,7 @@ export function ChatList({ token, userId }: ChatListProps) {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await chatApi.getTickets(token);
+        const response = await chatApi.getTickets(token, { scope: "all" });
         setTickets(response.items);
       } catch (error) {
         console.error("Failed to fetch tickets", error);
@@ -77,19 +77,26 @@ export function ChatList({ token, userId }: ChatListProps) {
                   <AvatarImage src={otherUser.avatar_url || ""} />
                   <AvatarFallback>{otherUser.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-semibold truncate">{otherUser.name}</h3>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <h3 className="font-semibold truncate">{otherUser.name}</h3>
+                      {ticket.viewer_scope === "provider" && (
+                        <span className="bg-[#0ea5a4]/10 text-[#0ea5a4] text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+                          {t.providerRole}
+                        </span>
+                      )}
+                    </div>
                     {lastMessage && (
                       <span className="text-xs text-neutral-500 whitespace-nowrap ml-2">
-                        {lang === "fa" 
+                        {lang === "fa"
                           ? format(new Date(lastMessage.at), "HH:mm")
                           : formatDistanceToNow(new Date(lastMessage.at), { addSuffix: true })}
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="flex justify-between items-center">
                     <p className="text-sm text-neutral-600 truncate max-w-[80%]">
                       {lastMessage?.text || (lastMessage?.type === 'image' ? t.imageSent : t.noMessages)}
@@ -101,7 +108,7 @@ export function ChatList({ token, userId }: ChatListProps) {
                     )}
                   </div>
                   <div className="text-xs text-neutral-400 mt-1">
-                     {ticket.subject || `Booking #${ticket.booking_id}`}
+                    {ticket.subject || `Booking #${ticket.booking_id}`}
                   </div>
                 </div>
               </div>

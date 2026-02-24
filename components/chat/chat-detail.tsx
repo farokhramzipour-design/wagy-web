@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/providers/language-provider";
-import { chatApi } from "@/services/chat-api";
-import { TicketResponse, TicketMessageResponse } from "@/types/chat";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, Image as ImageIcon, ArrowLeft, Trash2, Paperclip } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
-import { format } from "date-fns-jalali";
+import { chatApi } from "@/services/chat-api";
+import { TicketMessageResponse, TicketResponse } from "@/types/chat";
 import { formatDistanceToNow } from "date-fns";
-import { cn } from "@/lib/utils";
+import { format } from "date-fns-jalali";
+import { ArrowLeft, Image as ImageIcon, Loader2, Paperclip, Send } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+
+import { API_BASE_URL } from "@/lib/api-client";
 
 const content = { en, fa };
 
@@ -28,16 +31,23 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
   const router = useRouter();
   const { lang } = useLanguage();
   const t = (content[lang] as any).dashboard.chat;
-  
+
   const [ticket, setTicket] = useState<TicketResponse | null>(null);
   const [messages, setMessages] = useState<TicketMessageResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [inputText, setInputText] = useState("");
   const [uploading, setUploading] = useState(false);
-  
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const getMediaUrl = (url: string | null) => {
+    if (!url) return "";
+    if (url.startsWith("http")) return url;
+    return `${API_BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -46,7 +56,7 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
           chatApi.getTicket(token, ticketId),
           chatApi.getMessages(token, ticketId)
         ]);
-        
+
         setTicket(ticketData);
         setMessages(msgList.messages);
       } catch (error) {
@@ -68,7 +78,7 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
-    
+
     try {
       setSending(true);
       const newMessage = await chatApi.sendMessage(token, ticketId, { text: inputText });
@@ -90,12 +100,12 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
       setUploading(true);
       // 1. Upload attachment
       const uploadResp = await chatApi.uploadAttachment(token, file);
-      
+
       // 2. Send message with media_id
-      const newMessage = await chatApi.sendMessage(token, ticketId, { 
-        media_id: uploadResp.media_id 
+      const newMessage = await chatApi.sendMessage(token, ticketId, {
+        media_id: uploadResp.media_id
       });
-      
+
       setMessages(prev => [...prev, newMessage]);
     } catch (error) {
       console.error("Failed to upload file", error);
@@ -168,15 +178,16 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
                 {msg.media_url && (
                   <div className="mb-2">
                     {msg.message_type === "image" ? (
-                      <img 
-                        src={msg.media_url} 
-                        alt="attachment" 
-                        className="rounded-lg max-w-full max-h-[300px] object-cover" 
+                      <img
+                        src={getMediaUrl(msg.media_thumbnail_url || msg.media_url)}
+                        alt="attachment"
+                        className="rounded-lg max-w-full max-h-[300px] object-cover cursor-pointer hover:opacity-95 transition-opacity"
+                        onClick={() => setPreviewImage(getMediaUrl(msg.media_url))}
                       />
                     ) : (
-                      <a 
-                        href={msg.media_url} 
-                        target="_blank" 
+                      <a
+                        href={getMediaUrl(msg.media_url)}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 underline"
                       >
@@ -188,7 +199,7 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
                 )}
                 <p>{msg.text}</p>
                 <div className={cn("text-[10px] mt-1 opacity-70", isMe ? "text-white" : "text-neutral-500")}>
-                  {lang === "fa" 
+                  {lang === "fa"
                     ? format(new Date(msg.created_at), "HH:mm")
                     : formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
                 </div>
@@ -224,14 +235,29 @@ export function ChatDetail({ token, userId, ticketId }: ChatDetailProps) {
           disabled={sending}
           className="flex-1"
         />
-        <Button 
-          onClick={handleSendMessage} 
+        <Button
+          onClick={handleSendMessage}
           disabled={(!inputText.trim() && !uploading) || sending}
           className="bg-[#0ea5a4] hover:bg-[#0b7c7b]"
         >
           {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
         </Button>
       </div>
+
+      <Dialog open={!!previewImage} onOpenChange={(open) => !open && setPreviewImage(null)}>
+        <DialogContent className="max-w-3xl w-full p-0 overflow-hidden bg-transparent border-none shadow-none">
+          <DialogTitle className="sr-only">Image Preview</DialogTitle>
+          {previewImage && (
+            <div className="relative flex items-center justify-center w-full h-full">
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+              />
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

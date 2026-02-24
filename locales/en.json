@@ -720,6 +720,7 @@
     },
     "chat": {
       "title": "Messages",
+      "providerRole": "Provider",
       "empty": "No conversations yet.",
       "loading": "Loading messages...",
       "send": "Send",

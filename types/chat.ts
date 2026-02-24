@@ -16,6 +16,7 @@ export interface TicketResponse {
   subject: string;
   owner: ChatUser;
   sitter: ChatUser;
+  viewer_scope: "owner" | "provider";
   last_message: LastMessage | null;
   unread_count: number;
   status: "active" | "archived" | "blocked";
