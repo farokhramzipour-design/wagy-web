@@ -30,7 +30,15 @@
     "dates": "تاریخ‌ها",
     "time": "زمان",
     "duration": "مدت زمان (ساعت)",
-    "enter_duration": "مدت زمان را وارد کنید"
+    "enter_duration": "مدت زمان را وارد کنید",
+    "check_in": "تاریخ ورود",
+    "check_out": "تاریخ خروج",
+    "start_time": "زمان شروع",
+    "end_time": "زمان پایان",
+    "booking_type": "نوع رزرو",
+    "hourly": "ساعتی",
+    "overnight": "شبانه‌روزی",
+    "select_dates": "انتخاب تاریخ"
   },
   "charity": {
     "pageTitle": "کمک به حیوانات نیازمند",

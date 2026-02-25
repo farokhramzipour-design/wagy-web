@@ -30,7 +30,15 @@
     "dates": "Dates",
     "time": "Time",
     "duration": "Duration (hours)",
-    "enter_duration": "Enter duration"
+    "enter_duration": "Enter duration",
+    "check_in": "Check-in Date",
+    "check_out": "Check-out Date",
+    "start_time": "Start Time",
+    "end_time": "End Time",
+    "booking_type": "Booking Type",
+    "hourly": "Hourly",
+    "overnight": "Overnight",
+    "select_dates": "Select Dates"
   },
   "charity": {
     "pageTitle": "Help Animals in Need",
