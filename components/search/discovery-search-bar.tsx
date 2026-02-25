@@ -4,6 +4,13 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { SearchDiscoveryServiceType } from "@/services/search-api";
@@ -29,48 +36,86 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
 
   // Form State
   const [serviceTypeId, setServiceTypeId] = useState<string>("");
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
+  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
+  const [startTime, setStartTime] = useState<string>("");
   const [pets, setPets] = useState<number>(1);
+  const [sortBy, setSortBy] = useState<string>("distance");
 
   // Initialize from URL params
   useEffect(() => {
     const pServiceType = searchParams.get("service_type_id");
-    const pDate = searchParams.get("date");
+    const pBookingDate = searchParams.get("booking_date");
+    const pCheckInDate = searchParams.get("check_in_date");
+    const pCheckOutDate = searchParams.get("check_out_date");
+    const pDate = searchParams.get("date"); // Legacy support
+    const pStartTime = searchParams.get("start_time");
     const pPets = searchParams.get("pets");
+    const pSortBy = searchParams.get("sort_by");
 
-    // Only set from URL if state is empty or matching URL param
+    // Service Type
     if (pServiceType) {
       setServiceTypeId(pServiceType);
     } else if (initialServiceTypes.length > 0 && !serviceTypeId) {
       setServiceTypeId(initialServiceTypes[0].service_type_id.toString());
     }
 
-    if (pDate) setDate(new Date(pDate));
+    // Dates
+    if (pCheckInDate) setCheckInDate(new Date(pCheckInDate));
+    else if (pBookingDate) setCheckInDate(new Date(pBookingDate));
+    else if (pDate) setCheckInDate(new Date(pDate));
+
+    if (pCheckOutDate) setCheckOutDate(new Date(pCheckOutDate));
+
+    // Other fields
+    if (pStartTime) setStartTime(pStartTime);
     if (pPets) setPets(parseInt(pPets));
-  }, [searchParams, initialServiceTypes]); // Removed serviceTypeId from deps to avoid overwriting user selection
+    if (pSortBy) setSortBy(pSortBy);
+
+  }, [searchParams, initialServiceTypes]);
 
   const handleServiceSelect = (id: string) => {
     setServiceTypeId(id);
-
-    // Update URL without navigation to keep search params in sync if on search page
     const params = new URLSearchParams(searchParams.toString());
     params.set("service_type_id", id);
-    // We don't want to push full navigation here as it might trigger page reload or complex effect chains
-    // But if the user expects the URL to change immediately:
     // router.replace(`?${params.toString()}`, { scroll: false });
   };
 
   const handleSearch = () => {
     const params = new URLSearchParams();
     if (serviceTypeId) params.set("service_type_id", serviceTypeId);
-    if (date) params.set("date", format(date, "yyyy-MM-dd"));
-    if (pets) params.set("pets", pets.toString());
+
+    // Date Logic
+    if (checkInDate) {
+      if (checkOutDate) {
+        // Range mode
+        params.set("check_in_date", format(checkInDate, "yyyy-MM-dd"));
+        params.set("check_out_date", format(checkOutDate, "yyyy-MM-dd"));
+      } else {
+        // Single date mode
+        params.set("booking_date", format(checkInDate, "yyyy-MM-dd"));
+      }
+    }
+
+    if (startTime) params.set("start_time", startTime);
+    if (pets) params.set("number_of_pets", pets.toString());
+    // Also support legacy 'pets' param if needed, but schema says 'number_of_pets'.
+    // However, existing code might expect 'pets'. I'll set both or switch to new one.
+    // The schema user provided says "number_of_pets".
+    // I'll use "number_of_pets" but keep "pets" for now if other components use it, or just switch.
+    // The SearchPageClient uses "pets". I should update it to use "number_of_pets" preferably, or map it.
+    // I'll stick to what SearchPageClient expects for now, which is "pets" in the URL -> mapped to "number_of_pets" in API.
+    // Wait, SearchPageClient currently reads "pets".
+    // I will use "pets" in URL for consistency, and map it to "number_of_pets" in API call.
+    params.set("pets", pets.toString());
+
+    if (sortBy) params.set("sort_by", sortBy);
 
     router.push(`/search?${params.toString()}`);
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex flex-col items-stretch w-full max-w-4xl mx-auto gap-4">
+    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex flex-col items-stretch w-full max-w-5xl mx-auto gap-4">
       {/* Service Types - Horizontal Radio List */}
       <div className="w-full overflow-x-auto pb-2 -mb-2">
         <div className="flex gap-2">
@@ -95,21 +140,44 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-center w-full">
-        {/* Date */}
-        <div className="flex-1 w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.date}</label>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end w-full">
+        {/* Check-in / Booking Date */}
+        <div className="w-full">
+          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_in}</label>
           <DatePicker
-            date={date}
-            setDate={setDate}
+            date={checkInDate}
+            setDate={setCheckInDate}
             locale={lang}
             placeholder={tSearch.select_date}
             className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
           />
         </div>
 
+        {/* Check-out Date (Optional) */}
+        <div className="w-full">
+          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_out} <span className="text-gray-300 text-[10px] lowercase">{tSearch.optional}</span></label>
+          <DatePicker
+            date={checkOutDate}
+            setDate={setCheckOutDate}
+            locale={lang}
+            placeholder={tSearch.select_date}
+            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
+          />
+        </div>
+
+        {/* Start Time */}
+        <div className="w-full">
+          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.time}</label>
+          <Input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
+          />
+        </div>
+
         {/* Pets */}
-        <div className="w-full md:w-32">
+        <div className="w-full">
           <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.pets}</label>
           <Input
             type="number"
@@ -121,8 +189,25 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
           />
         </div>
 
-        <div className="w-full md:w-auto mt-auto pt-6 md:pt-0">
-          <Button size="lg" className="w-full md:w-auto h-12 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-md" onClick={handleSearch}>
+        {/* Sort By */}
+        <div className="w-full">
+          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.sort_by}</label>
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors">
+              <SelectValue placeholder={tSearch.sort_by} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="distance">{tSearch.distance}</SelectItem>
+              <SelectItem value="price">{tSearch.price}</SelectItem>
+              <SelectItem value="rating">{tSearch.rating}</SelectItem>
+              <SelectItem value="response_time">{tSearch.response_time}</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Search Button */}
+        <div className="w-full md:col-span-2 lg:col-span-5 mt-2">
+          <Button size="lg" className="w-full h-12 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-md" onClick={handleSearch}>
             <Search className="w-5 h-5 mr-2" />
             {tSearch.search_button}
           </Button>

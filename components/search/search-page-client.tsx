@@ -13,9 +13,11 @@ import { ProfileCompletionResponse } from "@/services/profile-api";
 import {
     getAvailableFilters,
     SearchAvailableFiltersResponse,
+    SearchDiscoveryServiceType,
     searchProviders,
     SearchProvidersRequest,
-    SearchProvidersResponse
+    SearchProvidersResponse,
+    SortBy
 } from "@/services/search-api";
 import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -26,8 +28,6 @@ import { SitterCard } from "./sitter-card";
 import { format } from "date-fns";
 
 const content = { en, fa };
-
-import { SearchDiscoveryServiceType } from "@/services/search-api";
 
 interface SearchPageClientProps {
     userToken?: string;
@@ -94,16 +94,31 @@ export function SearchPageClient({ userToken, user, profileCompletion, initialSe
 
         setLoading(true);
         try {
-            const dateParam = searchParams.get("date");
-            const formattedDate = dateParam ? format(new Date(dateParam), "yyyy-MM-dd") : undefined;
+            const bookingDate = searchParams.get("booking_date");
+            const checkInDate = searchParams.get("check_in_date");
+            const checkOutDate = searchParams.get("check_out_date");
+            const startTime = searchParams.get("start_time");
+            const sortBy = searchParams.get("sort_by") as SortBy;
+            const pets = searchParams.get("pets"); // Maps to number_of_pets
+
+            // Legacy date support
+            const legacyDate = searchParams.get("date");
+            let effectiveBookingDate = bookingDate;
+            if (!effectiveBookingDate && !checkInDate && legacyDate) {
+                effectiveBookingDate = format(new Date(legacyDate), "yyyy-MM-dd");
+            }
 
             const req: SearchProvidersRequest = {
                 service_type_id: parseInt(serviceTypeId),
                 limit: pagination.limit,
                 skip: pagination.skip,
                 filters: appliedFilters,
-                booking_date: formattedDate,
-                number_of_pets: searchParams.get("pets") ? parseInt(searchParams.get("pets")!) : 1,
+                number_of_pets: pets ? parseInt(pets) : 1,
+                booking_date: effectiveBookingDate || undefined,
+                check_in_date: checkInDate || undefined,
+                check_out_date: checkOutDate || undefined,
+                start_time: startTime || undefined,
+                sort_by: sortBy || "distance",
             };
 
             // Add Location
@@ -144,7 +159,7 @@ export function SearchPageClient({ userToken, user, profileCompletion, initialSe
             <div className="bg-[#f0fbfa] border-b border-[#dce6e8]">
                 <div className="container mx-auto px-4 py-8 max-w-7xl">
                     <h1 className="text-3xl font-bold text-[#103745] mb-6 text-center">{t.nav.cta}</h1>
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <DiscoverySearchBar initialServiceTypes={initialServiceTypes} />
                     </div>
                 </div>
