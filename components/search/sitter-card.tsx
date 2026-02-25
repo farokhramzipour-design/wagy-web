@@ -10,6 +10,7 @@ import { ProviderSearchResult } from "@/services/search-api";
 import { Clock, MapPin, Star } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { BookingModal } from "./booking-modal";
 
 const content = { en, fa };
 
@@ -21,14 +22,9 @@ export function SitterCard({ provider, isAuthenticated, hasAddress = false }: { 
 
     const price = provider.service_data.price || provider.service_data.price_per_night || provider.service_data.base_price;
 
-    const handleBook = () => {
-        if (!isAuthenticated) {
-            const currentPath = window.location.pathname + window.location.search;
-            router.push(`/auth?redirect=${encodeURIComponent(currentPath)}`);
-            return;
-        }
-        // Redirect to booking page (future implementation)
-        router.push(`/book/${provider.provider_service_id}`);
+    const handleLoginRedirect = () => {
+        const currentPath = window.location.pathname + window.location.search;
+        router.push(`/auth?redirect=${encodeURIComponent(currentPath)}`);
     };
 
     const getDistanceText = () => {
@@ -133,7 +129,13 @@ export function SitterCard({ provider, isAuthenticated, hasAddress = false }: { 
                             </div>
                         )}
                     </div>
-                    <Button onClick={handleBook}>{tSearch.book}</Button>
+                    {isAuthenticated ? (
+                        <BookingModal provider={provider}>
+                            <Button>{tSearch.book}</Button>
+                        </BookingModal>
+                    ) : (
+                        <Button onClick={handleLoginRedirect}>{tSearch.book}</Button>
+                    )}
                 </CardFooter>
             </div>
         </Card>

@@ -10,6 +10,28 @@
   "common": {
     "back": "Back"
   },
+  "booking": {
+    "title": "Book Service",
+    "select_pets": "Select your pets",
+    "special_requests": "Special Requests",
+    "special_requests_placeholder": "Any special instructions or requests...",
+    "confirm": "Confirm Booking",
+    "cancel": "Cancel",
+    "success": "Booking request sent successfully!",
+    "error": "Failed to create booking. Please try again.",
+    "login_required": "Please login to book a service.",
+    "no_pets": "You don't have any pets yet. Please add a pet first.",
+    "add_pet": "Add Pet",
+    "loading_pets": "Loading pets...",
+    "select_at_least_one_pet": "Please select at least one pet.",
+    "dates_required": "Please select dates.",
+    "booking_details": "Booking Details",
+    "provider": "Provider",
+    "dates": "Dates",
+    "time": "Time",
+    "duration": "Duration (hours)",
+    "enter_duration": "Enter duration"
+  },
   "charity": {
     "pageTitle": "Help Animals in Need",
     "pageSubtitle": "Join us in making a difference. Every donation counts.",

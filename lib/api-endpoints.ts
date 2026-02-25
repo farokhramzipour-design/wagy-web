@@ -90,6 +90,9 @@ export const API_ENDPOINTS = {
     review: "/api/v1/admin/documents/{document_id}/review",
     userDocuments: "/api/v1/admin/documents/user/{user_id}/documents"
   },
+  bookings: {
+    base: "/api/v1/bookings"
+  },
   adminBlog: {
     base: "/api/v1/admin/blog",
     posts: "/api/v1/admin/blog/posts",
