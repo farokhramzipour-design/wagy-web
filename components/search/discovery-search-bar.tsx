@@ -167,7 +167,7 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
 
         {/* Start Time */}
         <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.time}</label>
+          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.time} <span className="text-gray-300 text-[10px] lowercase">{tSearch.optional}</span></label>
           <Input
             type="time"
             value={startTime}

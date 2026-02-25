@@ -74,8 +74,8 @@ export function SitterCard({ provider, isAuthenticated, hasAddress = false }: { 
                                 </div>
                             )}
                             <div>
-                                <h3 className="text-xl font-bold text-gray-900">{provider.business_name}</h3>
-                                {provider.full_name && <p className="text-sm text-gray-500">{provider.full_name}</p>}
+                                <h3 className="text-xl font-bold text-gray-900">{provider.full_name || provider.business_name}</h3>
+                                {provider.full_name && <p className="text-sm text-gray-500">{provider.business_name}</p>}
                                 <div className="flex items-center gap-2 mt-1">
                                     <Badge variant="secondary" className="text-xs">
                                         {lang === "fa" ? provider.service_type.name_fa : provider.service_type.name_en}
