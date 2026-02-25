@@ -81,7 +81,7 @@ export interface ProviderSearchResult {
   distance_km: number | null;
   response_time_hours: number | null;
   service_data: Record<string, any>;
-  avatar_image: string | null;
+  avatar_url: string | null;
   full_name: string;
 }
 

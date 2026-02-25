@@ -41,9 +41,9 @@ export function SitterCard({ provider, isAuthenticated, hasAddress = false }: { 
     return (
         <Card className="overflow-hidden hover:shadow-lg transition-shadow border-l-4 border-l-primary flex flex-col sm:flex-row">
             <div className="w-full sm:w-48 h-48 sm:h-auto relative bg-gray-100 flex-shrink-0 flex items-center justify-center">
-                {provider.avatar_image ? (
+                {provider.avatar_url ? (
                     <Image
-                        src={`https://api.waggy.ir${provider.avatar_image}`}
+                        src={`https://api.waggy.ir${provider.avatar_url}`}
                         alt={provider.business_name}
                         fill
                         className="object-cover"
