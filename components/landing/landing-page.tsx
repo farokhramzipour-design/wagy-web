@@ -63,15 +63,15 @@ function CountUp({
 import { getDiscoveryServiceTypes, SearchDiscoveryServiceType } from "@/services/search-api";
 import { DiscoverySearchBar } from "../search/discovery-search-bar";
 
-export async function LandingPage({ user, profileCompletion }: { user: SessionData | null; profileCompletion?: ProfileCompletionResponse | null }) {
-  let initialServiceTypes: SearchDiscoveryServiceType[] = [];
-  try {
-    const res = await getDiscoveryServiceTypes();
-    initialServiceTypes = res.items;
-  } catch (error) {
-    console.error("Failed to fetch service types", error);
-  }
-
+export function LandingPage({ 
+  user, 
+  profileCompletion,
+  initialServiceTypes = [] 
+}: { 
+  user: SessionData | null; 
+  profileCompletion?: ProfileCompletionResponse | null;
+  initialServiceTypes?: SearchDiscoveryServiceType[];
+}) {
   const { lang } = useLanguage();
 
   const t = useMemo(() => content[lang], [lang]);
