@@ -98,7 +98,14 @@ export const API_ENDPOINTS = {
     categoryById: "/api/v1/admin/blog/categories/{category_id}"
   },
   media: {
+    base: "/api/v1/media",
     upload: "/api/v1/media/upload"
+  },
+  search: {
+    discoveryServiceTypes: "/api/v1/search/discovery/service-types",
+    filters: "/api/v1/search/filters/{service_type_id}",
+    providers: "/api/v1/search/providers",
+    providerDetail: "/api/v1/search/providers/{provider_service_id}"
   },
   system: {
     health: "/health",

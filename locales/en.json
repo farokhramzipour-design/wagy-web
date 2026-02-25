@@ -122,6 +122,28 @@
       "countdown": "Resend in {seconds}"
     }
   },
+  "search": {
+    "title": "Find a Sitter",
+    "search_button": "Search",
+    "guest_location_prompt": "Set your location to see distances and sort by proximity.",
+    "login_to_see_distance": "Login to see distance",
+    "add_address_to_see_distance": "Add address to see distance",
+    "response_time": "Response time",
+    "filters": "Filters",
+    "clear_filters": "Clear All",
+    "apply_filters": "Apply Filters",
+    "location": "Location",
+    "select_address": "Select Address",
+    "add_address": "Add Address",
+    "results_found": "results found",
+    "verified_only": "Verified",
+    "book": "Book",
+    "service": "Service",
+    "select_service": "Select service",
+    "date": "Date",
+    "select_date": "Select date",
+    "pets": "Pets"
+  },
   "hero": {
     "title": "Peace of Mind for You. Pure Joy for Them.",
     "subtitle": "Join 15,000+ happy pet parents. Trusted local care when you can't be there.",
@@ -1509,5 +1531,34 @@
     "paymentVerificationFailed": "Payment verification failed. Please contact support.",
     "bankNamePlaceholder": "Bank Melli",
     "accountNamePlaceholder": "John Doe"
+  },
+  "search_sitter": {
+    "service": "Service",
+    "select_service": "Select service",
+    "date": "Date",
+    "select_date": "Select date",
+    "pets": "Pets",
+    "search_button": "Search",
+    "filters": "Filters",
+    "price": "Price",
+    "rating": "Rating",
+    "distance": "Distance",
+    "clear_filters": "Clear Filters",
+    "apply_filters": "Apply Filters",
+    "results_found": "results found",
+    "min_price": "Min Price",
+    "max_price": "Max Price",
+    "verified_only": "Verified",
+    "sort_by": "Sort by",
+    "response_time": "Response Time",
+    "book": "Book",
+    "login_to_book": "Login to Book",
+    "login_to_see_distance": "Login to see distance",
+    "add_address_to_see_distance": "Add address to see distance",
+    "location": "Location",
+    "select_address": "Select Address",
+    "add_address": "Add Address",
+    "no_address": "No address found",
+    "guest_location_prompt": "Please login and add an address to see sitters near you."
   }
 }

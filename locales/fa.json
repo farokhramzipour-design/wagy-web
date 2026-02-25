@@ -122,6 +122,28 @@
       "countdown": "ارسال مجدد در {seconds}"
     }
   },
+  "search": {
+    "title": "یافتن مراقب",
+    "search_button": "جستجو",
+    "guest_location_prompt": "موقعیت مکانی خود را برای مشاهده فاصله و مرتب‌سازی بر اساس نزدیکی تنظیم کنید.",
+    "login_to_see_distance": "برای مشاهده فاصله وارد شوید",
+    "add_address_to_see_distance": "برای مشاهده فاصله آدرس اضافه کنید",
+    "response_time": "زمان پاسخگویی",
+    "filters": "فیلترها",
+    "clear_filters": "حذف فیلترها",
+    "apply_filters": "اعمال فیلترها",
+    "location": "موقعیت",
+    "select_address": "انتخاب آدرس",
+    "add_address": "افزودن آدرس",
+    "results_found": "نتیجه یافت شد",
+    "verified_only": "تایید شده",
+    "book": "رزرو",
+    "service": "سرویس",
+    "select_service": "انتخاب سرویس",
+    "date": "تاریخ",
+    "select_date": "انتخاب تاریخ",
+    "pets": "حیوانات"
+  },
   "hero": {
     "title": "اون‌ها فقط حیوان خونگی نیستن… خانواده‌ان.",
     "subtitle": "وقتی تو کنارش نیستی، ما مطمئن می‌شیم یک آدم مهربون کنارش هست.",
@@ -1508,5 +1530,34 @@
     "paymentVerificationFailed": "تایید پرداخت ناموفق بود. لطفا با پشتیبانی تماس بگیرید.",
     "bankNamePlaceholder": "بانک ملی",
     "accountNamePlaceholder": "علی محمدی"
+  },
+  "search_sitter": {
+    "service": "سرویس",
+    "select_service": "انتخاب سرویس",
+    "date": "تاریخ",
+    "select_date": "انتخاب تاریخ",
+    "pets": "تعداد حیوانات",
+    "search_button": "جستجو",
+    "filters": "فیلترها",
+    "price": "قیمت",
+    "rating": "امتیاز",
+    "distance": "فاصله",
+    "clear_filters": "حذف فیلترها",
+    "apply_filters": "اعمال فیلترها",
+    "results_found": "نتیجه یافت شد",
+    "min_price": "حداقل قیمت",
+    "max_price": "حداکثر قیمت",
+    "verified_only": "تاییدشده",
+    "sort_by": "مرتب‌سازی بر اساس",
+    "response_time": "زمان پاسخگویی",
+    "book": "رزرو",
+    "login_to_book": "برای رزرو وارد شوید",
+    "login_to_see_distance": "برای مشاهده فاصله وارد شوید",
+    "add_address_to_see_distance": "برای مشاهده فاصله آدرس اضافه کنید",
+    "location": "موقعیت",
+    "select_address": "انتخاب آدرس",
+    "add_address": "افزودن آدرس",
+    "no_address": "آدرسی یافت نشد",
+    "guest_location_prompt": "لطفا برای مشاهده مراقبین نزدیک خود وارد شوید و آدرس خود را ثبت کنید."
   }
 }

@@ -3,7 +3,6 @@
 import { CharitySection } from "@/components/landing/charity-section";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import type { SessionData } from "@/lib/session";
 import { ProfileCompletionResponse } from "@/services/profile-api";
 import Image from "next/image";
@@ -61,7 +60,18 @@ function CountUp({
   );
 }
 
-export function LandingPage({ user, profileCompletion }: { user: SessionData | null; profileCompletion?: ProfileCompletionResponse | null }) {
+import { getDiscoveryServiceTypes, SearchDiscoveryServiceType } from "@/services/search-api";
+import { DiscoverySearchBar } from "../search/discovery-search-bar";
+
+export async function LandingPage({ user, profileCompletion }: { user: SessionData | null; profileCompletion?: ProfileCompletionResponse | null }) {
+  let initialServiceTypes: SearchDiscoveryServiceType[] = [];
+  try {
+    const res = await getDiscoveryServiceTypes();
+    initialServiceTypes = res.items;
+  } catch (error) {
+    console.error("Failed to fetch service types", error);
+  }
+
   const { lang } = useLanguage();
 
   const t = useMemo(() => content[lang], [lang]);
@@ -99,23 +109,10 @@ export function LandingPage({ user, profileCompletion }: { user: SessionData | n
               <h1 className="m-0 text-3xl lg:text-4xl leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-4xl rtl:leading-[1.35]">{t.hero.title}</h1>
               <p className="mt-2 max-w-[520px] text-[16px] lg:text-[18px] leading-[1.55] text-[#37556a] m-0">{t.hero.subtitle}</p>
 
-              <div className="mt-4 p-2 bg-white/92 border border-neutral-200 shadow-sm rounded-[16px]">
-                <div className="px-2 pb-1 text-xs font-medium text-neutral-500 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#0ea5a4]"></span>
-                  {t.hero.step1}
-                </div>
-                <form className="grid grid-cols-1 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto] items-center gap-2" onSubmit={(e) => e.preventDefault()}>
-                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[0]} />
-                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[1]} />
-                  <Input className="h-auto p-[10px_11px] text-[13px] border-neutral-200 rounded-[12px]" placeholder={t.hero.fields[3]} />
-                  <Button className="h-auto min-h-[40px] px-4 whitespace-nowrap rounded-[12px] bg-[#ff6b6b] hover:bg-[#ff5252] text-white shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5" type="submit">
-                    {t.nav.cta}
-                    <svg className="w-4 h-4 ms-1.5 text-white/90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Button>
-                </form>
+              <div className="mt-4">
+                <DiscoverySearchBar initialServiceTypes={initialServiceTypes} />
               </div>
+
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {trustBadges.map((badge) => (
                   <span className="border border-neutral-200 bg-white rounded-full text-xs text-neutral-600 px-2.5 py-1.5" key={badge}>{badge}</span>
