@@ -57,6 +57,32 @@
     "updates": "Updates",
     "story": "Story",
     "loginToDonate": "Please login to donate",
+    "featured": "Featured",
+    "urgent": "Urgent",
+    "active": "In Progress",
+    "category": "Medical Help",
+    "funded": "Funded",
+    "supporters": "Supporters",
+    "donateNow": "Donate Now",
+    "goal": "Goal",
+    "filters": {
+      "all": "All",
+      "medical": "Medical",
+      "shelter": "Shelter",
+      "food": "Food & Water"
+    },
+    "sort": {
+      "placeholder": "Sort by",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "goalLowHigh": "Goal: Low to High",
+      "goalHighLow": "Goal: High to Low"
+    },
+    "ctaSection": {
+      "title": "Become a Volunteer",
+      "subtitle": "Join our community of animal lovers and help make a difference.",
+      "button": "Join Us"
+    },
     "donationDialog": {
       "title": "Donate to this cause",
       "description": "Your contribution helps us reach our goal.",

@@ -18,7 +18,7 @@ export default function CharityPage() {
     <div className="min-h-screen bg-neutral-50 flex flex-col">
       <Header user={session} />
       <main className="flex-grow">
-        <PublicCharityList />
+        <PublicCharityList session={session} />
       </main>
     </div>
   );

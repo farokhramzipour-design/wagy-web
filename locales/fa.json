@@ -57,6 +57,32 @@
     "updates": "بروزرسانی‌ها",
     "story": "داستان",
     "loginToDonate": "لطفا برای کمک وارد شوید",
+    "featured": "ویژه",
+    "urgent": "فوری",
+    "active": "در جریان",
+    "category": "حیوانات آسیب‌دیده",
+    "funded": "تأمین شد",
+    "supporters": "حامی",
+    "donateNow": "همین حالا کمک کنید ❤️",
+    "goal": "هدف",
+    "filters": {
+      "all": "همه",
+      "medical": "درمانی",
+      "shelter": "پناهگاه",
+      "food": "غذا و آب"
+    },
+    "sort": {
+      "placeholder": "مرتب‌سازی",
+      "newest": "جدیدترین",
+      "oldest": "قدیمی‌ترین",
+      "goalLowHigh": "هدف: کم به زیاد",
+      "goalHighLow": "هدف: زیاد به کم"
+    },
+    "ctaSection": {
+      "title": "داوطلب شوید",
+      "subtitle": "به جامعه دوستداران حیوانات بپیوندید و در ایجاد تغییر سهیم باشید.",
+      "button": "به ما بپیوندید"
+    },
     "donationDialog": {
       "title": "کمک به این پرونده",
       "description": "کمک شما ما را به هدفمان نزدیک‌تر می‌کند.",

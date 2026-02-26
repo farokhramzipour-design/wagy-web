@@ -27,3 +27,8 @@ export function getImageUrl(url: string | null | undefined): string {
   if (url.startsWith("http")) return url;
   return `${API_BASE_URL}${url}`;
 }
+
+export function toEnglishDigits(str: string): string {
+  return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString())
+            .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d).toString());
+}

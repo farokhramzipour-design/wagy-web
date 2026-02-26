@@ -19,6 +19,14 @@ export interface CharityCase {
   can_edit: boolean;
   can_delete: boolean;
   can_submit: boolean;
+  description?: string;
+  is_urgent?: boolean;
+  donations_count?: number;
+  category?: {
+    id: number;
+    name: string;
+    slug: string;
+  };
 }
 
 export interface CharityMedia {

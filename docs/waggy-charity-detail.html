@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نجات گلدن رتریور آسیب‌دیده — واگی خیریه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0ea5a4;
+    --teal-dark: #0b7c7b;
+    --teal-light: #e0f7f7;
+    --teal-gradient: linear-gradient(135deg, #0ea5a4, #2dd4bf);
+    --coral: #ff6b6b;
+    --coral-dark: #ff5252;
+    --text-dark: #103745;
+    --text-mid: #3d5a63;
+    --text-light: #6b8a93;
+    --bg: #f0f4f6;
+    --white: #ffffff;
+    --border: #dce6e8;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(14,165,164,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: 64px;
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--teal-gradient);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 22px; font-weight: 900; color: var(--teal); letter-spacing: -0.5px; }
+
+  nav { display: flex; gap: 28px; }
+  nav a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--text-mid); transition: color 0.2s; }
+  nav a:hover { color: var(--teal); }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 20px; border-radius: 10px; font-family: inherit; font-size: 14px;
+    font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
+    text-decoration: none; white-space: nowrap;
+  }
+  .btn-primary { background: var(--teal-gradient); color: white; box-shadow: 0 4px 14px rgba(14,165,164,0.35); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(14,165,164,0.45); }
+  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text-dark); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+  .btn-ghost { background: transparent; color: var(--text-mid); }
+  .btn-ghost:hover { color: var(--teal); background: var(--teal-light); }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+  .breadcrumb a { color: var(--text-light); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--teal); }
+  .breadcrumb svg { width: 14px; height: 14px; }
+
+  /* ── HERO BANNER ── */
+  .hero-banner {
+    max-width: 1280px;
+    margin: 14px auto 0;
+    padding: 0 24px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0a4050 0%, #0b6060 50%, #1a9b8a 100%);
+  }
+
+  .hero-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    mix-blend-mode: luminosity;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,32,40,0.95) 0%,
+      rgba(10,32,40,0.5) 45%,
+      rgba(10,32,40,0.1) 100%
+    );
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: radial-gradient(circle, white 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 0; right: 0; left: 0;
+    padding: 32px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .hero-meta { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+  .hero-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-active { background: rgba(74,222,128,0.2); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+  .badge-active .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
+  .badge-category { background: rgba(14,165,164,0.2); color: #2dd4bf; border: 1px solid rgba(14,165,164,0.3); }
+  .badge-urgent { background: rgba(255,107,107,0.2); color: #ff8080; border: 1px solid rgba(255,107,107,0.3); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .hero-title {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    max-width: 680px;
+  }
+
+  .hero-info-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-info-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: rgba(255,255,255,0.65);
+  }
+  .hero-info-item svg { width: 15px; height: 15px; opacity: 0.8; }
+
+  .hero-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+  .btn-share {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white; padding: 9px 16px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-share:hover { background: rgba(255,255,255,0.2); }
+
+  /* ── MAIN LAYOUT ── */
+  .page-body {
+    max-width: 1280px;
+    margin: 20px auto 40px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* ── LEFT COLUMN ── */
+  .main-col { display: flex; flex-direction: column; gap: 16px; }
+
+  /* Progress card */
+  .progress-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp 0.5s 0.1s ease both;
+    opacity: 0;
+  }
+
+  .progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .progress-pct {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--coral);
+    letter-spacing: -1px;
+  }
+
+  .progress-days {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: var(--text-light);
+    background: #fff3e0; padding: 5px 12px; border-radius: 20px;
+  }
+
+  .progress-bar-wrap {
+    height: 10px;
+    background: #f0f4f5;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(to left, var(--coral), #2EC4B6);
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .progress-amounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .amount-item {
+    background: #f7fbfb;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .amount-value {
+    display: block;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+  }
+
+  .amount-value.raised { color: var(--teal-dark); }
+  .amount-label { font-size: 11px; color: var(--text-light); font-weight: 600; }
+
+  /* Section card */
+  .section-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .section-card.delay-1 { animation: fadeUp 0.5s 0.15s ease both; opacity: 0; }
+  .section-card.delay-2 { animation: fadeUp 0.5s 0.2s ease both; opacity: 0; }
+  .section-card.delay-3 { animation: fadeUp 0.5s 0.25s ease both; opacity: 0; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 3px; height: 14px;
+    background: var(--teal-gradient);
+    border-radius: 2px;
+  }
+
+  .section-card h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+
+  .section-card p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  /* Image gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    background: linear-gradient(135deg, #e0f7f7, #b2ebf2);
+    border: 1px solid var(--border);
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+
+  .gallery-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .gallery-item:hover .gallery-img { transform: scale(1.04); }
+
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+  }
+
+  .gallery-item:hover::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(14,165,164,0.15);
+    border-radius: 12px;
+  }
+
+  /* Updates timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 34px;
+    bottom: 0;
+    width: 1.5px;
+    background: var(--border);
+  }
+
+  .timeline-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    border: 2px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    z-index: 1;
+  }
+
+  .timeline-body { flex: 1; }
+
+  .timeline-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .timeline-text {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    background: #f7fbfb;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  /* ── RIGHT SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; }
+
+  /* Donate card */
+  .donate-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    animation: fadeUp 0.5s 0.2s ease both;
+    opacity: 0;
+  }
+
+  .donate-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .amount-presets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .preset-btn {
+    padding: 9px 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .preset-btn:hover, .preset-btn.active {
+    border-color: var(--teal);
+    background: var(--teal-light);
+    color: var(--teal-dark);
+  }
+
+  .preset-btn.featured {
+    border-color: var(--coral);
+    background: #fff3f3;
+    color: var(--coral-dark);
+  }
+
+  .donate-input-wrap {
+    position: relative;
+    margin-bottom: 14px;
+  }
+
+  .donate-input {
+    width: 100%;
+    height: 48px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0 16px 0 60px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: right;
+    transition: border-color 0.2s;
+    background: #f7fbfb;
+  }
+
+  .donate-input:focus { outline: none; border-color: var(--teal); background: white; box-shadow: 0 0 0 3px rgba(14,165,164,0.1); }
+
+  .donate-input-suffix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    background: white;
+    padding: 2px 6px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+  }
+
+  .btn-donate {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(135deg, var(--coral), #ff8e53);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+    letter-spacing: 0.3px;
+  }
+
+  .btn-donate:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(255,107,107,0.5); }
+  .btn-donate:active { transform: translateY(0); }
+
+  .donate-note {
+    display: flex; align-items: center; gap: 5px; justify-content: center;
+    margin-top: 10px; font-size: 12px; color: var(--text-light);
+  }
+
+  /* Donor list */
+  .donors-card {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp 0.5s 0.3s ease both;
+    opacity: 0;
+  }
+
+  .donors-card h4 {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .donors-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .donor-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f6f7;
+  }
+
+  .donor-item:last-child { border-bottom: none; }
+
+  .donor-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .donor-info { flex: 1; }
+  .donor-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+  .donor-time { font-size: 11px; color: var(--text-light); margin-top: 1px; }
+  .donor-amount { font-size: 13px; font-weight: 800; color: var(--teal-dark); }
+
+  /* Share card */
+  .share-card {
+    background: linear-gradient(160deg, var(--teal-light), white);
+    border-radius: 20px;
+    border: 1px solid rgba(14,165,164,0.2);
+    padding: 20px;
+    text-align: center;
+    animation: fadeUp 0.5s 0.35s ease both;
+    opacity: 0;
+  }
+
+  .share-card p { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 14px; }
+
+  .share-buttons { display: flex; gap: 8px; justify-content: center; }
+
+  .share-btn {
+    flex: 1;
+    padding: 9px 8px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+
+  .share-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+
+  /* Urgency banner */
+  .urgency-banner {
+    background: linear-gradient(135deg, #fff8f0, #fff0f0);
+    border: 1px solid #fdd;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.5s 0.25s ease both;
+    opacity: 0;
+  }
+
+  .urgency-icon { font-size: 28px; flex-shrink: 0; }
+
+  .urgency-text h4 { font-size: 13px; font-weight: 800; color: #c53030; margin-bottom: 2px; }
+  .urgency-text p { font-size: 12px; color: #9b4444; line-height: 1.5; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .page-body { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .hero-content { flex-direction: column; align-items: flex-start; }
+    nav { display: none; }
+    .gallery { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; }
+  }
+
+  @media (max-width: 580px) {
+    .hero-img-wrap { height: 280px; }
+    .hero-content { padding: 20px; }
+    .hero-title { font-size: 20px; }
+    .progress-amounts { grid-template-columns: 1fr 1fr; }
+    .amount-presets { grid-template-columns: repeat(3, 1fr); }
+    .gallery { grid-template-columns: 1fr; }
+    .gallery-item:first-child { grid-column: span 1; }
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.92);
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-close {
+    position: absolute; top: 20px; left: 20px;
+    width: 40px; height: 40px;
+    border-radius: 50%; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white; font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox img { max-width: 90%; max-height: 80vh; border-radius: 12px; object-fit: contain; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--text-dark); color: white; padding: 12px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; z-index: 999;
+    transition: transform 0.3s; pointer-events: none;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">🐾</div>
+      <span class="logo-text">واگی</span>
+    </a>
+    <nav>
+      <a href="#">سرویس‌ها</a>
+      <a href="#">نحوه کار</a>
+      <a href="#">امنیت</a>
+      <a href="#">مراقب شو</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-outline">ورود</button>
+      <button class="btn btn-primary">ثبت‌نام رایگان</button>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">خانه</a>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+  <a href="#">خیریه</a>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+  <span style="color: var(--text-mid);">نجات گلدن رتریور</span>
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+  <div class="hero-img-wrap">
+    <!-- Using a gradient + emoji as placeholder for the actual image -->
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:0.15;user-select:none;">🐕</div>
+    <div class="hero-overlay"></div>
+    <div class="hero-pattern"></div>
+
+    <div class="hero-content">
+      <div class="hero-meta">
+        <div class="hero-badges">
+          <span class="badge badge-active"><span class="dot"></span> در جریان</span>
+          <span class="badge badge-category">🐾 حیوانات آسیب‌دیده</span>
+          <span class="badge badge-urgent">⚡ فوری</span>
+        </div>
+        <h1 class="hero-title">نجات گلدن رتریور آسیب‌دیده<br>از تصادف جاده‌ای</h1>
+        <div class="hero-info-row">
+          <span class="hero-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            خان دایی بهراد
+          </span>
+          <span class="hero-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            ۱۴۰۴/۱۲/۰۵
+          </span>
+          <span class="hero-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ۵ روز باقی‌مانده
+          </span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-share" onclick="handleShare()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          اشتراک‌گذاری
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- LEFT / MAIN COLUMN -->
+  <div class="main-col">
+
+    <!-- Progress Card -->
+    <div class="progress-card">
+      <div class="progress-header">
+        <div>
+          <div class="progress-pct" id="pctDisplay">۴۲٪</div>
+          <div style="font-size: 12px; color: var(--text-light); margin-top: 2px;">از هدف جمع‌آوری شده</div>
+        </div>
+        <div class="progress-days">
+          ⏱ ۵ روز باقی‌مانده
+        </div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-amounts">
+        <div class="amount-item">
+          <span class="amount-value raised">۴۲٬۰۰۰</span>
+          <span class="amount-label">جمع‌آوری شده (تومان)</span>
+        </div>
+        <div class="amount-item">
+          <span class="amount-value">۱۰۰٬۰۰۰</span>
+          <span class="amount-label">هدف کل (تومان)</span>
+        </div>
+        <div class="amount-item">
+          <span class="amount-value" style="color: var(--coral);">۲۳</span>
+          <span class="amount-label">تعداد حامیان</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story -->
+    <div class="section-card delay-1">
+      <div class="section-label">داستان</div>
+      <h2>ماجرای این پرونده چیست؟</h2>
+      <p>
+        این سگ گلدن رتریور ۳ ساله در یک تصادف جاده‌ای در اتوبان تهران-کرج آسیب جدی به ستون فقراتش وارد شد.
+        او توسط یک عابر پیاده مهربان پیدا و به کلینیک دامپزشکی اورژانسی منتقل شد.
+        <br><br>
+        پزشکان معالج تشخیص داده‌اند که برای بهبودی کامل به جراحی تخصصی ارتوپدی نیاز است که هزینه آن
+        تقریباً ۱۰۰٬۰۰۰ تومان برآورد شده است. بدون این جراحی، احتمال فلج دائمی او بسیار زیاد است.
+        <br><br>
+        واگی این پرونده را تأیید کرده و تمام مبالغ جمع‌آوری‌شده مستقیماً به کلینیک دامپزشکی پرداخت خواهد شد.
+      </p>
+    </div>
+
+    <!-- Gallery -->
+    <div class="section-card delay-2">
+      <div class="section-label">تصاویر</div>
+      <div class="gallery">
+        <div class="gallery-item" onclick="openLightbox()">
+          <div class="gallery-placeholder" style="background: linear-gradient(135deg, #e8f5e9, #a5d6a7);">🐕</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox()">
+          <div class="gallery-placeholder" style="background: linear-gradient(135deg, #e3f2fd, #90caf9);">🏥</div>
+        </div>
+        <div class="gallery-item" onclick="openLightbox()">
+          <div class="gallery-placeholder" style="background: linear-gradient(135deg, #fce4ec, #f48fb1);">🩺</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-light); margin-top: 10px; text-align: center;">برای مشاهده تصویر بزرگ‌تر کلیک کنید</p>
+    </div>
+
+    <!-- Updates timeline -->
+    <div class="section-card delay-3">
+      <div class="section-label">آخرین به‌روزرسانی‌ها</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">📋</div>
+          <div class="timeline-body">
+            <div class="timeline-date">۱۴۰۴/۱۲/۰۵</div>
+            <div class="timeline-text">پرونده در سیستم واگی ثبت و تأیید شد. مدارک دامپزشکی بررسی و صحت آن‌ها تأیید گردید.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🏥</div>
+          <div class="timeline-body">
+            <div class="timeline-date">۱۴۰۴/۱۲/۰۴</div>
+            <div class="timeline-text">سگ به کلینیک تخصصی منتقل شد و آزمایش‌های اولیه انجام گرفت. تشخیص پزشکی آسیب به ستون فقرات تأیید شد.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">🚑</div>
+          <div class="timeline-body">
+            <div class="timeline-date">۱۴۰۴/۱۲/۰۳</div>
+            <div class="timeline-text">حیوان توسط یک عابر پیاده پیدا و به اورژانس دامپزشکی منتقل شد. وضعیت عمومی او پایدار است.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Urgency banner -->
+    <div class="urgency-banner">
+      <div class="urgency-icon">⚠️</div>
+      <div class="urgency-text">
+        <h4>جراحی باید این هفته انجام شود</h4>
+        <p>تأخیر بیشتر می‌تواند آسیب دائمی ایجاد کند. هر کمکی می‌تواند سرنوشت‌ساز باشد.</p>
+      </div>
+    </div>
+
+    <!-- Donate card -->
+    <div class="donate-card">
+      <h3>❤️ کمک کنید</h3>
+
+      <div class="amount-presets">
+        <button class="preset-btn" onclick="setAmount(10000)">۱۰٬۰۰۰</button>
+        <button class="preset-btn featured active" onclick="setAmount(25000)">۲۵٬۰۰۰</button>
+        <button class="preset-btn" onclick="setAmount(50000)">۵۰٬۰۰۰</button>
+        <button class="preset-btn" onclick="setAmount(100000)">۱۰۰٬۰۰۰</button>
+        <button class="preset-btn" onclick="setAmount(200000)">۲۰۰٬۰۰۰</button>
+        <button class="preset-btn" onclick="setAmount(0, true)">دلخواه</button>
+      </div>
+
+      <div class="donate-input-wrap">
+        <input type="text" class="donate-input" id="donateInput" value="۲۵٬۰۰۰" placeholder="مبلغ دلخواه">
+        <span class="donate-input-suffix">تومان</span>
+      </div>
+
+      <button class="btn-donate" onclick="handleDonate()">
+        همین حالا کمک کنید 🐾
+      </button>
+
+      <div class="donate-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        پرداخت امن از طریق درگاه واگی
+      </div>
+    </div>
+
+    <!-- Recent donors -->
+    <div class="donors-card">
+      <h4>
+        حامیان اخیر
+        <span class="donors-count">۲۳ نفر</span>
+      </h4>
+      <div class="donor-item">
+        <div class="donor-avatar" style="background:#e0f7f7; color:#0b7c7b;">س</div>
+        <div class="donor-info">
+          <div class="donor-name">سارا م.</div>
+          <div class="donor-time">۲ ساعت پیش</div>
+        </div>
+        <div class="donor-amount">۵۰٬۰۰۰</div>
+      </div>
+      <div class="donor-item">
+        <div class="donor-avatar" style="background:#fce4ec; color:#c2185b;">م</div>
+        <div class="donor-info">
+          <div class="donor-name">محمد ر.</div>
+          <div class="donor-time">۵ ساعت پیش</div>
+        </div>
+        <div class="donor-amount">۲۵٬۰۰۰</div>
+      </div>
+      <div class="donor-item">
+        <div class="donor-avatar" style="background:#e8f5e9; color:#2e7d32;">ن</div>
+        <div class="donor-info">
+          <div class="donor-name">نرگس ک.</div>
+          <div class="donor-time">دیروز</div>
+        </div>
+        <div class="donor-amount">۱۰۰٬۰۰۰</div>
+      </div>
+      <div class="donor-item">
+        <div class="donor-avatar" style="background:#f3e5f5; color:#7b1fa2;">ع</div>
+        <div class="donor-info">
+          <div class="donor-name">علی ح.</div>
+          <div class="donor-time">دیروز</div>
+        </div>
+        <div class="donor-amount">۲۵٬۰۰۰</div>
+      </div>
+      <div class="donor-item">
+        <div class="donor-avatar" style="background:#fff3e0; color:#e65100;">ف</div>
+        <div class="donor-info">
+          <div class="donor-name">فاطمه ز.</div>
+          <div class="donor-time">۲ روز پیش</div>
+        </div>
+        <div class="donor-amount">۵۰٬۰۰۰</div>
+      </div>
+    </div>
+
+    <!-- Share card -->
+    <div class="share-card">
+      <p>با اشتراک‌گذاری این پرونده، شانس نجات این حیوان را چند برابر کنید.</p>
+      <div class="share-buttons">
+        <button class="share-btn" onclick="handleShare('telegram')">
+          ✈️ تلگرام
+        </button>
+        <button class="share-btn" onclick="handleShare('instagram')">
+          📸 اینستا
+        </button>
+        <button class="share-btn" onclick="handleShare('copy')">
+          🔗 کپی لینک
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div style="font-size: 120px;">🐕</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Animate progress bar on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('progressFill').style.width = '42%';
+    }, 400);
+  });
+
+  // Amount presets
+  function setAmount(val, custom = false) {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    if (!custom) {
+      event.target.classList.add('active');
+      document.getElementById('donateInput').value = val.toLocaleString('fa-IR');
+    } else {
+      event.target.classList.add('active');
+      document.getElementById('donateInput').value = '';
+      document.getElementById('donateInput').focus();
+    }
+  }
+
+  // Donate action
+  function handleDonate() {
+    showToast('✅ در حال انتقال به درگاه پرداخت...');
+  }
+
+  // Share
+  function handleShare(platform) {
+    if (platform === 'copy' || !platform) {
+      navigator.clipboard?.writeText(window.location.href).catch(() => {});
+      showToast('🔗 لینک کپی شد!');
+    } else if (platform === 'telegram') {
+      showToast('✈️ اشتراک‌گذاری در تلگرام...');
+    } else if (platform === 'instagram') {
+      showToast('📸 لینک کپی شد — در اینستاگرام پیست کنید');
+    }
+  }
+
+  // Lightbox
+  function openLightbox() { document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Input formatting
+  document.getElementById('donateInput').addEventListener('input', function() {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  });
+</script>
+</body>
+</html>
