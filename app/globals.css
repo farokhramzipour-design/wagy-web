@@ -95,6 +95,9 @@
     @apply bg-background text-foreground;
     font-family: var(--font-en);
   }
+  html {
+    scroll-behavior: smooth;
+  }
   html[dir="rtl"] body {
     font-family: var(--font-fa);
   }

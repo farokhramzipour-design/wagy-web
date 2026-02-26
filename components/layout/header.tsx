@@ -186,12 +186,16 @@ export function Header({ user, showNavLinks = true, mobileNav, profileCompletion
           )}
 
           {!user && (
-            <div className="flex items-center gap-4">
-              <Link href="/auth" className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
-                {t.auth.login}
-              </Link>
-              <Button asChild className="bg-[#0ea5a4] hover:bg-[#0b7c7b] text-white">
-                <Link href="/auth/register">{t.auth.register}</Link>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" asChild className="border-neutral-200 text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900">
+                <Link href="/auth">
+                  {t.auth.login}
+                </Link>
+              </Button>
+              <Button asChild className="bg-[#0ea5a4] hover:bg-[#0b7c7b] text-white shadow-sm hover:shadow-md transition-all">
+                <Link href="/auth">
+                  {t.auth.register}
+                </Link>
               </Button>
             </div>
           )}

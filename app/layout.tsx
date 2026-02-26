@@ -24,6 +24,11 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: 'Waggy Team' }],
     creator: 'Waggy',
     publisher: 'Waggy',
+    icons: {
+      icon: '/images/icon.png',
+      shortcut: '/images/icon.png',
+      apple: '/images/icon.png',
+    },
     openGraph: {
       type: 'website',
       locale: isRtl ? 'fa_IR' : 'en_US',
@@ -33,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: isRtl ? 'واگی' : 'Waggy',
       images: [
         {
-          url: '/og-image.jpg', // Placeholder
+          url: 'https://waggy.ir/og-image.jpg', // Placeholder
           width: 1200,
           height: 630,
           alt: isRtl ? 'واگی - خدمات مراقبت از حیوانات' : 'Waggy - Pet Care Services',
@@ -45,6 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: dict.metadata.title,
       description: dict.metadata.description,
       creator: '@waggy',
+      images: ['https://waggy.ir/og-image.jpg'],
     },
     robots: {
       index: true,

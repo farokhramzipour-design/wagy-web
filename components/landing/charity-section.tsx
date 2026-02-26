@@ -21,15 +21,54 @@ export function CharitySection() {
   useEffect(() => {
     // Fetch limited number of cases for the landing page
     const fetchCases = async () => {
-      try {
-        const data = await charityPublicApi.getCases();
-        // Take top 4 for 2-column grid
-        if (data && data.length > 0) {
-          setCases(data.slice(0, 4));
+      // Mock data for landing page as requested
+      const mockCases: CharityCase[] = [
+        {
+          charity_case_id: 101,
+          title: "نجات گلدن رتریور آسیب‌دیده از تصادف جاده‌ای",
+          status: "active",
+          primary_media_id: 0,
+          target_amount_minor: 50000000,
+          collected_amount_minor: 12500000,
+          remaining_minor: 37500000,
+          progress_percent: 25,
+          currency_code: "IRR",
+          expires_at: new Date(Date.now() + 86400000 * 10).toISOString(),
+          can_accept_donations: true,
+          cover_image_url: "/images/charity-dog.jpg",
+          province_id: 1,
+          city_id: 1,
+          location_text: "Tehran",
+          incident_date: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          can_edit: false,
+          can_delete: false,
+          can_submit: false
+        },
+        {
+          charity_case_id: 102,
+          title: "درمان گربه خیابانی مبتلا به بیماری پارو ویروس",
+          status: "active",
+          primary_media_id: 0,
+          target_amount_minor: 15000000,
+          collected_amount_minor: 8000000,
+          remaining_minor: 7000000,
+          progress_percent: 53,
+          currency_code: "IRR",
+          expires_at: new Date(Date.now() + 86400000 * 5).toISOString(),
+          can_accept_donations: true,
+          cover_image_url: "/images/charity-cat.jpg",
+          province_id: 1,
+          city_id: 1,
+          location_text: "Tehran",
+          incident_date: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          can_edit: false,
+          can_delete: false,
+          can_submit: false
         }
-      } catch (error) {
-        console.error("Failed to fetch charity cases for landing page", error);
-      }
+      ];
+      setCases(mockCases);
     };
     fetchCases();
   }, []);

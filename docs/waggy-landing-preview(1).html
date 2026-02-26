@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>واگی - خدمات حرفه‌ای مراقبت از حیوانات خانگی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0ea5a4;
+    --teal-dark: #0b7c7b;
+    --teal-light: #e0f7f7;
+    --teal-gradient: linear-gradient(135deg, #0ea5a4, #2dd4bf);
+    --coral: #ff6b6b;
+    --coral-dark: #ff5252;
+    --text-dark: #103745;
+    --text-mid: #3d5a63;
+    --text-light: #6b8a93;
+    --bg: #f0f4f6;
+    --white: #ffffff;
+    --border: #dce6e8;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 40px rgba(14,165,164,0.15), 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    line-height: 1.6;
+    padding-bottom: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--teal-gradient);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--teal);
+    letter-spacing: -0.5px;
+  }
+
+  nav { display: flex; gap: 28px; }
+  nav a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-mid);
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--teal); }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--teal-gradient);
+    color: white;
+    box-shadow: 0 4px 14px rgba(14,165,164,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(14,165,164,0.4); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-dark);
+  }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+
+  .btn-coral {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    box-shadow: 0 4px 14px rgba(255,107,107,0.35);
+  }
+  .btn-coral:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,107,107,0.45); }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    min-height: 560px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #0a4a5a 0%, #0b7c7b 40%, #1a9b8a 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 60%, rgba(45,212,191,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 30%, rgba(255,107,107,0.15) 0%, transparent 60%);
+  }
+
+  .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: radial-gradient(circle, white 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+  }
+
+  .hero-badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(74,222,128,0.1); }
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, #7fffd4, #2dd4bf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── SEARCH CARD ── */
+  .search-card {
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.8);
+    margin-top: 8px;
+  }
+
+  .service-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .service-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 8px;
+    height: 80px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-mid);
+    gap: 6px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .service-tab:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: var(--teal-light);
+    transform: translateY(-1px);
+  }
+
+  .service-tab.active {
+    border-color: var(--teal);
+    background: rgba(14,165,164,0.08);
+    color: var(--teal);
+    box-shadow: 0 2px 8px rgba(14,165,164,0.2);
+  }
+
+  .service-tab svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  .search-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 5px; }
+
+  .field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .field-input {
+    height: 44px;
+    border: 1.5px solid #e2e8ea;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-dark);
+    background: white;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .field-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,165,164,0.1); }
+
+  .btn-search {
+    height: 44px;
+    padding: 0 24px;
+    background: var(--teal-gradient);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(14,165,164,0.4);
+  }
+  .btn-search:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(14,165,164,0.5); }
+
+  /* Trust badges */
+  .trust-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 50px;
+  }
+
+  .trust-badge .green-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-weight: 500;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(5px); }
+  }
+
+  .scroll-arrow {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── STATS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stat-card {
+    background: linear-gradient(160deg, #f7fbfb, white);
+    border: 1px solid #e8f4f4;
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--teal-dark);
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .stat-label {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  /* Media bar */
+  .media-bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 24px;
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+
+  .media-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding-left: 24px;
+    border-left: 1px solid var(--border);
+  }
+
+  .media-logos {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex: 1;
+    justify-content: center;
+    opacity: 0.35;
+    filter: grayscale(1);
+  }
+
+  .media-logo {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 800;
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+  }
+
+  /* Services grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .service-card {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: white;
+    transition: all 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(14,165,164,0.3);
+  }
+
+  .service-img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #e0f7f7, #b2ebf2);
+  }
+
+  .service-img-placeholder {
+    width: 100%;
+    height: 175px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+
+  .service-img-placeholder.p1 { background: linear-gradient(135deg, #e0f7f7, #b2f0e8); }
+  .service-img-placeholder.p2 { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
+  .service-img-placeholder.p3 { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
+
+  .service-body { padding: 16px; }
+
+  .service-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .service-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* How it works */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    position: relative;
+  }
+
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    right: 12.5%;
+    left: 12.5%;
+    height: 1.5px;
+    background: linear-gradient(to left, transparent, var(--teal-light), var(--teal-light), transparent);
+    z-index: 0;
+  }
+
+  .step-card {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 16px;
+    padding: 20px 16px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.2s;
+  }
+
+  .step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+  .step-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--teal-gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(14,165,164,0.35);
+  }
+
+  .step-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
+  .step-card p { font-size: 13.5px; color: var(--text-light); line-height: 1.6; }
+
+  /* Safety section */
+  .safety-section {
+    background: linear-gradient(165deg, rgba(14,165,164,0.05), white 60%);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .safety-list {
+    list-style: none;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .safety-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--text-mid);
+    padding: 12px 16px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .safety-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .safety-img {
+    width: 100%;
+    height: 280px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #e0f7f7, #80deea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border: 1px solid var(--border);
+  }
+
+  /* Testimonials */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .testimonial-card {
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: linear-gradient(160deg, white, #f7fdfd);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s;
+  }
+
+  .testimonial-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+    color: #f59e0b;
+    font-size: 15px;
+  }
+
+  .testimonial-text {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-author { display: flex; align-items: center; gap: 10px; }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .author-info h4 { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+  .author-info span {
+    font-size: 12px;
+    color: var(--teal);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    border-radius: var(--radius-lg);
+    background: var(--teal-gradient);
+    padding: 52px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(255,255,255,0.1) 0%, transparent 70%);
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .cta-section h2 {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 900;
+    color: white;
+    max-width: 700px;
+    margin: 0 auto 28px;
+    line-height: 1.35;
+    letter-spacing: -0.5px;
+  }
+
+  .cta-section .btn-white {
+    position: relative;
+    z-index: 1;
+    background: white;
+    color: var(--teal);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    padding: 12px 32px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+  .cta-section .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .faq-item:hover { border-color: rgba(14,165,164,0.4); }
+
+  .faq-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .faq-summary::-webkit-details-marker { display: none; }
+
+  .faq-chevron {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    color: var(--teal);
+  }
+
+  details[open] .faq-chevron { transform: rotate(180deg); }
+  details[open] { border-color: rgba(14,165,164,0.4); }
+  details[open] .faq-summary { color: var(--teal); }
+
+  .faq-answer {
+    padding: 0 20px 18px;
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    border-top: 1px solid #f0f8f8;
+  }
+
+  /* Become a sitter */
+  .become-section {
+    background: linear-gradient(165deg, rgba(255,107,107,0.05), white 60%);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .earnings-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .earnings-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .earnings-info h4 { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+  .earnings-info p { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+  /* Footer */
+  footer {
+    background: var(--text-dark);
+    color: rgba(255,255,255,0.75);
+    padding: 48px 24px 28px;
+    margin-top: 0;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 28px;
+  }
+
+  .footer-brand .logo-text { color: white; }
+  .footer-brand p {
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-top: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    text-decoration: none;
+  }
+
+  .social-btn:hover { background: var(--teal); border-color: var(--teal); }
+
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--teal); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-bottom a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--teal); }
+
+  /* Charity section */
+  .charity-section {
+    background: #FFF8F8;
+    border-radius: var(--radius-lg);
+    border: 1px solid #fdd;
+    padding: 32px;
+  }
+
+  .charity-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .charity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffe4e4;
+    color: #e53e3e;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+  }
+
+  .charity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+  .charity-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.25s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .charity-card:hover { transform: translateY(-3px); }
+
+  .charity-img {
+    height: 200px;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    position: relative;
+  }
+
+  .charity-status {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .status-active { background: #dcfce7; color: #16a34a; }
+  .status-done { background: #dbeafe; color: #2563eb; }
+
+  .charity-body { padding: 18px; }
+  .charity-body h3 { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; }
+
+  .progress-bar {
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(to left, #ff6b6b, #2EC4B6);
+    transition: width 1s ease;
+  }
+
+  .charity-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--text-light);
+    margin-bottom: 14px;
+  }
+
+  .charity-raised { color: var(--teal); font-weight: 700; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .service-tabs { grid-template-columns: repeat(3, 1fr); }
+    .search-fields { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid::before { display: none; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .safety-section { grid-template-columns: 1fr; }
+    .become-section { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .charity-grid { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .service-tabs { grid-template-columns: repeat(2, 1fr); }
+    .search-fields { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">🐾</div>
+      <span class="logo-text">واگی</span>
+    </a>
+    <nav>
+      <a href="#services">سرویس‌ها</a>
+      <a href="#how">نحوه کار</a>
+      <a href="#safety">امنیت</a>
+      <a href="#become">مراقب شو</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-outline">ورود</button>
+      <button class="btn btn-primary">ثبت‌نام رایگان</button>
+    </div>
+  </div>
+</header>
+
+<div style="background:#f0f4f6; padding-bottom: 0;">
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-bg-pattern"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        بیش از ۵۰۰ مراقب فعال در سراسر ایران
+      </div>
+
+      <h1>اون‌ها فقط حیوان خونگی نیستن…<br><span>خانواده‌ان.</span></h1>
+
+      <p>وقتی تو کنارش نیستی، ما مطمئن می‌شیم یک آدم مهربون کنارش هست — تاییدشده، قابل اعتماد، و واقعاً عاشق حیوانات.</p>
+
+      <!-- Search Card -->
+      <div class="search-card">
+        <div class="service-tabs">
+          <button class="service-tab active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            مراقبت در منزل
+          </button>
+          <button class="service-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+            نگهداری شبانه
+          </button>
+          <button class="service-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+            سرزدن کوتاه
+          </button>
+          <button class="service-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.93 4.93-1.41-1.41M6.34 6.34 4.93 4.93"/></svg>
+            مراقبت روزانه
+          </button>
+          <button class="service-tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/></svg>
+            پیاده‌روی
+          </button>
+        </div>
+
+        <div class="search-fields">
+          <div class="field-group">
+            <label class="field-label">تاریخ ورود</label>
+            <input type="date" class="field-input">
+          </div>
+          <div class="field-group">
+            <label class="field-label">تاریخ خروج</label>
+            <input type="date" class="field-input">
+          </div>
+          <div class="field-group">
+            <label class="field-label">ساعت</label>
+            <input type="time" class="field-input">
+          </div>
+          <div class="field-group">
+            <label class="field-label">تعداد حیوانات</label>
+            <input type="number" min="1" max="10" value="1" class="field-input">
+          </div>
+          <button class="btn-search">جستجو 🔍</button>
+        </div>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="trust-badges">
+        <span class="trust-badge"><span class="green-dot"></span>مراقبین تاییدشده</span>
+        <span class="trust-badge"><span class="green-dot"></span>پرداخت امن</span>
+        <span class="trust-badge"><span class="green-dot"></span>پشتیبانی ۲۴/۷</span>
+        <span class="trust-badge"><span class="green-dot"></span>بازپرداخت تضمینی</span>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-arrow">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">۱۰٬۰۰۰+</div>
+      <div class="stat-label">صاحب پت راضی
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">۴٫۹★</div>
+      <div class="stat-label">میانگین امتیاز خدمات
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">۵۰۰+</div>
+      <div class="stat-label">مراقب تاییدشده
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDIA BAR -->
+  <div class="media-bar">
+    <span class="media-label">در رسانه‌ها</span>
+    <div class="media-logos">
+      <span class="media-logo">دیجیاتو</span>
+      <span class="media-logo">زومیت</span>
+      <span class="media-logo">ایران استارتاپ</span>
+      <span class="media-logo">تک‌رسا</span>
+      <span class="media-logo">اکوایران</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="section-header">
+      <h2 class="section-title">سرویس‌های ما</h2>
+      <a href="#" class="btn btn-outline" style="font-size:13px; padding: 8px 16px;">مشاهده همه سرویس‌ها</a>
+    </div>
+    <div class="services-grid">
+      <a href="#" class="service-card">
+        <div class="service-img-placeholder p1">🏠</div>
+        <div class="service-body">
+          <h3>نگهداری شبانه</h3>
+          <p>وقتی سفر هستی، حیوانت تو یه محیط امن و گرم نزد مراقب تاییدشده می‌مونه.</p>
+          <span class="service-price">از ۲۰۰٬۰۰۰ تومان / شب</span>
+        </div>
+      </a>
+      <a href="#" class="service-card">
+        <div class="service-img-placeholder p2">🐕</div>
+        <div class="service-body">
+          <h3>مراقبت در منزل شما</h3>
+          <p>حیوانت در فضای آشنا و راحت خودش می‌مونه. مراقب به خانه شما می‌آید.</p>
+          <span class="service-price">از ۱۵۰٬۰۰۰ تومان / شب</span>
+        </div>
+      </a>
+      <a href="#" class="service-card">
+        <div class="service-img-placeholder p3">🦮</div>
+        <div class="service-body">
+          <h3>پیاده‌روی و بازی</h3>
+          <p>تحرک، انرژی و شادی بیشتر. مراقبین ما روزانه پیش‌قرارداد با شما هماهنگ می‌کنند.</p>
+          <span class="service-price">از ۸۰٬۰۰۰ تومان / جلسه</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section">
+    <h2 class="section-title" style="text-align:center; margin-bottom: 28px;">چطور کار می‌کنه</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">۱</div>
+        <h3>جستجو</h3>
+        <p>مراقبین تاییدشده اطرافت رو ببین، پروفایل‌ها و نظرات کاربران رو بررسی کن.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">۲</div>
+        <h3>آشنایی</h3>
+        <p>قبل از رزرو از طریق چت پیام بده، سوال‌هات رو بپرس و با مراقب آشنا بشو.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">۳</div>
+        <h3>رزرو امن</h3>
+        <p>سرویس موردنظر رو با پرداخت امن نهایی کن. پول تا پایان سرویس نزد واگی محفوظ است.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">۴</div>
+        <h3>با خیال راحت</h3>
+        <p>با آپدیت‌ها و عکس‌های منظم از سوی مراقب، آرامش کامل داشته باش.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section id="safety" class="safety-section">
+    <div>
+      <h2 class="section-title">امنیت حیوانت اولویت ماست</h2>
+      <p style="font-size:15px; color: var(--text-light); margin-top: 8px; line-height: 1.7;">ما هر مراقب را پیش از پذیرش به دقت بررسی می‌کنیم تا آرامش خاطر شما تضمین شود.</p>
+      <ul class="safety-list">
+        <li>
+          <div class="safety-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          تایید هویت و سابقه همه مراقبین
+        </li>
+        <li>
+          <div class="safety-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          پرداخت امن — پول تا پایان سرویس محفوظ است
+        </li>
+        <li>
+          <div class="safety-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          پشتیبانی ۲۴ ساعته در طول سرویس
+        </li>
+        <li>
+          <div class="safety-check">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          ارسال تصویر و گزارش روزانه از وضعیت حیوان
+        </li>
+      </ul>
+    </div>
+    <div class="safety-img">🛡️</div>
+  </section>
+
+  <!-- CHARITY -->
+  <section class="charity-section">
+    <div class="charity-header">
+      <div>
+        <div class="charity-badge">❤️ کمک به حیوانات نیازمند</div>
+        <h2 class="section-title">امروز تغییری ایجاد کنید</h2>
+        <p style="font-size:15px; color: var(--text-light); margin-top: 8px; line-height: 1.7; max-width: 460px;">به ما کمک کنید تا از حیوانات آسیب‌دیده حمایت کنیم. کمک شما می‌تواند زندگی‌ای را نجات دهد.</p>
+      </div>
+      <button class="btn btn-coral">مشاهده همه پرونده‌ها ←</button>
+    </div>
+    <div class="charity-grid">
+      <a href="#" class="charity-card">
+        <div class="charity-img">
+          🐶
+          <span class="charity-status status-active"><span style="width:6px;height:6px;border-radius:50%;background:#16a34a;"></span>در جریان</span>
+        </div>
+        <div class="charity-body">
+          <h3>نجات گلدن رتریور آسیب‌دیده از تصادف جاده‌ای</h3>
+          <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
+          <div class="charity-meta">
+            <span>۶ روز باقی‌مانده</span>
+            <span class="charity-raised">۴۲٬۰۰۰ تومان از ۱۰۰٬۰۰۰ تومان</span>
+          </div>
+          <button class="btn btn-coral" style="width:100%; padding: 10px;">همین حالا کمک کنید</button>
+        </div>
+      </a>
+      <a href="#" class="charity-card">
+        <div class="charity-img" style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9);">
+          🐱
+          <span class="charity-status status-done">✓ تکمیل شده</span>
+        </div>
+        <div class="charity-body">
+          <h3>درمان گربه خیابانی مبتلا به بیماری پارو ویروس</h3>
+          <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          <div class="charity-meta">
+            <span>هدف محقق شد 🎉</span>
+            <span class="charity-raised">۱۰۰٬۰۰۰ از ۱۰۰٬۰۰۰ تومان</span>
+          </div>
+          <button class="btn btn-outline" style="width:100%; padding: 10px; color: var(--coral); border-color: var(--coral);">مشاهده نتیجه</button>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <h2 class="section-title" style="text-align:center; margin-bottom: 24px;">تجربه کاربران واقعی</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">«اولش خیلی استرس داشتم که چطور گربه‌م رو به یه غریبه بسپارم. ولی بعد از صحبت با مراقب، دلم جا افتاد. هر روز عکس و ویدیو می‌فرستاد و حتی یه بار ساعت ۱۱ شب وقتی نگران شدم، سریع جواب داد. قطعاً دوباره استفاده می‌کنم.»</p>
+        <div class="testimonial-author">
+          <div class="avatar">س</div>
+          <div class="author-info">
+            <h4>سارا محمدی — تهران</h4>
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              مالک تاییدشده · صاحب گربه پرشین
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">«یه سفر ۱۰ روزه داشتم و نگران سگم بودم. مراقبم آدم فوق‌العاده‌ای بود — هر روز گزارش می‌داد، حتی یه مشکل کوچیک پیاده‌روی رو خودش حل کرد. وقتی برگشتم سگم کاملاً آروم و شاد بود. ممنون واگی!»</p>
+        <div class="testimonial-author">
+          <div class="avatar">م</div>
+          <div class="author-info">
+            <h4>محمد رضایی — شیراز</h4>
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              مالک تاییدشده · صاحب سگ گلدن
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">«به عنوان یه نفر که اولین باره از این خدمات استفاده می‌کنم، خیلی تحت‌تاثیر قرار گرفتم. از مرحله رزرو تا پایان سرویس همه چیز حرفه‌ای بود. مراقب خودش هماهنگ کرد که قبلش یه جلسه آشنایی با حیوانم داشته باشیم که خیلی به آرامشم کمک کرد.»</p>
+        <div class="testimonial-author">
+          <div class="avatar">ن</div>
+          <div class="author-info">
+            <h4>نرگس کریمی — اصفهان</h4>
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#0ea5a4"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              مالک تاییدشده · صاحب خرگوش
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BECOME A SITTER -->
+  <section id="become" class="become-section">
+    <div>
+      <h2 class="section-title">عشق به حیوانات داری؟</h2>
+      <p style="font-size:16px; color: var(--text-light); margin-top: 8px; line-height: 1.7;">ازش درآمد بساز. هزاران مراقب در واگی درآمد خوبی از علاقه‌شان به حیوانات به دست می‌آورند.</p>
+
+      <div class="earnings-card">
+        <div class="earnings-icon">💰</div>
+        <div class="earnings-info">
+          <h4>درآمد تا ۱۵ میلیون تومان در ماه</h4>
+          <p>بر اساس میانگین درآمد مراقبین فعال واگی</p>
+        </div>
+      </div>
+
+      <div class="earnings-card">
+        <div class="earnings-icon">⏰</div>
+        <div class="earnings-info">
+          <h4>ساعت کار کاملاً آزاد</h4>
+          <p>خودت انتخاب می‌کنی چه روزهایی و چه ساعتی کار کنی</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn btn-coral" style="padding: 12px 28px; font-size: 15px;">همین امروز ثبت‌نام کن</button>
+        <button class="btn btn-outline">بیشتر بدان</button>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:center; height: 100%; min-height: 260px;">
+      <div style="width:100%; height:260px; background: linear-gradient(135deg, #fff3e0, #fce4ec); border-radius: 16px; display:flex; align-items:center; justify-content:center; font-size: 80px; border: 1px solid var(--border);">🐾</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>چون اون‌ها به تو اعتماد دارن…<br>و تو می‌تونی به ما اعتماد کنی.</h2>
+    <div style="display:flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1;">
+      <button class="btn btn-white">پیدا کردن مراقب مهربان 🐾</button>
+      <button class="btn" style="background: rgba(255,255,255,0.15); color: white; border: 1.5px solid rgba(255,255,255,0.4); backdrop-filter: blur(8px);">درباره ما بیشتر بدانید</button>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 class="section-title" style="text-align:center; margin-bottom: 24px;">سوالات پرتکرار</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-summary">
+          آیا می‌تونم قبل از رزرو با مراقب صحبت کنم؟
+          <span class="faq-chevron">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <p class="faq-answer">بله، قبل از تایید نهایی می‌تونی از طریق سیستم پیام‌رسانی واگی با مراقب ارتباط بگیری، سوال بپرسی و حتی یک جلسه آشنایی حضوری یا ویدیویی با حیوانت ترتیب بدی. ما این مرحله رو توصیه می‌کنیم.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-summary">
+          اگر مشکلی پیش بیاد چی؟
+          <span class="faq-chevron">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <p class="faq-answer">تیم پشتیبانی واگی ۲۴ ساعته آماده‌ست. اگر در طول سرویس مشکلی پیش بیاد، می‌تونی مستقیم با ما تماس بگیری. ما نه تنها موضوع رو سریع پیگیری می‌کنیم، بلکه در صورت نارضایتی بخشی یا تمام هزینه رو بازپرداخت می‌کنیم.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-summary">
+          پرداخت چطور انجام میشه؟
+          <span class="faq-chevron">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <p class="faq-answer">پرداخت از طریق درگاه امن پلتفرم انجام میشه. پول شما نزد واگی نگه‌داری میشه و فقط بعد از اتمام موفق سرویس به مراقب پرداخت میشه — این یعنی شما همیشه محافظت می‌شید.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-summary">
+          اطلاعات من امن می‌مونه؟
+          <span class="faq-chevron">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <p class="faq-answer">بله، اطلاعات شما کاملاً محرمانه و رمزگذاری‌شده هستند. ما اطلاعات هیچ کاربری رو به اشخاص ثالث نمی‌فروشیم. سیاست حریم خصوصی کامل ما در صفحه مربوطه قابل مشاهده‌ست.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-summary">
+          اگر از خدمات راضی نبودم؟
+          <span class="faq-chevron">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+        <p class="faq-answer">رضایت شما برای ما اولویته. در صورت نارضایتی ظرف ۴۸ ساعت با پشتیبانی ما تماس بگیرید. تیم ما موضوع رو بررسی و در صورت تایید، بازپرداخت کامل یا جزئی انجام میشه. تا به امروز بیش از ۹۸٪ موارد با موفقیت حل شده‌اند.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon">🐾</div>
+          <span class="logo-text">واگی</span>
+        </div>
+        <p>پلتفرم مراقبت حرفه‌ای از حیوانات خانگی. بهترین مراقبین تاییدشده را در محله‌ی خودت پیدا کن.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">📸</a>
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">🎬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>سرویس‌ها</h4>
+        <ul>
+          <li><a href="#">نگهداری شبانه</a></li>
+          <li><a href="#">مراقبت در منزل</a></li>
+          <li><a href="#">پیاده‌روی</a></li>
+          <li><a href="#">سرزدن کوتاه</a></li>
+          <li><a href="#">مراقبت روزانه</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>شرکت</h4>
+        <ul>
+          <li><a href="#">درباره ما</a></li>
+          <li><a href="#">مراقب شو</a></li>
+          <li><a href="#">وبلاگ</a></li>
+          <li><a href="#">خیریه</a></li>
+          <li><a href="#">تماس با ما</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>پشتیبانی</h4>
+        <ul>
+          <li><a href="#">سوالات متداول</a></li>
+          <li><a href="#">سیاست حریم خصوصی</a></li>
+          <li><a href="#">قوانین استفاده</a></li>
+          <li><a href="#">گزارش مشکل</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© ۱۴۰۳ واگی — تمام حقوق محفوظ است</span>
+      <div style="display:flex; gap:16px;">
+        <a href="#">حریم خصوصی</a>
+        <a href="#">شرایط استفاده</a>
+        <a href="#">تماس</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Service tab switching
+  document.querySelectorAll('.service-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Animate stats on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.style.opacity = '1';
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.stat-card, .step-card, .service-card').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

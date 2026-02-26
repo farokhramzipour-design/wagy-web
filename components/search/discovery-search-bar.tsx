@@ -117,7 +117,7 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-xl border border-gray-100 flex flex-col w-full max-w-4xl mx-auto gap-6">
+    <div className="bg-white p-6 rounded-xl border border-neutral-200 flex flex-col w-full max-w-4xl mx-auto gap-6 shadow-sm">
       {/* Service Types - Cards Grid */}
       <div>
         <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wider hidden md:block">
@@ -131,10 +131,10 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
                 key={st.service_type_id}
                 onClick={() => handleServiceSelect(st.service_type_id.toString())}
                 className={`
-                  flex flex-col items-center justify-center p-3 rounded-lg border transition-all h-24
+                  flex flex-col items-center justify-center p-3 rounded-lg border transition-all h-24 duration-200
                   ${isSelected
                     ? "bg-primary/5 border-primary text-primary shadow-sm"
-                    : "bg-white border-gray-200 text-gray-600 hover:border-primary/50 hover:bg-gray-50"
+                    : "bg-white border-gray-200 text-gray-600 hover:border-[#0ea5a4]/50 hover:bg-teal-50 hover:text-teal-600 hover:-translate-y-0.5"
                   }
                 `}
               >

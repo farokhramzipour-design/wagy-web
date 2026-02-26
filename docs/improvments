@@ -1,0 +1,315 @@
+You are improving the Waggy (waggy.ir) landing page — a Persian (RTL) pet care marketplace built with Next.js + Tailwind CSS. The primary language is Farsi. Apply ALL of the following changes precisely.
+
+═══════════════════════════════════════
+1. CRITICAL BUG FIXES (do these first)
+═══════════════════════════════════════
+
+- In the charity section, replace all placeholder text ("asdasdasd", "adsasdasd") with real Persian content:
+  - Card 1 title: "نجات گلدن رتریور آسیب‌دیده از تصادف جاده‌ای"
+  - Card 2 title: "درمان گربه خیابانی مبتلا به بیماری پارو ویروس"
+- Fix OG image meta tag: change `http://localhost:3000/og-image.jpg` → `https://waggy.ir/og-image.jpg`
+- Fix Twitter image meta tag the same way.
+- Add `font-display: swap` to any Google Font imports.
+- Add `scroll-behavior: smooth` to the html element.
+
+═══════════════════════════════════════
+2. HEADER
+═══════════════════════════════════════
+
+- Add two CTA buttons to the header actions area (after the language switcher):
+  - "ورود" → outlined style, links to /auth
+  - "ثبت‌نام رایگان" → primary teal filled style, links to /auth
+- Keep the existing bell + user icon buttons.
+
+═══════════════════════════════════════
+3. HERO SECTION
+═══════════════════════════════════════
+
+- Add more vertical padding: change `py-12` → `py-16 md:py-20`.
+- Add a badge above the H1:
+```jsx
+  <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full mb-2">
+    <span className="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_0_4px_rgba(74,222,128,0.2)] animate-pulse" />
+    بیش از ۵۰۰ مراقب فعال در سراسر ایران
+  </span>
+```
+- Add a 4th trust badge after the existing 3:
+```jsx
+  <span className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold text-gray-800 shadow-sm flex items-center gap-2">
+    <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>بازپرداخت تضمینی
+  </span>
+```
+- Add scroll indicator at the bottom of the hero (above the closing tag):
+```jsx
+  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-white/50 text-xs animate-bounce">
+    <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center">
+      <ChevronDown className="w-3.5 h-3.5" />
+    </div>
+  </div>
+```
+
+═══════════════════════════════════════
+4. SEARCH WIDGET
+═══════════════════════════════════════
+
+- Change the search card background to `bg-white/97` and increase shadow:
+  `shadow-[0_20px_60px_rgba(0,0,0,0.22),0_4px_16px_rgba(0,0,0,0.08)]`
+- Add a border: `border border-white/80`
+- Add hover and focus styles to each service tab:
+  `hover:border-[#0ea5a4]/50 hover:bg-teal-50 hover:text-[#0ea5a4] hover:-translate-y-0.5 transition-all`
+
+═══════════════════════════════════════
+5. STATS SECTION
+═══════════════════════════════════════
+
+No layout changes. Update the stat labels to be more descriptive:
+- "صاحب پت راضی" → "صاحب پت راضی در سراسر ایران"
+- "میانگین امتیاز" → "میانگین امتیاز از ۵"
+- "مراقب تاییدشده" → "مراقب تاییدشده و فعال"
+
+Add a new MEDIA BAR section immediately after the stats grid:
+```jsx
+<div className="mt-3.5 flex items-center gap-6 bg-white rounded-[14px] border border-[#dce6e8] px-6 py-4">
+  <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider whitespace-nowrap pl-6 border-l border-[#dce6e8]">
+    در رسانه‌ها
+  </span>
+  <div className="flex items-center gap-8 flex-1 justify-center opacity-35 grayscale">
+    <span className="text-[13px] font-extrabold text-neutral-800">دیجیاتو</span>
+    <span className="text-[13px] font-extrabold text-neutral-800">زومیت</span>
+    <span className="text-[13px] font-extrabold text-neutral-800">ایران استارتاپ</span>
+    <span className="text-[13px] font-extrabold text-neutral-800">تک‌رسا</span>
+    <span className="text-[13px] font-extrabold text-neutral-800">اکوایران</span>
+  </div>
+</div>
+```
+(Replace these with real media names if available. Keep opacity-35 and grayscale for credibility effect.)
+
+═══════════════════════════════════════
+6. SERVICES SECTION
+═══════════════════════════════════════
+
+- Add a price tag to each service card below the description:
+```jsx
+  <span className="inline-flex items-center gap-1 mt-2.5 text-xs font-semibold text-[#0ea5a4] bg-teal-50 px-2.5 py-1 rounded-md">
+    از ۲۰۰٬۰۰۰ تومان / شب
+  </span>
+```
+  - نگهداری شبانه: از ۲۰۰٬۰۰۰ تومان / شب
+  - مراقبت در منزل: از ۱۵۰٬۰۰۰ تومان / شب
+  - پیاده‌روی و بازی: از ۸۰٬۰۰۰ تومان / جلسه
+- Add `hover:border-[#0ea5a4]/30` to each service card's border.
+
+═══════════════════════════════════════
+7. HOW IT WORKS SECTION
+═══════════════════════════════════════
+
+Expand each step description to be more specific:
+- Step 1: "مراقبین تاییدشده اطرافت رو ببین، پروفایل‌ها و نظرات کاربران واقعی رو مقایسه کن."
+- Step 2: "قبل از رزرو از طریق چت پیام بده، سوال‌هات رو بپرس و با مراقب آشنا بشو."
+- Step 3: "سرویس موردنظر رو با پرداخت امن نهایی کن. پول تا پایان سرویس نزد واگی محفوظ است."
+- Step 4: "با آپدیت‌ها و عکس‌های منظم از سوی مراقب، آرامش کامل داشته باش."
+
+═══════════════════════════════════════
+8. SAFETY SECTION
+═══════════════════════════════════════
+
+Replace the `<ul>` bullet list with individual card-style list items:
+```jsx
+<ul className="mt-4 space-y-2.5 list-none p-0">
+  {[
+    "تایید هویت و سابقه همه مراقبین",
+    "پرداخت امن — پول تا پایان سرویس محفوظ است",
+    "پشتیبانی ۲۴ ساعته در طول سرویس",
+    "ارسال تصویر و گزارش روزانه از وضعیت حیوان"
+  ].map((item) => (
+    <li key={item} className="flex items-center gap-3 bg-white rounded-xl border border-neutral-200 px-4 py-3 shadow-sm text-[15px] text-neutral-600">
+      <span className="w-7 h-7 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
+        <Check className="w-3.5 h-3.5 text-[#0ea5a4]" />
+      </span>
+      {item}
+    </li>
+  ))}
+</ul>
+```
+
+═══════════════════════════════════════
+9. TESTIMONIALS SECTION
+═══════════════════════════════════════
+
+Replace the three short testimonials with expanded versions:
+
+Testimonial 1:
+- Name: "سارا محمدی — تهران"
+- Pet type: "صاحب گربه پرشین"
+- Stars: 5
+- Text: «اولش خیلی استرس داشتم که چطور گربه‌م رو به یه غریبه بسپارم. ولی بعد از صحبت با مراقب، دلم جا افتاد. هر روز عکس و ویدیو می‌فرستاد و حتی یه بار ساعت ۱۱ شب وقتی نگران شدم، سریع جواب داد. قطعاً دوباره استفاده می‌کنم.»
+
+Testimonial 2:
+- Name: "محمد رضایی — شیراز"
+- Pet type: "صاحب سگ گلدن رتریور"
+- Stars: 5
+- Text: «یه سفر ۱۰ روزه داشتم و نگران سگم بودم. مراقب آدم فوق‌العاده‌ای بود — هر روز گزارش می‌داد، یه مشکل کوچیک پیاده‌روی رو هم خودش حل کرد. وقتی برگشتم سگم کاملاً آروم و شاد بود.»
+
+Testimonial 3:
+- Name: "نرگس کریمی — اصفهان"
+- Pet type: "صاحب خرگوش"
+- Stars: 5
+- Text: «به عنوان کسی که اولین باره از این خدمات استفاده می‌کنم، خیلی تحت‌تاثیر قرار گرفتم. از مرحله رزرو تا پایان سرویس همه چیز حرفه‌ای بود. مراقب خودش پیشنهاد داد یه جلسه آشنایی با حیوانم داشته باشیم که خیلی به آرامشم کمک کرد.»
+
+Add a star rating display above each testimonial text:
+```jsx
+<div className="flex gap-0.5 mb-3 text-amber-400 text-sm">★★★★★</div>
+```
+
+Add pet type below the name:
+```jsx
+<span className="text-xs text-[#0ea5a4] font-semibold flex items-center gap-1 mt-1">
+  <CheckCircle className="w-3 h-3" /> مالک تاییدشده · {petType}
+</span>
+```
+
+═══════════════════════════════════════
+10. FAQ SECTION
+═══════════════════════════════════════
+
+Replace all short FAQ answers with these expanded versions:
+
+Q: "آیا می‌تونم قبل از رزرو با مراقب صحبت کنم؟"
+A: "بله، قبل از تایید نهایی می‌تونی از طریق سیستم پیام‌رسانی واگی با مراقب ارتباط بگیری، سوال بپرسی و حتی یک جلسه آشنایی حضوری یا ویدیویی با حیوانت ترتیب بدی. ما این مرحله رو توصیه می‌کنیم."
+
+Q: "اگر مشکلی پیش بیاد چی؟"
+A: "تیم پشتیبانی واگی ۲۴ ساعته آماده‌ست. اگر در طول سرویس مشکلی پیش بیاد، مستقیم با ما تماس بگیر. ما نه تنها موضوع رو سریع پیگیری می‌کنیم، بلکه در صورت نارضایتی بخشی یا تمام هزینه رو بازپرداخت می‌کنیم."
+
+Q: "پرداخت چطور انجام میشه؟"
+A: "پرداخت از طریق درگاه امن پلتفرم انجام میشه. پول شما نزد واگی نگه‌داری میشه و فقط بعد از اتمام موفق سرویس به مراقب پرداخت میشه — این یعنی شما همیشه محافظت می‌شید."
+
+Q: "اطلاعات من امن می‌مونه؟"
+A: "بله، اطلاعات شما کاملاً محرمانه و رمزگذاری‌شده هستند. ما اطلاعات هیچ کاربری رو به اشخاص ثالث نمی‌فروشیم. سیاست حریم خصوصی کامل ما در صفحه مربوطه قابل مشاهده‌ست."
+
+Q: "اگر از خدمات راضی نبودم؟"
+A: "رضایت شما اولویت ماست. در صورت نارضایتی ظرف ۴۸ ساعت با پشتیبانی تماس بگیر. تیم ما موضوع رو بررسی و در صورت تایید، بازپرداخت کامل یا جزئی انجام میشه. تا به امروز بیش از ۹۸٪ موارد با موفقیت حل شده‌اند."
+
+Also add hover style to each `<details>` element:
+`hover:border-[#0ea5a4]/40 transition-colors`
+
+═══════════════════════════════════════
+11. BECOME A SITTER SECTION
+═══════════════════════════════════════
+
+Expand the description below the H2:
+"ازش درآمد بساز. هزاران مراقب در واگی درآمد خوبی از علاقه‌شان به حیوانات به دست می‌آورند."
+
+Add two earnings cards below the description (before the CTA button):
+```jsx
+<div className="flex items-center gap-3 bg-white rounded-xl border border-neutral-200 px-4 py-3 shadow-sm mt-4">
+  <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center text-lg flex-shrink-0">💰</div>
+  <div>
+    <p className="text-sm font-bold text-neutral-800">درآمد تا ۱۵ میلیون تومان در ماه</p>
+    <p className="text-xs text-neutral-400 mt-0.5">بر اساس میانگین مراقبین فعال واگی</p>
+  </div>
+</div>
+<div className="flex items-center gap-3 bg-white rounded-xl border border-neutral-200 px-4 py-3 shadow-sm mt-2.5">
+  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-content-center text-lg flex-shrink-0">⏰</div>
+  <div>
+    <p className="text-sm font-bold text-neutral-800">ساعت کار کاملاً آزاد</p>
+    <p className="text-xs text-neutral-400 mt-0.5">خودت انتخاب می‌کنی چه روزهایی کار کنی</p>
+  </div>
+</div>
+```
+
+═══════════════════════════════════════
+12. ADD FOOTER (currently missing entirely)
+═══════════════════════════════════════
+
+Add a full footer component after the main closing tag. Structure:
+```jsx
+<footer className="bg-[#103745] text-white/70 pt-12 pb-7 mt-0">
+  <div className="max-w-7xl mx-auto px-6">
+    
+    {/* Top grid */}
+    <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 pb-10 border-b border-white/10 mb-7">
+      
+      {/* Brand col */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <img src="/typographic_logo.svg" className="h-6 brightness-0 invert" alt="Waggy" />
+        </div>
+        <p className="text-sm leading-7 text-white/50">
+          پلتفرم مراقبت حرفه‌ای از حیوانات خانگی. بهترین مراقبین تاییدشده را در محله‌ی خودت پیدا کن.
+        </p>
+        <div className="flex gap-2.5 mt-5">
+          {/* Instagram */}
+          <a href="https://instagram.com/waggy" className="w-9 h-9 rounded-lg bg-white/8 border border-white/12 flex items-center justify-center hover:bg-[#0ea5a4] hover:border-[#0ea5a4] transition-all">
+            <Instagram className="w-4 h-4" />
+          </a>
+          {/* Twitter/X */}
+          <a href="https://twitter.com/waggy" className="w-9 h-9 rounded-lg bg-white/8 border border-white/12 flex items-center justify-center hover:bg-[#0ea5a4] hover:border-[#0ea5a4] transition-all">
+            <Twitter className="w-4 h-4" />
+          </a>
+          {/* LinkedIn */}
+          <a href="#" className="w-9 h-9 rounded-lg bg-white/8 border border-white/12 flex items-center justify-center hover:bg-[#0ea5a4] hover:border-[#0ea5a4] transition-all">
+            <Linkedin className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+
+      {/* Links col 1 */}
+      <div>
+        <h4 className="text-white text-[13px] font-bold mb-4">سرویس‌ها</h4>
+        <ul className="space-y-2.5 text-[13px]">
+          <li><a href="/services" className="hover:text-[#0ea5a4] transition-colors">نگهداری شبانه</a></li>
+          <li><a href="/services" className="hover:text-[#0ea5a4] transition-colors">مراقبت در منزل</a></li>
+          <li><a href="/services" className="hover:text-[#0ea5a4] transition-colors">پیاده‌روی</a></li>
+          <li><a href="/services" className="hover:text-[#0ea5a4] transition-colors">سرزدن کوتاه</a></li>
+          <li><a href="/services" className="hover:text-[#0ea5a4] transition-colors">مراقبت روزانه</a></li>
+        </ul>
+      </div>
+
+      {/* Links col 2 */}
+      <div>
+        <h4 className="text-white text-[13px] font-bold mb-4">شرکت</h4>
+        <ul className="space-y-2.5 text-[13px]">
+          <li><a href="/about" className="hover:text-[#0ea5a4] transition-colors">درباره ما</a></li>
+          <li><a href="/auth" className="hover:text-[#0ea5a4] transition-colors">مراقب شو</a></li>
+          <li><a href="/blog" className="hover:text-[#0ea5a4] transition-colors">وبلاگ</a></li>
+          <li><a href="/charity" className="hover:text-[#0ea5a4] transition-colors">خیریه</a></li>
+          <li><a href="/contact" className="hover:text-[#0ea5a4] transition-colors">تماس با ما</a></li>
+        </ul>
+      </div>
+
+      {/* Links col 3 */}
+      <div>
+        <h4 className="text-white text-[13px] font-bold mb-4">پشتیبانی</h4>
+        <ul className="space-y-2.5 text-[13px]">
+          <li><a href="/landing#faq" className="hover:text-[#0ea5a4] transition-colors">سوالات متداول</a></li>
+          <li><a href="/privacy" className="hover:text-[#0ea5a4] transition-colors">حریم خصوصی</a></li>
+          <li><a href="/terms" className="hover:text-[#0ea5a4] transition-colors">قوانین استفاده</a></li>
+          <li><a href="/contact" className="hover:text-[#0ea5a4] transition-colors">گزارش مشکل</a></li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Bottom bar */}
+    <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-[12.5px] text-white/35">
+      <span>© ۱۴۰۳ واگی — تمام حقوق محفوظ است</span>
+      <div className="flex gap-5">
+        <a href="/privacy" className="hover:text-[#0ea5a4] transition-colors">حریم خصوصی</a>
+        <a href="/terms" className="hover:text-[#0ea5a4] transition-colors">شرایط استفاده</a>
+        <a href="/contact" className="hover:text-[#0ea5a4] transition-colors">تماس</a>
+      </div>
+    </div>
+  </div>
+</footer>
+```
+
+═══════════════════════════════════════
+CONSTRAINTS — DO NOT CHANGE
+═══════════════════════════════════════
+
+- Keep all existing RTL (`dir="rtl"`) layout and Farsi text
+- Keep the primary teal color `#0ea5a4` and dark teal `#0b7c7b`
+- Keep the existing Next.js component structure and file locations
+- Keep the existing search widget logic and state management
+- Keep the `bg-[#f2f4f7]` page background
+- Do not change routing or API calls
+- Do not modify any TypeScript types or interfaces
