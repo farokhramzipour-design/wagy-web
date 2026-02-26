@@ -15,7 +15,7 @@ import en from "@/locales/en.json";
 import fa from "@/locales/fa.json";
 import { SearchDiscoveryServiceType } from "@/services/search-api";
 import { format } from "date-fns";
-import { Search } from "lucide-react";
+import { Briefcase, Footprints, Home, MapPin, Search, Sun } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -99,14 +99,6 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
 
     if (startTime) params.set("start_time", startTime);
     if (pets) params.set("number_of_pets", pets.toString());
-    // Also support legacy 'pets' param if needed, but schema says 'number_of_pets'.
-    // However, existing code might expect 'pets'. I'll set both or switch to new one.
-    // The schema user provided says "number_of_pets".
-    // I'll use "number_of_pets" but keep "pets" for now if other components use it, or just switch.
-    // The SearchPageClient uses "pets". I should update it to use "number_of_pets" preferably, or map it.
-    // I'll stick to what SearchPageClient expects for now, which is "pets" in the URL -> mapped to "number_of_pets" in API.
-    // Wait, SearchPageClient currently reads "pets".
-    // I will use "pets" in URL for consistency, and map it to "number_of_pets" in API call.
     params.set("pets", pets.toString());
 
     if (sortBy) params.set("sort_by", sortBy);
@@ -114,11 +106,24 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
     router.push(`/search?${params.toString()}`);
   };
 
+  const getServiceIcon = (name: string) => {
+    const n = name.toLowerCase();
+    if (n.includes("boarding") || n.includes("hotel")) return <Briefcase className="w-5 h-5 mb-2" />;
+    if (n.includes("house") || n.includes("sitting")) return <Home className="w-5 h-5 mb-2" />;
+    if (n.includes("drop") || n.includes("visit")) return <MapPin className="w-5 h-5 mb-2" />;
+    if (n.includes("day") || n.includes("care")) return <Sun className="w-5 h-5 mb-2" />;
+    if (n.includes("walk")) return <Footprints className="w-5 h-5 mb-2" />;
+    return <Briefcase className="w-5 h-5 mb-2" />;
+  };
+
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-100 flex flex-col items-stretch w-full max-w-5xl mx-auto gap-4">
-      {/* Service Types - Horizontal Radio List */}
-      <div className="w-full overflow-x-auto pb-2 -mb-2">
-        <div className="flex gap-2">
+    <div className="bg-white p-6 rounded-xl shadow-xl border border-gray-100 flex flex-col w-full max-w-4xl mx-auto gap-6">
+      {/* Service Types - Cards Grid */}
+      <div>
+        <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wider hidden md:block">
+          {tSearch.select_service || "Select Service"}
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {serviceTypes.map((st) => {
             const isSelected = serviceTypeId === st.service_type_id.toString();
             return (
@@ -126,89 +131,82 @@ export function DiscoverySearchBar({ initialServiceTypes = [] }: DiscoverySearch
                 key={st.service_type_id}
                 onClick={() => handleServiceSelect(st.service_type_id.toString())}
                 className={`
-                            px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                            ${isSelected
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  flex flex-col items-center justify-center p-3 rounded-lg border transition-all h-24
+                  ${isSelected
+                    ? "bg-primary/5 border-primary text-primary shadow-sm"
+                    : "bg-white border-gray-200 text-gray-600 hover:border-primary/50 hover:bg-gray-50"
                   }
-                        `}
+                `}
               >
-                {lang === "fa" ? st.name_fa : st.name_en}
+                {getServiceIcon(st.name_en)}
+                <span className="text-xs font-medium text-center leading-tight">
+                  {lang === "fa" ? st.name_fa : st.name_en}
+                </span>
               </button>
             )
           })}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end w-full">
-        {/* Check-in / Booking Date */}
-        <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_in}</label>
-          <DatePicker
-            date={checkInDate}
-            setDate={setCheckInDate}
-            locale={lang}
-            placeholder={tSearch.select_date}
-            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
-          />
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-end">
+        {/* Search Inputs Group */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full">
+            {/* Check-in / Booking Date */}
+            <div className="w-full">
+              <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_in}</label>
+              <DatePicker
+                date={checkInDate}
+                setDate={setCheckInDate}
+                locale={lang}
+                placeholder={tSearch.select_date}
+                className="w-full h-11 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+              />
+            </div>
 
-        {/* Check-out Date (Optional) */}
-        <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_out} <span className="text-gray-300 text-[10px] lowercase">{tSearch.optional}</span></label>
-          <DatePicker
-            date={checkOutDate}
-            setDate={setCheckOutDate}
-            locale={lang}
-            placeholder={tSearch.select_date}
-            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
-          />
-        </div>
+            {/* Check-out Date */}
+            <div className="w-full">
+              <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.check_out}</label>
+              <DatePicker
+                date={checkOutDate}
+                setDate={setCheckOutDate}
+                locale={lang}
+                placeholder={tSearch.select_date}
+                className="w-full h-11 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+              />
+            </div>
 
-        {/* Start Time */}
-        <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.time} <span className="text-gray-300 text-[10px] lowercase">{tSearch.optional}</span></label>
-          <Input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
-          />
-        </div>
+            {/* Start Time (Optional) */}
+            <div className="w-full">
+               <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.time}</label>
+               <Input
+                 type="time"
+                 value={startTime}
+                 onChange={(e) => setStartTime(e.target.value)}
+                 className="w-full h-11 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+               />
+            </div>
 
-        {/* Pets */}
-        <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.pets}</label>
-          <Input
-            type="number"
-            min={1}
-            max={10}
-            value={pets}
-            onChange={(e) => setPets(parseInt(e.target.value) || 1)}
-            className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors"
-          />
-        </div>
-
-        {/* Sort By */}
-        <div className="w-full">
-          <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.sort_by}</label>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full h-12 border border-gray-200 rounded-lg px-3 bg-gray-50 hover:bg-white transition-colors">
-              <SelectValue placeholder={tSearch.sort_by} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="distance">{tSearch.distance}</SelectItem>
-              <SelectItem value="price">{tSearch.price}</SelectItem>
-              <SelectItem value="rating">{tSearch.rating}</SelectItem>
-              <SelectItem value="response_time">{tSearch.response_time}</SelectItem>
-            </SelectContent>
-          </Select>
+            {/* Pets */}
+            <div className="w-full">
+              <label className="text-xs text-gray-500 font-medium mb-1 block uppercase tracking-wider">{tSearch.pets}</label>
+              <Input
+                type="number"
+                min={1}
+                max={10}
+                value={pets}
+                onChange={(e) => setPets(parseInt(e.target.value) || 1)}
+                className="w-full h-11 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+              />
+            </div>
         </div>
 
         {/* Search Button */}
-        <div className="w-full md:col-span-2 lg:col-span-5 mt-2">
-          <Button size="lg" className="w-full h-12 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-md" onClick={handleSearch}>
-            <Search className="w-5 h-5 mr-2" />
+        <div className="w-full md:w-auto">
+          <Button 
+            size="lg" 
+            className="w-full md:w-32 h-11 rounded-md bg-primary hover:bg-primary/90 text-white font-bold text-base shadow-md transition-transform active:scale-95" 
+            onClick={handleSearch}
+          >
             {tSearch.search_button}
           </Button>
         </div>

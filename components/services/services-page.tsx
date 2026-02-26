@@ -16,11 +16,11 @@ type ServiceCategory = "all" | "overnight" | "daytime";
 const content = { en, fa };
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80", // Boarding
-  "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=800&q=80", // House Sitting
-  "https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?auto=format&fit=crop&w=800&q=80", // Dog Walking
-  "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80", // Day Care
-  "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=800&q=80"  // Drop-In
+  "/images/pet-boarding.jpg",
+  "/images/home-care.jpg",
+  "/images/pet-walking.jpg",
+  "/images/day-care.jpg",
+  "/images/drop-in.jpg"
 ];
 
 const serviceMetadata = [

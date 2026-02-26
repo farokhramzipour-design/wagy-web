@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
-import { PublicCharityCard } from "@/components/charity/public-charity-card";
+import { LandingCharityCard } from "@/components/landing/landing-charity-card";
 import { charityPublicApi } from "@/services/charity-public-api";
 import { CharityCase } from "@/types/charity-public";
 import { ArrowRight, Heart } from "lucide-react";
@@ -23,9 +23,9 @@ export function CharitySection() {
     const fetchCases = async () => {
       try {
         const data = await charityPublicApi.getCases();
-        // Take top 3
+        // Take top 4 for 2-column grid
         if (data && data.length > 0) {
-          setCases(data.slice(0, 3));
+          setCases(data.slice(0, 4));
         }
       } catch (error) {
         console.error("Failed to fetch charity cases for landing page", error);
@@ -37,32 +37,37 @@ export function CharitySection() {
   if (cases.length === 0) return null;
 
   return (
-    <section className="py-20 bg-rose-50/50">
+    <section className="py-20 bg-[#FFF8F8]">
       <div className="container mx-auto px-4">
+        {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+          {/* Text Block - Right Aligned in RTL */}
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-sm font-medium">
               <Heart className="w-4 h-4 fill-rose-600" />
               <span>{t.pageTitle}</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-800 leading-tight">
+            <h2 className="text-3xl md:text-[32px] font-bold text-[#1A1A2E] leading-tight">
               {t.landing.title}
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-gray-500">
               {t.landing.subtitle}
             </p>
           </div>
+          
+          {/* Button - Left Aligned in RTL */}
           <Link href="/charity">
-            <Button className="bg-rose-500 hover:bg-rose-600 text-white gap-2 h-12 px-6 rounded-xl shadow-lg shadow-rose-200">
+            <Button className="bg-[#FF6B6B] hover:bg-[#ff5252] text-white gap-2 h-12 px-8 rounded-full shadow-lg shadow-rose-200 transition-all hover:scale-105">
               {t.landing.cta}
               {lang === "fa" ? <ArrowRight className="rotate-180 w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {cases.map((charityCase) => (
-            <PublicCharityCard key={charityCase.charity_case_id} charityCase={charityCase} />
+            <LandingCharityCard key={charityCase.charity_case_id} charityCase={charityCase} />
           ))}
         </div>
       </div>

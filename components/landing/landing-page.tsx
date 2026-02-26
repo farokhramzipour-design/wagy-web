@@ -77,15 +77,15 @@ export function LandingPage({
   const t = useMemo(() => content[lang], [lang]);
   const trustBadges = t.hero.trust.split(" • ");
   const serviceImages = [
-    "https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+    "/images/pet-boarding.jpg",
+    "/images/home-care.jpg",
+    "/images/pet-walking.jpg",
+    "/images/day-care.jpg",
+    "/images/drop-in.jpg"
   ];
-  const heroImage = "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1600&q=80";
-  const safetyImage = "https://images.unsplash.com/photo-1548681528-6a5c45b66b42?auto=format&fit=crop&w=1200&q=80";
-  const sitterImage = "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=80";
+  const heroImage = "/images/hero-bg.jpg";
+  const safetyImage = "/images/safety.jpg";
+  const sitterImage = "/images/love-pet.jpg";
 
   return (
     <div className="pb-16 bg-[#f2f4f7]">
@@ -95,41 +95,41 @@ export function LandingPage({
 
       <Header user={user} profileCompletion={profileCompletion} />
 
-      <main className="w-full max-w-[1280px] mx-auto px-4 lg:px-6">
-        <section className="mt-6 p-0 overflow-hidden rounded-[20px] border border-[#dbe5e7] bg-[radial-gradient(140%_120%_at_0%_0%,rgba(14,165,164,0.16),rgba(255,255,255,0)_55%),radial-gradient(120%_100%_at_100%_0%,rgba(255,107,107,0.12),rgba(255,255,255,0)_48%),linear-gradient(180deg,#eff8f7,#f9fcfb)] relative before:content-[''] before:absolute before:-left-[120px] before:-top-[120px] before:w-[300px] before:h-[300px] before:rounded-full before:bg-[radial-gradient(circle,rgba(14,124,123,0.18),transparent_70%)] before:pointer-events-none">
-          <div className="p-[28px_20px_20px] lg:p-[34px_30px_20px] relative grid gap-[18px] grid-cols-1 lg:grid-cols-[1.2fr_1fr] lg:gap-6 items-stretch">
-            <div className="grid content-start gap-3.5">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-xs font-medium mb-4 border border-orange-100 w-fit">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-                </span>
-                {t.hero.highDemand}
-              </div>
-              <h1 className="m-0 text-3xl lg:text-4xl leading-[1.2] text-[#103745] font-bold max-w-[520px] rtl:tracking-[-0.01em] rtl:text-4xl rtl:leading-[1.35]">{t.hero.title}</h1>
-              <p className="mt-2 max-w-[520px] text-[16px] lg:text-[18px] leading-[1.55] text-[#37556a] m-0">{t.hero.subtitle}</p>
+      <main className="w-full max-w-[1440px] mx-auto px-4 lg:px-6">
+        <section className="relative mt-4 rounded-[24px] overflow-hidden min-h-[500px] flex flex-col items-center justify-center text-center py-12 px-4">
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={heroImage}
+              alt={t.hero.photoLabel}
+              fill
+              className="object-cover object-center"
+              priority
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px]" />
+          </div>
 
-              <div className="mt-4">
-                <DiscoverySearchBar initialServiceTypes={initialServiceTypes} />
-              </div>
-
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {trustBadges.map((badge) => (
-                  <span className="border border-neutral-200 bg-white rounded-full text-xs text-neutral-600 px-2.5 py-1.5" key={badge}>{badge}</span>
-                ))}
-              </div>
+          {/* Content */}
+          <div className="relative z-10 w-full max-w-5xl flex flex-col items-center gap-6">
+            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-md leading-relaxed md:leading-relaxed lg:leading-relaxed max-w-3xl py-2">
+              {t.hero.title}
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl font-medium drop-shadow-sm max-w-2xl leading-relaxed">
+              {t.hero.subtitle}
+            </p>
+            
+            <div className="w-full mt-4">
+              <DiscoverySearchBar initialServiceTypes={initialServiceTypes} />
             </div>
-            <div className="grid gap-4 items-end h-full">
-              <article className="relative w-full bg-gradient-to-br from-white to-[#f0fbfa] p-0 rounded-[20px] border-0 shadow-none overflow-hidden aspect-[16/10] lg:h-full lg:min-h-[320px]">
-                <Image
-                  src={heroImage}
-                  alt={t.hero.photoLabel}
-                  fill
-                  className="object-cover object-center rounded-[20px]"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </article>
+            
+            <div className="mt-8 flex flex-wrap gap-3 justify-center">
+              {trustBadges.map((badge) => (
+                <span className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-sm font-semibold text-gray-800 shadow-sm flex items-center gap-2" key={badge}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                  {badge}
+                </span>
+              ))}
             </div>
           </div>
         </section>
